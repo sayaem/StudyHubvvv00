@@ -29,10 +29,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -42,6 +45,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
@@ -77,16 +81,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.buddy.BuddyAction
-import com.example.buddy.BuddyActionType
 import com.example.data.local.BuddyConversationEntity
 import com.example.data.local.BuddyMessageEntity
 import com.example.data.local.UserProfile
 import com.example.revision.RevisionSummaryMetrics
+import com.example.ui.components.EmblemSize
+import com.example.ui.components.StudyBuddyEmblem
+import com.example.ui.theme.BrandBlue
 import com.example.ui.theme.BrandTeal
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -121,8 +127,8 @@ fun StudyBuddyScreen(
     val listState = rememberLazyListState()
     var inputText by remember { mutableStateOf(initialQueryText ?: "") }
     var showHistorySheet by remember { mutableStateOf(false) }
+    var showContextDialog by remember { mutableStateOf(false) }
     var conversationToDelete by remember { mutableStateOf<BuddyConversationEntity?>(null) }
-    val scope = rememberCoroutineScope()
 
     // Auto-scroll to bottom on new messages
     LaunchedEffect(messages.size, isSending) {
@@ -144,20 +150,7 @@ fun StudyBuddyScreen(
             TopAppBar(
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Box(
-                            modifier = Modifier
-                                .size(34.dp)
-                                .clip(CircleShape)
-                                .background(BrandTeal.copy(alpha = 0.2f)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.AutoAwesome,
-                                contentDescription = null,
-                                tint = BrandTeal,
-                                modifier = Modifier.size(18.dp)
-                            )
-                        }
+                        StudyBuddyEmblem(size = EmblemSize.TOOLBAR)
                         Spacer(modifier = Modifier.width(10.dp))
                         Column {
                             Text(
@@ -261,14 +254,14 @@ fun StudyBuddyScreen(
 
                 // Action chips from the latest assistant response
                 if (suggestedActions.isNotEmpty()) {
-                    FlowRow(
+                    LazyRow(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 6.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
+                        contentPadding = PaddingValues(end = 8.dp)
                     ) {
-                        suggestedActions.forEach { action ->
+                        items(suggestedActions) { action ->
                             Surface(
                                 shape = RoundedCornerShape(12.dp),
                                 color = MaterialTheme.colorScheme.primaryContainer,
@@ -300,80 +293,20 @@ fun StudyBuddyScreen(
                     }
                 }
 
-                // Input bar
-                Surface(
-                    color = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 2.dp,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 12.dp, vertical = 8.dp),
-                        verticalAlignment = Alignment.Bottom
-                    ) {
-                        OutlinedTextField(
-                            value = inputText,
-                            onValueChange = { inputText = it },
-                            placeholder = {
-                                Text(
-                                    text = "Ask Study Buddy...",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            },
-                            modifier = Modifier
-                                .weight(1f)
-                                .testTag("buddy_input_field"),
-                            maxLines = 4,
-                            shape = RoundedCornerShape(20.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant
-                            )
-                        )
-
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        IconButton(
-                            onClick = {
-                                val text = inputText.trim()
-                                if (text.isNotEmpty() && !isSending) {
-                                    onSendMessage(text)
-                                    inputText = ""
-                                }
-                            },
-                            enabled = inputText.trim().isNotEmpty() && !isSending,
-                            modifier = Modifier
-                                .size(48.dp)
-                                .clip(CircleShape)
-                                .background(
-                                    if (inputText.trim().isNotEmpty() && !isSending)
-                                        MaterialTheme.colorScheme.primary
-                                    else
-                                        MaterialTheme.colorScheme.surfaceVariant
-                                )
-                                .testTag("buddy_send_button")
-                        ) {
-                            if (isSending) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(20.dp),
-                                    color = MaterialTheme.colorScheme.primary,
-                                    strokeWidth = 2.dp
-                                )
-                            } else {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.Send,
-                                    contentDescription = "Send Message",
-                                    tint = if (inputText.trim().isNotEmpty())
-                                        MaterialTheme.colorScheme.onPrimary
-                                    else
-                                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
+                // Advanced Message Composer
+                StudyBuddyComposer(
+                    inputText = inputText,
+                    isSending = isSending,
+                    onInputChanged = { inputText = it },
+                    onSend = {
+                        val text = inputText.trim()
+                        if (text.isNotEmpty() && !isSending) {
+                            onSendMessage(text)
+                            inputText = ""
                         }
-                    }
-                }
+                    },
+                    onOpenContextInfo = { showContextDialog = true }
+                )
             }
         }
     ) { innerPadding ->
@@ -443,6 +376,34 @@ fun StudyBuddyScreen(
                 }
             }
         }
+    }
+
+    // Context Info Dialog
+    if (showContextDialog) {
+        AlertDialog(
+            onDismissRequest = { showContextDialog = false },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    StudyBuddyEmblem(size = EmblemSize.SMALL)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Grounded Context Knowledge", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                }
+            },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Study Buddy has direct access to your local StudyHub data:", style = MaterialTheme.typography.bodyMedium)
+                    Text("• HSC/SSC & University Admission Syllabus", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("• Scheduled Calendar Tasks & Due Dates", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("• Spaced Repetition Revision Workload", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("• Focus Timer & Gamification Stats", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showContextDialog = false }) {
+                    Text("Got it")
+                }
+            }
+        )
     }
 
     // Conversation History Bottom Sheet
@@ -580,7 +541,10 @@ fun StudyBuddyScreen(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+/**
+ * Compact, Adaptable Empty Welcome State.
+ * Prevents vertical clipping and adapts gracefully on short screens or when composer is focused.
+ */
 @Composable
 private fun EmptyBuddyWelcomeState(
     studentName: String?,
@@ -590,54 +554,48 @@ private fun EmptyBuddyWelcomeState(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 20.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Box(
-            modifier = Modifier
-                .size(72.dp)
-                .clip(CircleShape)
-                .background(BrandTeal.copy(alpha = 0.15f)),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.AutoAwesome,
-                contentDescription = null,
-                tint = BrandTeal,
-                modifier = Modifier.size(36.dp)
-            )
-        }
+        StudyBuddyEmblem(size = EmblemSize.LARGE, isAnimated = true)
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
         Text(
             text = if (!studentName.isNullOrBlank()) "Hello $studentName!" else "Welcome to Study Buddy",
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface
         )
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        Text(
-            text = "I'm your grounded companion. I understand your syllabus, study plans, calendar, and revision workload.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+        Surface(
+            shape = RoundedCornerShape(12.dp),
+            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f),
+            modifier = Modifier.fillMaxWidth(0.9f)
+        ) {
+            Text(
+                text = "Grounded in your HSC/Admission syllabus, scheduled tasks & study history.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+            )
+        }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(18.dp))
 
         Text(
             text = "Suggested Questions",
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         val dueCount = (revisionMetrics?.dueTodayCount ?: 0) + (revisionMetrics?.overdueCount ?: 0)
         val questions = listOf(
@@ -648,26 +606,121 @@ private fun EmptyBuddyWelcomeState(
             "Help me prepare for my next admission target"
         )
 
-        FlowRow(
+        LazyRow(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 4.dp)
         ) {
-            questions.forEach { q ->
+            items(questions) { q ->
                 Surface(
-                    shape = RoundedCornerShape(16.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
+                    shape = RoundedCornerShape(14.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
                     modifier = Modifier
                         .clickable { onSelectPrompt(q) }
-                        .padding(horizontal = 4.dp)
                         .testTag("welcome_suggestion_$q")
                 ) {
                     Text(
                         text = q,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Advanced Message Composer with multiline text input, prompt helper trigger, and send state.
+ */
+@Composable
+private fun StudyBuddyComposer(
+    inputText: String,
+    isSending: Boolean,
+    onInputChanged: (String) -> Unit,
+    onSend: () -> Unit,
+    onOpenContextInfo: () -> Unit
+) {
+    Surface(
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 2.dp,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.Bottom
+        ) {
+            // Context Info / Prompt Helper Button
+            IconButton(
+                onClick = onOpenContextInfo,
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(bottom = 2.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AutoAwesome,
+                    contentDescription = "Grounded Context Info",
+                    tint = BrandTeal,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(4.dp))
+
+            // Multiline Expandable Input
+            OutlinedTextField(
+                value = inputText,
+                onValueChange = onInputChanged,
+                placeholder = {
+                    Text(
+                        text = "Ask Study Buddy...",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .testTag("buddy_input_field"),
+                minLines = 1,
+                maxLines = 5,
+                shape = RoundedCornerShape(22.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant
+                )
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            // Send Button
+            val canSend = inputText.trim().isNotEmpty() && !isSending
+            IconButton(
+                onClick = onSend,
+                enabled = canSend,
+                modifier = Modifier
+                    .size(44.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if (canSend) MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.surfaceVariant
+                    )
+                    .testTag("buddy_send_button")
+            ) {
+                if (isSending) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(18.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                        strokeWidth = 2.dp
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.Send,
+                        contentDescription = "Send Message",
+                        tint = if (canSend) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             }
@@ -689,20 +742,7 @@ private fun BuddyMessageBubble(
         horizontalArrangement = if (isUser) Arrangement.End else Arrangement.Start
     ) {
         if (!isUser) {
-            Box(
-                modifier = Modifier
-                    .size(30.dp)
-                    .clip(CircleShape)
-                    .background(BrandTeal.copy(alpha = 0.2f)),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.AutoAwesome,
-                    contentDescription = null,
-                    tint = BrandTeal,
-                    modifier = Modifier.size(16.dp)
-                )
-            }
+            StudyBuddyEmblem(size = EmblemSize.SMALL)
             Spacer(modifier = Modifier.width(8.dp))
         }
 
@@ -716,7 +756,7 @@ private fun BuddyMessageBubble(
             color = when {
                 isFailed -> MaterialTheme.colorScheme.errorContainer
                 isUser -> MaterialTheme.colorScheme.primary
-                else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f)
+                else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.75f)
             },
             modifier = Modifier
                 .widthIn(max = 300.dp)
@@ -776,20 +816,7 @@ private fun BuddyThinkingIndicator() {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Start
     ) {
-        Box(
-            modifier = Modifier
-                .size(30.dp)
-                .clip(CircleShape)
-                .background(BrandTeal.copy(alpha = 0.2f)),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.AutoAwesome,
-                contentDescription = null,
-                tint = BrandTeal,
-                modifier = Modifier.size(16.dp)
-            )
-        }
+        StudyBuddyEmblem(size = EmblemSize.SMALL, isAnimated = true)
         Spacer(modifier = Modifier.width(8.dp))
         Surface(
             shape = RoundedCornerShape(16.dp),
@@ -807,7 +834,7 @@ private fun BuddyThinkingIndicator() {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Study Buddy is thinking...",
+                    text = "Study Buddy is analyzing your study context...",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
