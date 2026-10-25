@@ -15,6 +15,8 @@ import com.example.data.local.RevisionHistoryEntity
 import com.example.data.local.RevisionItemEntity
 import com.example.data.local.SubjectEntity
 import com.example.data.local.UserProfile
+import com.example.data.local.BuddyConversationEntity
+import com.example.data.local.BuddyMessageEntity
 import kotlinx.coroutines.flow.Flow
 
 class StudyHubRepository(private val db: AppDatabase) {
@@ -436,6 +438,65 @@ class StudyHubRepository(private val db: AppDatabase) {
         historyEntry: RevisionHistoryEntity
     ): Long {
         return db.revisionDao().recordCompletedReview(updatedItem, historyEntry)
+    }
+
+    // --- Study Buddy ---
+    val allBuddyConversations: Flow<List<BuddyConversationEntity>> = db.buddyDao().getAllConversations()
+
+    fun getBuddyMessages(conversationId: Long): Flow<List<BuddyMessageEntity>> {
+        return db.buddyDao().getMessagesForConversation(conversationId)
+    }
+
+    suspend fun getBuddyMessagesSync(conversationId: Long): List<BuddyMessageEntity> {
+        return db.buddyDao().getMessagesForConversationSync(conversationId)
+    }
+
+    suspend fun createBuddyConversation(
+        title: String = "New Study Session",
+        initialContextTopicId: Long? = null,
+        initialContextSubjectId: Long? = null
+    ): Long {
+        val conv = BuddyConversationEntity(
+            title = title,
+            createdAt = System.currentTimeMillis(),
+            updatedAt = System.currentTimeMillis(),
+            initialContextTopicId = initialContextTopicId,
+            initialContextSubjectId = initialContextSubjectId
+        )
+        return db.buddyDao().insertConversation(conv)
+    }
+
+    suspend fun updateBuddyConversation(conversation: BuddyConversationEntity) {
+        db.buddyDao().updateConversation(conversation)
+    }
+
+    suspend fun deleteBuddyConversation(conversationId: Long) {
+        db.buddyDao().deleteConversationAndMessages(conversationId)
+    }
+
+    suspend fun insertBuddyMessage(message: BuddyMessageEntity): Long {
+        val id = db.buddyDao().insertMessage(message)
+        // Also update conversation updatedAt timestamp
+        val conv = db.buddyDao().getConversationByIdSync(message.conversationId)
+        if (conv != null) {
+            val updatedTitle = if (conv.title == "New Study Session" && message.sender == "USER") {
+                val short = message.content.take(30).trim()
+                if (short.isNotEmpty()) short else conv.title
+            } else {
+                conv.title
+            }
+            db.buddyDao().updateConversation(
+                conv.copy(
+                    title = updatedTitle,
+                    updatedAt = System.currentTimeMillis()
+                )
+            )
+        }
+        return id
+    }
+
+    suspend fun updateBuddyMessage(message: BuddyMessageEntity) {
+        db.buddyDao().updateMessage(message)
     }
 }
 

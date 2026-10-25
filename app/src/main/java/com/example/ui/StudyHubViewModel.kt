@@ -4,6 +4,16 @@ import android.app.Application
 import android.os.SystemClock
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.buddy.BuddyAction
+import com.example.buddy.BuddyAiResult
+import com.example.buddy.BuddyContextEnvelope
+import com.example.buddy.BuddyGenerationRequest
+import com.example.buddy.GeminiRestAiProvider
+import com.example.buddy.StudyBuddyAiProvider
+import com.example.buddy.StudyBuddyContextEngine
+import com.example.buddy.StudyHubVerifiedFacts
+import com.example.data.local.BuddyConversationEntity
+import com.example.data.local.BuddyMessageEntity
 import com.example.data.local.AdmissionTargetEntity
 import com.example.data.local.AppDatabase
 import com.example.data.local.AppSettingsEntity
@@ -1295,4 +1305,261 @@ class StudyHubViewModel(application: Application) : AndroidViewModel(application
     fun clearProposedRevisionTasks() {
         _proposedRevisionTasks.value = emptyList()
     }
+
+    // --- Study Buddy State & Operations ---
+    var buddyAiProvider: StudyBuddyAiProvider = GeminiRestAiProvider()
+
+    val buddyConversations: StateFlow<List<BuddyConversationEntity>> = repository.allBuddyConversations
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    private val _currentBuddyConversationId = MutableStateFlow<Long?>(null)
+    val currentBuddyConversationId: StateFlow<Long?> = _currentBuddyConversationId.asStateFlow()
+
+    private val _currentBuddyMessages = MutableStateFlow<List<BuddyMessageEntity>>(emptyList())
+    val currentBuddyMessages: StateFlow<List<BuddyMessageEntity>> = _currentBuddyMessages.asStateFlow()
+
+    private val _isSendingBuddyMessage = MutableStateFlow(false)
+    val isSendingBuddyMessage: StateFlow<Boolean> = _isSendingBuddyMessage.asStateFlow()
+
+    private val _buddyErrorMessage = MutableStateFlow<String?>(null)
+    val buddyErrorMessage: StateFlow<String?> = _buddyErrorMessage.asStateFlow()
+
+    private val _lastSuggestedActions = MutableStateFlow<List<BuddyAction>>(emptyList())
+    val lastSuggestedActions: StateFlow<List<BuddyAction>> = _lastSuggestedActions.asStateFlow()
+
+    private var buddyMessageJob: Job? = null
+    private var activeConversationCollectorJob: Job? = null
+
+    // Track initial topic/subject if navigated with context
+    private val _activeBuddyTopicContext = MutableStateFlow<Pair<String?, String?>?>(null)
+    val activeBuddyTopicContext: StateFlow<Pair<String?, String?>?> = _activeBuddyTopicContext.asStateFlow()
+
+    fun selectOrCreateConversation(
+        conversationId: Long? = null,
+        initialTopicId: Long? = null,
+        initialSubjectId: Long? = null,
+        initialTopicName: String? = null,
+        initialSubjectName: String? = null
+    ) {
+        if (initialTopicName != null || initialSubjectName != null) {
+            _activeBuddyTopicContext.value = Pair(initialTopicName, initialSubjectName)
+        }
+
+        viewModelScope.launch {
+            val targetId = if (conversationId != null) {
+                conversationId
+            } else {
+                val title = if (!initialTopicName.isNullOrBlank()) {
+                    "Topic: $initialTopicName"
+                } else {
+                    "Study Session"
+                }
+                repository.createBuddyConversation(
+                    title = title,
+                    initialContextTopicId = initialTopicId,
+                    initialContextSubjectId = initialSubjectId
+                )
+            }
+            _currentBuddyConversationId.value = targetId
+            listenToMessages(targetId)
+        }
+    }
+
+    private fun listenToMessages(conversationId: Long) {
+        activeConversationCollectorJob?.cancel()
+        activeConversationCollectorJob = viewModelScope.launch {
+            repository.getBuddyMessages(conversationId).collect { msgs ->
+                _currentBuddyMessages.value = msgs
+            }
+        }
+    }
+
+    fun startNewBuddyConversation(
+        initialTopicId: Long? = null,
+        initialSubjectId: Long? = null,
+        initialTopicName: String? = null,
+        initialSubjectName: String? = null
+    ) {
+        _activeBuddyTopicContext.value = if (initialTopicName != null || initialSubjectName != null) {
+            Pair(initialTopicName, initialSubjectName)
+        } else null
+        viewModelScope.launch {
+            val title = if (!initialTopicName.isNullOrBlank()) "Topic: $initialTopicName" else "Study Session"
+            val id = repository.createBuddyConversation(
+                title = title,
+                initialContextTopicId = initialTopicId,
+                initialContextSubjectId = initialSubjectId
+            )
+            _currentBuddyConversationId.value = id
+            listenToMessages(id)
+        }
+    }
+
+    fun deleteBuddyConversation(conversationId: Long) {
+        viewModelScope.launch {
+            repository.deleteBuddyConversation(conversationId)
+            if (_currentBuddyConversationId.value == conversationId) {
+                _currentBuddyConversationId.value = null
+                _currentBuddyMessages.value = emptyList()
+            }
+        }
+    }
+
+    fun clearBuddyError() {
+        _buddyErrorMessage.value = null
+    }
+
+    fun sendBuddyMessage(prompt: String, entryPointContext: String? = null) {
+        val trimmed = prompt.trim()
+        if (trimmed.isEmpty() || _isSendingBuddyMessage.value) return
+
+        val convId = _currentBuddyConversationId.value
+        if (convId == null) {
+            viewModelScope.launch {
+                val id = repository.createBuddyConversation(
+                    title = trimmed.take(30),
+                    initialContextTopicId = null,
+                    initialContextSubjectId = null
+                )
+                _currentBuddyConversationId.value = id
+                listenToMessages(id)
+                performSendMessage(id, trimmed, entryPointContext)
+            }
+        } else {
+            performSendMessage(convId, trimmed, entryPointContext)
+        }
+    }
+
+    private fun performSendMessage(conversationId: Long, promptText: String, entryPointContext: String?) {
+        _isSendingBuddyMessage.value = true
+        _buddyErrorMessage.value = null
+
+        buddyMessageJob?.cancel()
+        buddyMessageJob = viewModelScope.launch {
+            val userMsg = BuddyMessageEntity(
+                conversationId = conversationId,
+                sender = "USER",
+                content = promptText,
+                status = "SENT"
+            )
+            repository.insertBuddyMessage(userMsg)
+
+            val verifiedFacts = buildVerifiedFacts(
+                specificTopic = _activeBuddyTopicContext.value?.first,
+                specificSubject = _activeBuddyTopicContext.value?.second
+            )
+            val intent = StudyBuddyContextEngine.classifyIntent(promptText)
+            val timeRef = StudyBuddyContextEngine.getCurrentTimeReference()
+            val envelope = BuddyContextEnvelope(
+                queryIntent = intent,
+                verifiedFacts = verifiedFacts,
+                timeReference = timeRef,
+                entryPointContext = entryPointContext
+            )
+
+            val history = repository.getBuddyMessagesSync(conversationId)
+                .filter { it.status == "SENT" }
+                .map { Pair(it.sender, it.content) }
+
+            val request = BuddyGenerationRequest(
+                conversationId = conversationId,
+                userPrompt = promptText,
+                recentTurns = history,
+                contextEnvelope = envelope
+            )
+
+            val result = buddyAiProvider.generateReply(request)
+
+            when (result) {
+                is BuddyAiResult.Success -> {
+                    _lastSuggestedActions.value = result.suggestedActions
+                    val assistantMsg = BuddyMessageEntity(
+                        conversationId = conversationId,
+                        sender = "ASSISTANT",
+                        content = result.responseText,
+                        status = "SENT"
+                    )
+                    repository.insertBuddyMessage(assistantMsg)
+                    _isSendingBuddyMessage.value = false
+                }
+                is BuddyAiResult.Error -> {
+                    _buddyErrorMessage.value = result.errorMessage
+                    val failedMsg = BuddyMessageEntity(
+                        conversationId = conversationId,
+                        sender = "ASSISTANT",
+                        content = result.errorMessage,
+                        status = "FAILED"
+                    )
+                    repository.insertBuddyMessage(failedMsg)
+                    _isSendingBuddyMessage.value = false
+                }
+            }
+        }
+    }
+
+    fun retryLastBuddyMessage() {
+        val convId = _currentBuddyConversationId.value ?: return
+        val messages = _currentBuddyMessages.value
+        val lastUserMsg = messages.lastOrNull { it.sender == "USER" } ?: return
+        val lastMsg = messages.lastOrNull()
+        if (lastMsg != null && lastMsg.status == "FAILED") {
+            viewModelScope.launch {
+                repository.deleteBuddyConversation(lastMsg.id)
+                performSendMessage(convId, lastUserMsg.content, null)
+            }
+        }
+    }
+
+    private fun buildVerifiedFacts(specificTopic: String?, specificSubject: String?): StudyHubVerifiedFacts {
+        val profile = userProfile.value
+        val allSubs = subjects.value
+        val allChaps = chapters.value
+        val allTasks = tasks.value
+        val allSessions = sessions.value
+        val allTargets = admissionTargets.value
+        val revMetrics = revisionSummaryMetrics.value
+
+        val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val todayTasks = allTasks.filter { it.date == todayDate }
+        val todaySeconds = todayStudySeconds.value
+
+        val completedChaps = allChaps.count { it.status == "COMPLETED" }
+        val totalSecs = allSessions.filter { it.status == "COMPLETED" }.sumOf { it.elapsedSeconds }
+
+        val nextExam = allTargets
+            .filter { !it.examDate.isNullOrBlank() }
+            .sortedBy { it.examDate }
+            .firstOrNull()
+
+        val nextExamStr = if (nextExam != null) {
+            "${nextExam.institutionName} (${nextExam.programUnit ?: nextExam.category}) on ${nextExam.examDate}"
+        } else null
+
+        val revModels = revisionUiModels.value
+        val dueCount = revMetrics.dueTodayCount + revMetrics.overdueCount
+        val dueRevSubjects = revModels.filter { it.isDueToday || it.isOverdue }.map { it.subjectName }.distinct()
+
+        return StudyHubVerifiedFacts(
+            studentName = profile?.displayName?.ifBlank { "Student" } ?: "Student",
+            academicLevel = profile?.academicLevel,
+            admissionTrack = profile?.admissionTrack,
+            dailyGoalHours = profile?.let { it.dailyGoalMinutes / 60f },
+            preferredStudyTime = profile?.preferredStudyTime,
+            todayPlannedTasksCount = todayTasks.size,
+            todayPlannedTasksSummary = todayTasks.map { "${it.title} (${it.status})" },
+            totalSubjectsCount = allSubs.size,
+            totalChaptersCount = allChaps.size,
+            completedChaptersCount = completedChaps,
+            incompleteChaptersCount = allChaps.size - completedChaps,
+            dueRevisionsCount = dueCount,
+            dueRevisionSubjects = dueRevSubjects,
+            todayStudyMinutesRecorded = (todaySeconds / 60).toInt(),
+            totalStudyHoursRecorded = totalSecs / 3600f,
+            nextExamTarget = nextExamStr,
+            specificTopicName = specificTopic,
+            specificSubjectName = specificSubject,
+            notesCount = notes.value.size
+        )
+    }
 }
+

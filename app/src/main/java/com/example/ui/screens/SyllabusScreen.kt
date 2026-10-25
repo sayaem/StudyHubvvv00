@@ -95,7 +95,8 @@ fun SyllabusScreen(
     onOpenRevisionHub: () -> Unit = {},
     initialAddSubjectRequested: Boolean = false,
     onAddSubjectDismissed: () -> Unit = {},
-    onSubjectDetailStateChanged: (Boolean) -> Unit = {}
+    onSubjectDetailStateChanged: (Boolean) -> Unit = {},
+    onAskStudyBuddy: (chapterId: Long, subjectId: Long, chapterName: String, subjectName: String) -> Unit = { _, _, _, _ -> }
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("All") } // "All", "Compulsory", "Optional"
@@ -138,7 +139,8 @@ fun SyllabusScreen(
             onTrackChapterInRevision = onTrackChapterInRevision,
             onRemoveChapterFromRevision = onRemoveChapterFromRevision,
             onReviewNow = onReviewNow,
-            onOpenRevisionHub = onOpenRevisionHub
+            onOpenRevisionHub = onOpenRevisionHub,
+            onAskStudyBuddy = onAskStudyBuddy
         )
     } else {
         Column(

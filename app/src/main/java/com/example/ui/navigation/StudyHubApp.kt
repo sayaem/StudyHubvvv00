@@ -46,6 +46,8 @@ import com.example.ui.screens.SplashScreen
 import com.example.ui.screens.SyllabusScreen
 import com.example.ui.screens.ToolsScreen
 import com.example.ui.screens.revision.RevisionHubScreen
+import com.example.buddy.BuddyActionType
+import com.example.ui.screens.buddy.StudyBuddyScreen
 import com.example.ui.theme.BrandTeal
 import com.example.ui.theme.StudyHubTheme
 import com.example.ui.theme.ThemeMode
@@ -64,7 +66,8 @@ enum class AppScreen {
     PROGRESS_ANALYTICS,
     NOTES,
     SETTINGS,
-    REVISION_HUB
+    REVISION_HUB,
+    STUDY_BUDDY
 }
 
 sealed class NavigationDestination {
@@ -78,6 +81,13 @@ sealed class NavigationDestination {
     object Onboarding : NavigationDestination()
     object Splash : NavigationDestination()
     object RevisionHub : NavigationDestination()
+    data class StudyBuddy(
+        val initialTopicId: Long? = null,
+        val initialSubjectId: Long? = null,
+        val initialTopicName: String? = null,
+        val initialSubjectName: String? = null,
+        val initialPrompt: String? = null
+    ) : NavigationDestination()
 }
 
 @Composable
@@ -140,11 +150,29 @@ fun StudyHubApp(
     val proposedRevisionTasks by viewModel.proposedRevisionTasks.collectAsStateWithLifecycle()
     val activeRevisionItemId by viewModel.activeRevisionItemId.collectAsStateWithLifecycle()
 
+    // Study Buddy State
+    val buddyConversations by viewModel.buddyConversations.collectAsStateWithLifecycle()
+    val currentBuddyConversationId by viewModel.currentBuddyConversationId.collectAsStateWithLifecycle()
+    val currentBuddyMessages by viewModel.currentBuddyMessages.collectAsStateWithLifecycle()
+    val isSendingBuddyMessage by viewModel.isSendingBuddyMessage.collectAsStateWithLifecycle()
+    val buddyErrorMessage by viewModel.buddyErrorMessage.collectAsStateWithLifecycle()
+    val lastSuggestedActions by viewModel.lastSuggestedActions.collectAsStateWithLifecycle()
+    val activeBuddyTopicContext by viewModel.activeBuddyTopicContext.collectAsStateWithLifecycle()
+
     val backStack = remember { androidx.compose.runtime.mutableStateListOf<NavigationDestination>(NavigationDestination.Splash) }
 
     fun navigateTo(dest: NavigationDestination) {
         val currentTop = backStack.lastOrNull()
         if (currentTop == dest) return
+
+        if (dest is NavigationDestination.StudyBuddy) {
+            viewModel.selectOrCreateConversation(
+                initialTopicId = dest.initialTopicId,
+                initialSubjectId = dest.initialSubjectId,
+                initialTopicName = dest.initialTopicName,
+                initialSubjectName = dest.initialSubjectName
+            )
+        }
 
         if (dest is NavigationDestination.MainTab) {
             // When navigating between main bottom tabs, maintain tab history with HOME as root
@@ -199,6 +227,7 @@ fun StudyHubApp(
             "analytics", "goals", "stats", "progress" -> navigateTo(NavigationDestination.ProgressAnalytics)
             "settings" -> navigateTo(NavigationDestination.Settings)
             "revision", "revisionhub", "spaced_repetition" -> navigateTo(NavigationDestination.RevisionHub)
+            "buddy", "studybuddy", "ai" -> navigateTo(NavigationDestination.StudyBuddy())
             else -> navigateTo(NavigationDestination.MainTab(NavDestination.HOME))
         }
     }
@@ -260,6 +289,7 @@ fun StudyHubApp(
         is NavigationDestination.Notes -> AppScreen.NOTES
         is NavigationDestination.Settings -> AppScreen.SETTINGS
         is NavigationDestination.RevisionHub -> AppScreen.REVISION_HUB
+        is NavigationDestination.StudyBuddy -> AppScreen.STUDY_BUDDY
     }
 
     val currentNavDestination = when (currentDestination) {
@@ -392,6 +422,9 @@ fun StudyHubApp(
                                         },
                                         onAvatarClick = {
                                             navigateTo(NavigationDestination.Profile)
+                                        },
+                                        onOpenStudyBuddy = { initialPrompt ->
+                                            navigateTo(NavigationDestination.StudyBuddy(initialPrompt = initialPrompt))
                                         }
                                     )
                                 }
@@ -428,6 +461,17 @@ fun StudyHubApp(
                                         onAddSubjectDismissed = { requestAddSubjectOnSyllabus = false },
                                         onSubjectDetailStateChanged = { isOpen ->
                                             isSubjectDetailOpen = isOpen
+                                        },
+                                        onAskStudyBuddy = { chapterId, subjectId, chapterName, subjectName ->
+                                            navigateTo(
+                                                NavigationDestination.StudyBuddy(
+                                                    initialTopicId = chapterId,
+                                                    initialSubjectId = subjectId,
+                                                    initialTopicName = chapterName,
+                                                    initialSubjectName = subjectName,
+                                                    initialPrompt = "Help me understand and revise topic: $chapterName"
+                                                )
+                                            )
                                         }
                                     )
                                 }
@@ -694,6 +738,66 @@ fun StudyHubApp(
                         },
                         onNavigateToSyllabus = {
                             navigateTo(NavigationDestination.MainTab(NavDestination.SYLLABUS))
+                        },
+                        onBack = { goBack() }
+                    )
+                }
+
+                AppScreen.STUDY_BUDDY -> {
+                    val buddyDest = currentDestination as? NavigationDestination.StudyBuddy
+                    StudyBuddyScreen(
+                        userProfile = userProfile,
+                        conversations = buddyConversations,
+                        currentConversationId = currentBuddyConversationId,
+                        messages = currentBuddyMessages,
+                        isSending = isSendingBuddyMessage,
+                        errorMessage = buddyErrorMessage,
+                        suggestedActions = lastSuggestedActions,
+                        revisionMetrics = revisionSummaryMetrics,
+                        activeTopicContext = activeBuddyTopicContext,
+                        initialQueryText = buddyDest?.initialPrompt,
+                        onSendMessage = { prompt ->
+                            viewModel.sendBuddyMessage(prompt)
+                        },
+                        onRetryMessage = {
+                            viewModel.retryLastBuddyMessage()
+                        },
+                        onClearError = {
+                            viewModel.clearBuddyError()
+                        },
+                        onStartNewChat = {
+                            viewModel.startNewBuddyConversation()
+                        },
+                        onSelectConversation = { convId ->
+                            viewModel.selectOrCreateConversation(conversationId = convId)
+                        },
+                        onDeleteConversation = { convId ->
+                            viewModel.deleteBuddyConversation(convId)
+                        },
+                        onExecuteAction = { action ->
+                            when (action.actionType) {
+                                BuddyActionType.START_FOCUS -> {
+                                    if (action.targetSubjectId != null || action.targetChapterId != null) {
+                                        viewModel.setTimerSubjectAndChapter(action.targetSubjectId, action.targetChapterId)
+                                    }
+                                    navigateTo(NavigationDestination.MainTab(NavDestination.FOCUS))
+                                }
+                                BuddyActionType.OPEN_CALENDAR -> {
+                                    navigateTo(NavigationDestination.MainTab(NavDestination.CALENDAR))
+                                }
+                                BuddyActionType.OPEN_SYLLABUS -> {
+                                    navigateTo(NavigationDestination.MainTab(NavDestination.SYLLABUS))
+                                }
+                                BuddyActionType.OPEN_REVISION_HUB -> {
+                                    navigateTo(NavigationDestination.RevisionHub)
+                                }
+                                BuddyActionType.OPEN_STATS -> {
+                                    navigateTo(NavigationDestination.ProgressAnalytics)
+                                }
+                                BuddyActionType.OPEN_ADMISSION_CALENDAR -> {
+                                    navigateTo(NavigationDestination.AdmissionCalendar)
+                                }
+                            }
                         },
                         onBack = { goBack() }
                     )

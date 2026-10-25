@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Autorenew
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
@@ -89,7 +90,8 @@ fun SubjectDetailScreen(
     onTrackChapterInRevision: (subjectId: Long, chapterId: Long) -> Unit = { _, _ -> },
     onRemoveChapterFromRevision: (chapterId: Long) -> Unit = {},
     onReviewNow: (itemId: Long, rating: RecallRating, durationSeconds: Int, notes: String?) -> Unit = { _, _, _, _ -> },
-    onOpenRevisionHub: () -> Unit = {}
+    onOpenRevisionHub: () -> Unit = {},
+    onAskStudyBuddy: (chapterId: Long, subjectId: Long, chapterName: String, subjectName: String) -> Unit = { _, _, _, _ -> }
 ) {
     BackHandler { onBack() }
 
@@ -484,6 +486,22 @@ fun SubjectDetailScreen(
                                             fontSize = 11.sp,
                                             fontWeight = FontWeight.Bold,
                                             color = statusColor
+                                        )
+                                    }
+
+                                    Spacer(modifier = Modifier.width(4.dp))
+
+                                    IconButton(
+                                        onClick = {
+                                            onAskStudyBuddy(chapter.id, subject.id, chapter.title, subject.name)
+                                        },
+                                        modifier = Modifier.size(28.dp)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.AutoAwesome,
+                                            contentDescription = "Ask Study Buddy about this topic",
+                                            tint = MaterialTheme.colorScheme.primary,
+                                            modifier = Modifier.size(16.dp)
                                         )
                                     }
 

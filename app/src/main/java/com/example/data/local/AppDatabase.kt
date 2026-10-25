@@ -20,9 +20,11 @@ import androidx.room.RoomDatabase
         FocusGamificationEntity::class,
         ActiveFocusSessionEntity::class,
         RevisionItemEntity::class,
-        RevisionHistoryEntity::class
+        RevisionHistoryEntity::class,
+        BuddyConversationEntity::class,
+        BuddyMessageEntity::class
     ],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -39,6 +41,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun focusGamificationDao(): FocusGamificationDao
     abstract fun activeFocusSessionDao(): ActiveFocusSessionDao
     abstract fun revisionDao(): RevisionDao
+    abstract fun buddyDao(): BuddyDao
 
     companion object {
         @Volatile
@@ -89,6 +92,36 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_4_5 = object : androidx.room.migration.Migration(4, 5) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `buddy_conversations` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `title` TEXT NOT NULL,
+                        `createdAt` INTEGER NOT NULL,
+                        `updatedAt` INTEGER NOT NULL,
+                        `initialContextTopicId` INTEGER,
+                        `initialContextSubjectId` INTEGER
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_buddy_conversations_updatedAt` ON `buddy_conversations` (`updatedAt`)")
+
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `buddy_messages` (
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        `conversationId` INTEGER NOT NULL,
+                        `sender` TEXT NOT NULL,
+                        `content` TEXT NOT NULL,
+                        `status` TEXT NOT NULL,
+                        `createdAt` INTEGER NOT NULL,
+                        `suggestedActionsJson` TEXT
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_buddy_messages_conversationId` ON `buddy_messages` (`conversationId`)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_buddy_messages_createdAt` ON `buddy_messages` (`createdAt`)")
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -96,7 +129,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "studyhub_database"
                 )
-                    .addMigrations(MIGRATION_3_4)
+                    .addMigrations(MIGRATION_3_4, MIGRATION_4_5)
                     .fallbackToDestructiveMigration(dropAllTables = true)
                     .build()
                 INSTANCE = instance

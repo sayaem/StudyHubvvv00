@@ -66,6 +66,7 @@ import com.example.data.local.SubjectEntity
 import com.example.data.local.UserProfile
 import com.example.revision.RevisionSummaryMetrics
 import com.example.ui.components.SmartRevisionHomeCard
+import com.example.ui.components.StudyBuddyHomeCard
 import com.example.ui.components.StudentAvatar
 import com.example.ui.components.getSubjectIcon
 import com.example.ui.components.parseColorHex
@@ -84,6 +85,7 @@ fun HomeScreen(
     admissionTargets: List<AdmissionTargetEntity>,
     revisionMetrics: RevisionSummaryMetrics = RevisionSummaryMetrics(),
     onOpenRevisionHub: () -> Unit = {},
+    onOpenStudyBuddy: (initialPrompt: String?) -> Unit = {},
     onAddSubjectClick: () -> Unit,
     onStartFocusClick: () -> Unit,
     onTodayPlanClick: () -> Unit,
@@ -396,6 +398,18 @@ fun HomeScreen(
                 onClick = onOpenAdmissionCalendar
             )
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // Study Buddy Companion Card
+        val todayDate = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
+        StudyBuddyHomeCard(
+            studentName = userProfile?.displayName?.ifBlank { userProfile.name },
+            revisionMetrics = revisionMetrics,
+            todayTasksCount = tasks.count { it.date == todayDate },
+            nextExamTarget = nextTarget?.let { "${it.universityName} (${it.unitTrack})" },
+            onOpenStudyBuddy = onOpenStudyBuddy
+        )
 
         Spacer(modifier = Modifier.height(24.dp))
 
