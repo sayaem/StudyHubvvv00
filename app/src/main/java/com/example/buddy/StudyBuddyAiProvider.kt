@@ -34,7 +34,7 @@ class GeminiRestAiProvider(
             ""
         }
     },
-    private val modelName: String = "gemini-2.5-flash",
+    private val modelName: String = "gemini-1.5-flash",
     private val client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
