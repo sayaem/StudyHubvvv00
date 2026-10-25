@@ -1,0 +1,1119 @@
+N001
+Title: বই খুলে ঘুমের ডাক 😂
+Body: বই খুললেই ঘুম এলে বুঝবি, তোর বালিশের সঙ্গে ষড়যন্ত্র চলছে। ১০ মিনিট পড়ে ষড়যন্ত্র ভাঙ!
+Action: Open Focus
+
+N002
+Title: সিলেবাসের দিকে তাকাস না 💀
+Body: সিলেবাস দেখে ভয় পেলে হবে? পুরো পাহাড় না, আজ শুধু একটা পাথর সরিয়ে দে।
+Action: Open Syllabus
+
+N003
+Title: পড়ার মুডের অপেক্ষা?
+Body: মুড আসার অপেক্ষায় থাকলে মুডই একদিন টপার হয়ে যাবে। শুরু কর, মুড পেছনে আসবে।
+Action: Open Focus
+
+N004
+Title: পানিরও চাপ আছে 😂
+Body: পরীক্ষা যত কাছে আসে, মনে হয় পানির তাপমাত্রাও তোর চেয়ে কম চাপে আছে!
+Action: Open Focus
+
+N005
+Title: মস্তিষ্ক কি ছুটিতে?
+Body: শরীর পড়ার টেবিলে, কিন্তু মস্তিষ্ক ঘুরতে গেছে? একটা প্রশ্ন দিয়ে তাকে ফিরিয়ে আন।
+Action: Open Focus
+
+N006
+Title: আজকের ছোট জয় 🏆
+Body: আজ দশটা প্রশ্ন ঠিকমতো বুঝলে, সেটা কালকের আত্মবিশ্বাসের পুঁজি।
+Action: Open Focus
+
+N007
+Title: বইয়ের সঙ্গে সম্পর্ক
+Body: বইয়ের দিকে তাকিয়ে থাকলে সম্পর্ক গভীর হয় না। ভেতরের বিষয়গুলোও জানতে হয়!
+Action: Open Syllabus
+
+N008
+Title: পড়া জমিয়ে রাখিস না
+Body: পড়া বাকি রেখে দিলে সেটা নিজে নিজে কমে না। আজকের একটা অংশ আজই শেষ কর।
+Action: Open Syllabus
+
+N009
+Title: মস্তিষ্কের উপস্থিতি নে
+Body: খাতায় নাম লিখলেই উপস্থিতি হয় না। পড়ার সময় মাথাটাকেও হাজির রাখ!
+Action: Open Focus
+
+N010
+Title: দুই মিনিটের চ্যালেঞ্জ
+Body: পড়তে ইচ্ছা করছে না? মাত্র দুই মিনিট শুরু কর। অনেক সময় শুরুটাই আসল বাধা।
+Action: Open Focus
+
+N011
+Title: সূত্র মুখস্থ, ব্যবহার কই?
+Body: সূত্র মুখস্থ করে বসে থাকলে হবে না। কোন প্রশ্নে কোন সূত্র লাগবে, সেটাও অনুশীলন কর।
+Action: Open Syllabus
+
+N012
+Title: ভুল মানেই শেষ নয়
+Body: অনুশীলনে ভুল ধরা পড়া ভালো। পরীক্ষার আগে ভুল ধরতে পারলে নম্বর বাঁচতে পারে।
+Action: Open Focus
+
+N013
+Title: আজকের লক্ষ্য ছোট রাখ
+Body: আজ পুরো অধ্যায় শেষ করার চাপ নিস না। আগে একটা নির্দিষ্ট অংশ শেষ কর।
+Action: Open Focus
+
+N014
+Title: খাতা খুলে বসে আছিস?
+Body: কলম হাতে নিয়ে ভাবলেই উত্তর আসবে না। প্রথম প্রশ্নটা নিজে সমাধান করে দেখ।
+Action: Open Syllabus
+
+N015
+Title: পড়ার টেবিলের নাটক 🎭
+Body: টেবিল গুছানো, কলম গুছানো, পানি গুছানো—এবার পড়াটাও শুরু কর!
+Action: Open Focus
+
+N016
+Title: ভুলে যাওয়া স্বাভাবিক
+Body: একবার পড়ে সব মনে না থাকলে নিজেকে দোষ দিস না। বই বন্ধ করে মনে করার অনুশীলন কর।
+Action: Open Focus
+
+N017
+Title: নিজের পরীক্ষা নিজে নে
+Body: বই দেখে সব সহজ লাগে। বই বন্ধ করে তিনটা মূল কথা লিখতে পারিস কি না দেখ।
+Action: Open Focus
+
+N018
+Title: পড়া আর পুনরাবৃত্তি
+Body: নতুন অধ্যায় পড়ছিস, ভালো কথা। কিন্তু পুরোনো পড়া ঝালাই না করলে সেগুলোও হারিয়ে যেতে পারে।
+Action: Open Syllabus
+
+N019
+Title: মনোযোগের খোঁজে 📵
+Body: পাঁচ মিনিট পরপর ফোন দেখলে মনোযোগও পাঁচ মিনিটের অতিথি হয়ে থাকবে। ফোনটা দূরে রাখ।
+Action: Open Focus
+
+N020
+Title: অল্প পড়া, আসল পড়া
+Body: এক ঘণ্টা বইয়ের সামনে বসার চেয়ে বিশ মিনিট মন দিয়ে শেখা বেশি কাজে লাগতে পারে।
+Action: Open Focus
+
+N021
+Title: অধ্যায়কে ছোট কর
+Body: বড় অধ্যায়কে ছোট ছোট অংশে ভাগ কর। ছোট লক্ষ্য শেষ হলে পরেরটা ধর।
+Action: Open Syllabus
+
+N022
+Title: পড়া বুঝেছিস তো?
+Body: লাইন মুখস্থ করার আগে নিজের ভাষায় বোঝানোর চেষ্টা কর। বুঝতে পারলেই মনে রাখা সহজ হয়।
+Action: Open Focus
+
+N023
+Title: সময় কোথায় গেল?
+Body: পড়ার সময় উধাও হয়ে যায়, কিন্তু ফোনে সময় উড়ে যায় আরও দ্রুত। আজ সময়টা মেপে দেখ।
+Action: Open Calendar
+
+N024
+Title: ভুলের খাতা বানাস
+Body: যে প্রশ্নে ভুল করিস, সেটা লিখে রাখ। একই ভুল বারবার করলে নম্বরও বারবার পালাবে।
+Action: Open Focus
+
+N025
+Title: পড়া শুরু করার কৌশল
+Body: প্রথমে বই, খাতা আর কলম সামনে রাখ। শুরু করার বাধা কমলে পড়ায় ঢোকা সহজ হয়।
+Action: Open Focus
+
+N026
+Title: মনে রাখার পরীক্ষা
+Body: একটা সংজ্ঞা পড়ে বই বন্ধ কর। নিজের ভাষায় বলতে পারলে বুঝবি শেখাটা হচ্ছে।
+Action: Open Focus
+
+N027
+Title: পড়া কি শুধু দাগানো?
+Body: পুরো বই রঙিন করে ফেললেই শেখা হয় না। দাগানো অংশ মনে করে বলতে পারাটাই আসল।
+Action: Open Syllabus
+
+N028
+Title: আজ একটু এগিয়ে যা
+Body: অন্যের পড়ার গতির সঙ্গে নিজের তুলনা করিস না। গতকালের চেয়ে একটু এগোলেই লাভ।
+Action: Open Focus
+
+N029
+Title: কঠিন প্রশ্নের মুখোমুখি
+Body: কঠিন প্রশ্ন দেখেই পালিয়ে যাস না। আগে কী জানতে চেয়েছে, সেটা আলাদা করে বুঝে নে।
+Action: Open Syllabus
+
+N030
+Title: পড়ার মাঝে বিরতি
+Body: একটানা পড়ে মাথা ভারী হলে ছোট বিরতি নে। বিরতির পর নির্দিষ্ট সময়ে আবার ফিরিস।
+Action: Open Focus
+
+N031
+Title: ক্যালকুলেটর সব জানে?
+Body: ক্যালকুলেটর হিসাব করতে পারে, কিন্তু কোন পদ্ধতি লাগবে সেটা বুঝতে তোকে শিখতেই হবে।
+Action: Open Tools
+
+N032
+Title: উত্তরটা কত নম্বরের?
+Body: প্রশ্নে যত নম্বর, উত্তরে ততটুকু প্রয়োজনীয় ব্যাখ্যা দে। অপ্রয়োজনীয় কথা লিখে সময় নষ্ট করিস না।
+Action: Open Focus
+
+N033
+Title: আগে প্রশ্ন পড়
+Body: বহুনির্বাচনী প্রশ্নে ‘নয়’ বা ‘ব্যতীত’ শব্দটা মিস করলেই উত্তর উল্টে যেতে পারে।
+Action: Open Focus
+
+N034
+Title: অনুমান করে দাগাস না
+Body: ভুল উত্তরে নম্বর কাটলে অন্ধ অনুমান বিপদ ডেকে আনতে পারে। আগে নিয়মটা বুঝে নে।
+Action: Open Focus
+
+N035
+Title: সময়ের সঙ্গে বন্ধুত্ব
+Body: বাড়িতে সময় ধরে প্রশ্ন সমাধান কর। পরীক্ষার হলে সময়ের চাপ তখন কম অচেনা লাগবে।
+Action: Open Calendar
+
+N036
+Title: শেষের পাঁচ মিনিট
+Body: পরীক্ষায় কিছু সময় উত্তর যাচাইয়ের জন্য রাখ। একক, চিহ্ন আর বাদ পড়া অংশ দেখে নে।
+Action: Open Focus
+
+N037
+Title: নিউটনের সূত্র মনে আছে?
+Body: স্থির বস্তু স্থির থাকতে চায়—তোর পড়া শুরু না করার অবস্থাটাও বেশ স্থির দেখাচ্ছে! এবার নড়।
+Action: Open Focus
+
+N038
+Title: সূত্রের পেছনের গল্প
+Body: সূত্র শুধু মুখস্থ করিস না। কোন ধারণা থেকে এসেছে বুঝলে নতুন প্রশ্নেও কাজে লাগবে।
+Action: Open Syllabus
+
+N039
+Title: পড়ার পরিকল্পনা বনাম পড়া
+Body: পরিকল্পনা সুন্দর হলেই নম্বর আসে না। পরিকল্পনার অন্তত একটা কাজ আজ শেষ কর।
+Action: Open Calendar
+
+N040
+Title: ঘুমের সঙ্গে যুদ্ধ নয়
+Body: ঘুম পেলে নিজেকে মেশিন ভাবিস না। নিয়মিত ঘুম আর মনোযোগী পড়া দুটোই দরকার।
+Action: Open Focus
+
+N041
+Title: ভর্তি পরীক্ষার বাস্তবতা
+Body: শুধু কত ঘণ্টা পড়েছিস, সেটাই সব নয়। কতটা মনে রাখতে আর প্রয়োগ করতে পারিস, সেটাও জরুরি।
+Action: Open Syllabus
+
+N042
+Title: মক টেস্টের ভয়
+Body: অনুশীলনী পরীক্ষায় কম নম্বর মানেই শেষ নয়। ভুলগুলো ঠিক করার সুযোগ হিসেবেই দেখ।
+Action: Open Focus
+
+N043
+Title: দুর্বল অধ্যায় পালাচ্ছে?
+Body: যে অধ্যায়টা বারবার এড়িয়ে যাচ্ছিস, আজ সেটার সবচেয়ে সহজ অংশ দিয়ে শুরু কর।
+Action: Open Syllabus
+
+N044
+Title: নিজের ভুলকে চিনে নে
+Body: ভুল উত্তর শুধু নম্বর কমায় না, দুর্বল জায়গাটাও দেখিয়ে দেয়। সেটা কাজে লাগা।
+Action: Open Focus
+
+N045
+Title: সবকিছু একদিনে নয়
+Body: এক দিনে পুরো সিলেবাস জেতার দরকার নেই। নিয়মিত ছোট অগ্রগতিই বড় ফল গড়ে।
+Action: Open Calendar
+
+N046
+Title: পড়া বুঝিয়ে বল
+Body: কাউকে শেখানোর মতো করে বিষয়টা ব্যাখ্যা কর। যেখানে আটকে যাবি, সেখানেই আরও শেখা দরকার।
+Action: Open Focus
+
+N047
+Title: প্রশ্নের ধরন চিনে নে
+Body: আগের বছরের প্রশ্ন দেখলে প্রশ্নের ধরন বোঝা যায়। তবে শুধু পুরোনো প্রশ্নের ওপর নির্ভর করিস না।
+Action: Open Syllabus
+
+N048
+Title: সূত্রের তালিকা
+Body: যেসব সূত্র বারবার ভুলে যাস, সেগুলো এক জায়গায় লিখে নিয়মিত মনে করার চেষ্টা কর।
+Action: Open Tools
+
+N049
+Title: একবার পড়েই শেষ?
+Body: একবার পড়ে পরিচিত লাগতে পারে, কিন্তু বই বন্ধ করে মনে করতে পারাই আসল পরীক্ষা।
+Action: Open Focus
+
+N050
+Title: মাথার ভেতর গুছিয়ে নে
+Body: অধ্যায়ের মূল ধারণাগুলো দিয়ে ছোট মানচিত্র বানালে বিষয়গুলোর সম্পর্ক বোঝা সহজ হয়।
+Action: Open Syllabus
+
+N051
+Title: আজকের তিনটি কাজ
+Body: আজকের জন্য তিনটি নির্দিষ্ট কাজ লিখে নে। সব শেষ না হলেও অগ্রগতি পরিষ্কার থাকবে।
+Action: Open Calendar
+
+N052
+Title: ফোনটা একটু দূরে
+Body: ফোন চোখের সামনে থাকলে মন সেদিকে যেতে পারে। পড়ার সময় নাগালের বাইরে রাখার চেষ্টা কর।
+Action: Open Focus
+
+N053
+Title: মনোযোগ ফিরিয়ে আন
+Body: মন অন্যদিকে চলে গেছে বুঝলেই নিজেকে দোষ দিস না। পরের লাইনটা মন দিয়ে পড়ে আবার শুরু কর।
+Action: Open Focus
+
+N054
+Title: কঠিন বিষয় আগে?
+Body: যে সময়ে মন সবচেয়ে সতেজ থাকে, তখন কঠিন বিষয়টা ধরার চেষ্টা কর।
+Action: Open Calendar
+
+N055
+Title: ছোট বিরতি, পরিষ্কার মাথা
+Body: বিরতিতে একটু হাঁটাহাঁটি কর। বিরতিটা যেন নতুন করে দীর্ঘ ফোন-ভ্রমণ না হয়ে যায়!
+Action: Open Focus
+
+N056
+Title: পড়ার জায়গা তৈরি
+Body: দরকারি বই আর খাতা আগে গুছিয়ে রাখ। পড়ার মাঝখানে জিনিস খুঁজতে সময় কম যাবে।
+Action: Open Focus
+
+N057
+Title: নম্বরের হিসাব
+Body: কোন অংশে বেশি নম্বর, সেটা জেনে সময় ভাগ কর। তবে কম নম্বরের গুরুত্বপূর্ণ ধারণাও বাদ দিস না।
+Action: Open Syllabus
+
+N058
+Title: উত্তর সাজিয়ে লেখ
+Body: বড় উত্তরে মূল কথা, ব্যাখ্যা আর উদাহরণ আলাদা করে লিখলে পরীক্ষক বুঝতে সুবিধা পান।
+Action: Open Focus
+
+N059
+Title: একক ভুলিস না
+Body: সংখ্যার উত্তর ঠিক হলেও একক ভুল হলে সমস্যা হতে পারে। হিসাবের শেষে একক যাচাই কর।
+Action: Open Focus
+
+N060
+Title: চিহ্নের ছোট বিপদ
+Body: যোগ-বিয়োগের চিহ্নে ছোট ভুল পুরো হিসাব বদলে দিতে পারে। শেষবার চিহ্নগুলো দেখে নে।
+Action: Open Focus
+
+N061
+Title: আগে সহজ নম্বর
+Body: পরীক্ষায় যে প্রশ্নগুলো ভালো পারিস, সেগুলো দিয়ে আত্মবিশ্বাস আর সময়—দুটোই সামলাতে পারিস।
+Action: Open Focus
+
+N062
+Title: আটকে গেলে থাম
+Body: একটি প্রশ্নে বেশি সময় আটকে থাকিস না। চিহ্ন দিয়ে পরেরটায় যা, পরে ফিরে আসিস।
+Action: Open Focus
+
+N063
+Title: প্রশ্নের সব অংশ
+Body: প্রশ্নে ক, খ, গ থাকলে সব অংশের উত্তর দিয়েছিস কি না শেষে মিলিয়ে দেখ।
+Action: Open Focus
+
+N064
+Title: পরীক্ষার ব্যাগ
+Body: পরীক্ষার আগের রাতে প্রবেশপত্র, কলম আর দরকারি জিনিস গুছিয়ে রাখ। সকালে অযথা দৌড়াতে হবে না।
+Action: Open Calendar
+
+N065
+Title: শেষ রাতের ম্যারাথন
+Body: পরীক্ষার আগের রাতে সব নতুন করে শেখার চেষ্টা চাপ বাড়াতে পারে। গুরুত্বপূর্ণ বিষয়গুলো ঝালাই কর।
+Action: Open Focus
+
+N066
+Title: পড়া আর বিরতির হিসাব
+Body: কতক্ষণ পড়বি আর কখন বিরতি নিবি, আগে ঠিক করে নে। এতে সময়ের ওপর নিয়ন্ত্রণ বাড়ে।
+Action: Open Calendar
+
+N067
+Title: মনে রাখার সহজ উপায়
+Body: তথ্যকে পরিচিত উদাহরণ বা গল্পের সঙ্গে মিলিয়ে দেখ। অর্থপূর্ণ সম্পর্ক মনে রাখতে সাহায্য করতে পারে।
+Action: Open Focus
+
+N068
+Title: ফ্ল্যাশকার্ডের পরীক্ষা
+Body: কার্ডের এক পাশে প্রশ্ন, অন্য পাশে উত্তর রাখ। আগে নিজে উত্তর দিয়ে তারপর মিলিয়ে নে।
+Action: Open Tools
+
+N069
+Title: আজ পুরোনোটা ঝালাই
+Body: নতুন বিষয়ের পাশাপাশি আগের দিনের পড়া কয়েক মিনিট মনে করে দেখ।
+Action: Open Syllabus
+
+N070
+Title: তিন দিনের পরীক্ষা
+Body: তিন দিন আগে পড়া বিষয়টা বই না দেখে মনে করার চেষ্টা কর। কোথায় ভুলছিস বুঝতে পারবি।
+Action: Open Focus
+
+N071
+Title: মন খারাপের দিনেও
+Body: আজ সব পড়তে না পারলেও একটা ছোট কাজ শেষ কর। নিয়মিত ফিরে আসাটাই গুরুত্বপূর্ণ।
+Action: Open Focus
+
+N072
+Title: নিজেকে ছোট করিস না
+Body: অন্যের অগ্রগতি দেখে নিজের চেষ্টা বাতিল করিস না। তোর পরের পদক্ষেপটা ঠিক কর।
+Action: Open Calendar
+
+N073
+Title: তুলনা নয়, উন্নতি
+Body: গত সপ্তাহে যা পারতিস না, আজ তার কতটা পারিস দেখে নিজের উন্নতি মাপ।
+Action: Open Focus
+
+N074
+Title: পড়ার গতি নয়
+Body: দ্রুত পৃষ্ঠা শেষ করাই লক্ষ্য নয়। মূল ধারণা বুঝেছিস কি না, সেটাই যাচাই কর।
+Action: Open Syllabus
+
+N075
+Title: মনোযোগের ছোট দৌড়
+Body: পনেরো মিনিটের জন্য একটা স্পষ্ট লক্ষ্য ঠিক কর। সময় শেষ হলে কী শিখলি, দেখে নে।
+Action: Open Focus
+
+N076
+Title: লক্ষ্যটা লিখে রাখ
+Body: ‘আজ পড়ব’ না লিখে কোন অধ্যায়ের কোন অংশ শেষ করবি, সেটা নির্দিষ্ট করে লিখ।
+Action: Open Calendar
+
+N077
+Title: অজুহাতের ছুটি শেষ
+Body: সবকিছু ঠিকঠাক হওয়ার অপেক্ষা করিস না। এখন যা আছে, তা দিয়েই শুরু কর।
+Action: Open Focus
+
+N078
+Title: একটা প্রশ্নই যথেষ্ট
+Body: শুরু করতে কষ্ট হলে একটা প্রশ্ন সমাধান কর। তারপর পরের কাজটা ঠিক কর।
+Action: Open Syllabus
+
+N079
+Title: আত্মবিশ্বাসের প্রমাণ
+Body: আত্মবিশ্বাস শুধু ভাবনা থেকে নয়, প্রস্তুতির প্রমাণ থেকেও আসে। আজ কিছু প্রশ্ন সমাধান কর।
+Action: Open Focus
+
+N080
+Title: প্রস্তুতি যাচাই কর
+Body: কোন বিষয় ভালো জানিস আর কোনটা ঝাপসা, লিখে রাখ। পরের পড়ার সময়টা ঠিক করতে সুবিধা হবে।
+Action: Open Syllabus
+
+N081
+Title: ঘড়ির দিকে তাকাস না
+Body: বারবার সময় দেখার বদলে নির্দিষ্ট সময়ের লক্ষ্য ঠিক কর। সময় শেষে কাজটা কতদূর হলো দেখ।
+Action: Open Calendar
+
+N082
+Title: পড়া শেষের সংক্ষিপ্তসার
+Body: পড়া শেষে তিনটি মূল কথা লিখে রাখ। পরেরবার পুনরাবৃত্তি দ্রুত হবে।
+Action: Open Focus
+
+N083
+Title: সংজ্ঞার সঙ্গে উদাহরণ
+Body: সংজ্ঞা পড়ার পর একটা উদাহরণ নিজে তৈরি কর। ধারণাটা বুঝেছিস কি না বোঝা যাবে।
+Action: Open Syllabus
+
+N084
+Title: উত্তর না দেখে লিখ
+Body: আগে নিজের মতো উত্তর লেখ, তারপর বইয়ের সঙ্গে মিলিয়ে ভুলগুলো ঠিক কর।
+Action: Open Focus
+
+N085
+Title: ভুল উত্তর কেন ভুল?
+Body: সঠিক উত্তর জানার পাশাপাশি অন্য বিকল্পগুলো কেন ভুল, সেটাও বোঝার চেষ্টা কর।
+Action: Open Focus
+
+N086
+Title: আজকের দুর্বল জায়গা
+Body: যে তিনটি বিষয় সবচেয়ে কঠিন লাগছে, সেগুলো লিখে রাখ। একে একে কাজ কর।
+Action: Open Syllabus
+
+N087
+Title: সঠিক সময়ে পুনরাবৃত্তি
+Body: একবার পড়ে দীর্ঘদিন ফেলে রাখিস না। বিরতি দিয়ে আবার মনে করার চেষ্টা কর।
+Action: Open Calendar
+
+N088
+Title: ক্যালেন্ডারে পড়া রাখ
+Body: পড়ার সময়টা ক্যালেন্ডারে লিখে রাখলে অন্য কাজের সঙ্গে সামলানো সহজ হতে পারে।
+Action: Open Calendar
+
+N089
+Title: অল্প অল্প করে এগো
+Body: বড় লক্ষ্যকে দৈনিক কাজে ভাগ কর। ছোট কাজগুলো শেষ হলে অগ্রগতি জমতে থাকবে।
+Action: Open Calendar
+
+N090
+Title: প্রশ্ন করতেই শিখ
+Body: কোনো ধারণা বুঝতে সমস্যা হলে নির্দিষ্ট প্রশ্ন লিখে রাখ। পরে শিক্ষক বা বন্ধুর কাছে পরিষ্কার করে নে।
+Action: Open Syllabus
+
+N091
+Title: পড়ার সঙ্গী
+Body: বন্ধুর সঙ্গে পালা করে একে অন্যকে প্রশ্ন কর। শুধু উত্তর শুনে নয়, নিজে ব্যাখ্যা দিয়েও শেখ।
+Action: Open Focus
+
+N092
+Title: দলবদ্ধ পড়ার নিয়ম
+Body: একসঙ্গে পড়লে আগে লক্ষ্য ঠিক কর। লক্ষ্য না থাকলে পড়ার দল গল্পের দলে পরিণত হতে পারে!
+Action: Open Focus
+
+N093
+Title: পড়া কি বুঝতে পারছিস?
+Body: একটি বিষয় এক মিনিটে বোঝানোর চেষ্টা কর। বারবার আটকে গেলে সেই অংশ আবার পড়।
+Action: Open Syllabus
+
+N094
+Title: নিজের প্রশ্ন বানাস
+Body: অধ্যায় পড়ে নিজেই পাঁচটা প্রশ্ন তৈরি কর। এতে গুরুত্বপূর্ণ তথ্য খুঁজে বের করার অভ্যাস হবে।
+Action: Open Focus
+
+N095
+Title: স্মৃতি যাচাই
+Body: বই বন্ধ করে অধ্যায়ের শিরোনামগুলো মনে করার চেষ্টা কর। কোন অংশ বাদ পড়েছে বুঝতে পারবি।
+Action: Open Focus
+
+N096
+Title: পরীক্ষার আগে শান্ত থাক
+Body: সবকিছু একসঙ্গে ভাবলে চাপ বাড়ে। এখন যে কাজটা করতে পারিস, সেটাতেই মন দে।
+Action: Open Focus
+
+N097
+Title: একটা ভুল, একটা শিক্ষা
+Body: ভুল প্রশ্নের পাশে কেন ভুল হয়েছে লিখে রাখ। শুধু সঠিক উত্তর দেখে এগিয়ে যাস না।
+Action: Open Focus
+
+N098
+Title: হিসাব আবার দেখ
+Body: গণিতের উত্তর পেলে সম্ভব হলে উল্টো হিসাব করে যাচাই কর। ছোট ভুল ধরা পড়তে পারে।
+Action: Open Tools
+
+N099
+Title: পড়ার ফল মাপ
+Body: কত পৃষ্ঠা পড়েছিস না গুনে, বই বন্ধ করে কতটা মনে করতে পারিস সেটা যাচাই কর।
+Action: Open Focus
+
+N100
+Title: আজকের পুনরাবৃত্তি
+Body: আজ নতুন পড়ার আগে গতকালের বিষয়টা পাঁচ মিনিট মনে করে দেখ।
+Action: Open Syllabus
+
+N101
+Title: ভর্তি প্রস্তুতির বাস্তবতা
+Body: ভর্তি পরীক্ষার প্রস্তুতিতে শুধু পড়া নয়, সময় ধরে প্রশ্ন সমাধানের অভ্যাসও দরকার।
+Action: Open Focus
+
+N102
+Title: ভুলের তালিকা ঝালাই
+Body: মক টেস্টে ভুল হওয়া প্রশ্নগুলো আবার সমাধান কর। একই ভুল কমানোই উন্নতির লক্ষণ।
+Action: Open Focus
+
+N103
+Title: প্রশ্নের ভাষা বুঝ
+Body: প্রশ্নে ‘ব্যাখ্যা কর’, ‘তুলনা কর’ আর ‘নির্ণয় কর’—প্রতিটির চাহিদা আলাদা।
+Action: Open Syllabus
+
+N104
+Title: সব প্রশ্ন এক রকম নয়
+Body: কিছু প্রশ্ন তথ্য চায়, কিছু প্রশ্ন প্রয়োগ চায়। প্রশ্নের ধরন বুঝে উত্তর সাজা।
+Action: Open Focus
+
+N105
+Title: সময় ভাগ করে নে
+Body: পরীক্ষার মোট সময় আর প্রশ্নের সংখ্যা দেখে সময়ের একটা পরিকল্পনা বানিয়ে নে।
+Action: Open Calendar
+
+N106
+Title: শেষ মুহূর্তের তালিকা
+Body: পরীক্ষার আগে সূত্র, সংজ্ঞা আর বারবার ভুল হওয়া বিষয়গুলো আলাদা করে ঝালাই কর।
+Action: Open Syllabus
+
+N107
+Title: নিজের গতি যাচাই
+Body: সময় ধরে একটা পুরোনো প্রশ্নপত্র সমাধান কর। কোন অংশে বেশি সময় যাচ্ছে, বুঝতে পারবি।
+Action: Open Focus
+
+N108
+Title: প্রস্তুতি মানে অনুশীলন
+Body: পড়া শেষ মানেই প্রস্তুতি শেষ নয়। প্রশ্ন সমাধান করে নিজের শেখা যাচাই কর।
+Action: Open Focus
+
+N109
+Title: আজই একটা অধ্যায়
+Body: অনেক কিছু বাকি থাকলেও একটা অধ্যায়ের নির্দিষ্ট অংশ শেষ কর। অগ্রগতি চোখে পড়বে।
+Action: Open Syllabus
+
+N110
+Title: শুরু কর, তারপর গতি
+Body: নিখুঁত পরিকল্পনার অপেক্ষা বাদ দে। আজকের প্রথম কাজটা এখনই শেষ কর।
+Action: Open Focus
+
+N111
+Title: Book khule sleep mode 😂
+Body: Boi khultei ghum ashle bujhbi pillow-er sathe conspiracy cholche. 10 minute pore conspiracy break kor!
+Action: Open Focus
+
+N112
+Title: Syllabus dekhe panic?
+Body: Puro mountain ekbare uthte hobe na. Ajke ekta pathor sorai de, mane ekta topic finish kor.
+Action: Open Syllabus
+
+N113
+Title: Mood-er jonno wait?
+Body: Study mood-er wait korte korte mood-i topper hoye jabe. Start kor, mood pore join korbe.
+Action: Open Focus
+
+N114
+Title: Panir-o pressure ase 😂
+Body: Exam joto kache ashe, mone hoy panir temperature-o tor cheye kom pressure-e ase!
+Action: Open Focus
+
+N115
+Title: Brain ki chhutite?
+Body: Body study table-e, brain tour-e? Ekta question solve kore brain-ke back an.
+Action: Open Focus
+
+N116
+Title: Chhoto win, boro confidence
+Body: Ajke 10 ta question bujhe korle, kalke confidence-er account-e deposit porbe.
+Action: Open Focus
+
+N117
+Title: Boi-er sathe relationship
+Body: Boi-er dike takiye thakle relationship deep hoy na. Bhitorer topic-gulao jante hoy!
+Action: Open Syllabus
+
+N118
+Title: Backlog nijey kombe na
+Body: Porar baki ongsho nijer theke vanish korbe na. Ajker ekta part ajkei finish kor.
+Action: Open Syllabus
+
+N119
+Title: Brain-er attendance ne
+Body: Khatai naam likhle attendance hoy na. Porar shomoy matha-o present rakh!
+Action: Open Focus
+
+N120
+Title: 2-minute challenge
+Body: Porte iccha kortese na? Just 2 minute start kor. Onek shomoy start koratai main boss level.
+Action: Open Focus
+
+N121
+Title: Formula mukhosto, use koi?
+Body: Formula mukhosto kore boshe thakle hobe na. Kon question-e kon formula lagbe, sheta practice kor.
+Action: Open Syllabus
+
+N122
+Title: Bhul mane game over na
+Body: Practice-e bhul dhora pora bhalo. Exam-er age bhul dhorte parle marks bachbe.
+Action: Open Focus
+
+N123
+Title: Ajker target chhoto rakh
+Body: Ajkei pura chapter shesh korar pressure nis na. Age ekta specific part complete kor.
+Action: Open Focus
+
+N124
+Title: Khata khule boshe achish?
+Body: Pen hate niye bhable answer ashbe na. First question-ta nije solve kore dekh.
+Action: Open Syllabus
+
+N125
+Title: Study table-er natok 🎭
+Body: Table clean, pen clean, pani ready—ekhon poratao start kor!
+Action: Open Focus
+
+N126
+Title: Bhule jawa normal
+Body: Ekbar pore shob mone na thakle nijeke blame koris na. Book bondho kore recall practice kor.
+Action: Open Focus
+
+N127
+Title: Nijer exam nije ne
+Body: Boi dekhe shob easy lage. Book bondho kore 3 ta main point likhte parish kina dekh.
+Action: Open Focus
+
+N128
+Title: Porashona ar revision
+Body: Notun chapter porchos, bhalo. Kintu purono pora revise na korle oigulao memory theke logout korte pare.
+Action: Open Syllabus
+
+N129
+Title: Focus-er khoje 📵
+Body: 5 minute porpor phone check korle focus-o 5 minute-er guest hoye thakbe. Phone dure rakh.
+Action: Open Focus
+
+N130
+Title: Kom pora, real pora
+Body: Ek ghonta boi-er shamne boshar cheye 20 minute mon diye shekha beshi useful hote pare.
+Action: Open Focus
+
+N131
+Title: Chapter-ke chhoto kor
+Body: Boro chapter-ke chhoto section-e vag kor. Ekta shesh hole next level-e ja.
+Action: Open Syllabus
+
+N132
+Title: Bujhchos toh?
+Body: Line mukhosto korar age nijer language-e explain kor. Bujhle mone rakha easier hoy.
+Action: Open Focus
+
+N133
+Title: Time gelo koi?
+Body: Porar shomoy time vanish kore, phone-e abar time rocket speed-e ure. Ajke nijer time track kor.
+Action: Open Calendar
+
+N134
+Title: Mistake-er khata ban
+Body: Je question-e bhul koris, likhe rakh. Same mistake repeat korle marks-o repeat kore palabe.
+Action: Open Focus
+
+N135
+Title: Start korar setup
+Body: Boi, khata, pen agei ready rakh. Start-er obstacle komle poray dhuka easy hoy.
+Action: Open Focus
+
+N136
+Title: Memory test de
+Body: Ekta definition pore book bondho kor. Nijer moto bolte parle bujhbi learning hocche.
+Action: Open Focus
+
+N137
+Title: Porashona mane highlight?
+Body: Pura boi colorful korlei learning hoy na. Highlight kora part mone kore bolte parish kina dekh.
+Action: Open Syllabus
+
+N138
+Title: Aj ektu agai ja
+Body: Onner study speed-er sathe nijeke compare koris na. Gotokaler cheye ektu agaleo progress.
+Action: Open Focus
+
+N139
+Title: Hard question-er face kor
+Body: Tough question dekhei palabi na. Age question-ta ashole ki chacche, sheta identify kor.
+Action: Open Syllabus
+
+N140
+Title: Break nite dosh nai
+Body: Ekta stretch por matha heavy hole short break ne. Break shesh hole abar fixed time-e fire ay.
+Action: Open Focus
+
+N141
+Title: Calculator shob jane?
+Body: Calculator calculation kore, kintu kon method lagbe sheta bujhte tokei shikhte hobe.
+Action: Open Tools
+
+N142
+Title: Answer koy marks-er?
+Body: Question-e jot marks, answer-e tototuku relevant explanation de. Extra golpo likhe time noshto koris na.
+Action: Open Focus
+
+N143
+Title: Question age por
+Body: MCQ-te NOT ba EXCEPT miss korlei answer ulta hoye jete pare. Keyword-ta age catch kor.
+Action: Open Focus
+
+N144
+Title: Guess kore mark koris na
+Body: Negative marking thakle blind guess risky. Age exam-er marking rule bujhe ne.
+Action: Open Focus
+
+N145
+Title: Timer-er sathe practice
+Body: Basay time dhore question solve kor. Exam hall-er time pressure tokhon kom unfamiliar lagbe.
+Action: Open Calendar
+
+N146
+Title: Last 5 minute
+Body: Exam-e kichu time answer check-er jonno rakh. Unit, sign ar missed part verify kor.
+Action: Open Focus
+
+N147
+Title: Newton-er law mone ase?
+Body: Inertia bole object rest-e thakte chay. Tor pora start na korar obosthao besh stable dekhacche—ekhon move!
+Action: Open Focus
+
+N148
+Title: Formula-r pichoner logic
+Body: Formula shudhu mukhosto koris na. Concept-ta bujhle unfamiliar question-eo apply korte parbi.
+Action: Open Syllabus
+
+N149
+Title: Plan vs actual pora
+Body: Study plan sundor holei marks ashbe na. Plan theke ajke at least ekta task complete kor.
+Action: Open Calendar
+
+N150
+Title: Ghum-er sathe juddho na
+Body: Ghum pele nijeke machine bhabis na. Regular sleep ar focused study duita-i important.
+Action: Open Focus
+
+N151
+Title: Admission-er reality
+Body: Koto ghonta porli, shetai shob na. Koto tuku recall ar apply korte parish, shetao matter kore.
+Action: Open Syllabus
+
+N152
+Title: Mock test-er bhoy
+Body: Mock test-e low score mane finish na. Mistake-gula fix korar chance hisebe dekh.
+Action: Open Focus
+
+N153
+Title: Weak chapter palacche?
+Body: Je chapter-ta bar bar avoid korchos, ajke oitar easiest part diye start kor.
+Action: Open Syllabus
+
+N154
+Title: Nijer mistake chin
+Body: Wrong answer shudhu marks komay na, weak spot-o show kore. Ei information-ta use kor.
+Action: Open Focus
+
+N155
+Title: Ek dine shob na
+Body: Ek dine full syllabus conquer korte hobe na. Regular small progress mile boro result hoy.
+Action: Open Calendar
+
+N156
+Title: Teach kore dekh
+Body: Kauke shekhanor moto topic-ta explain kor. Jekhane atke jabi, oikhanei aro learning dorkar.
+Action: Open Focus
+
+N157
+Title: Previous question dek
+Body: Previous year-er question dekhe pattern bujhte parish. Tobe shudhu old question-er upor depend koris na.
+Action: Open Syllabus
+
+N158
+Title: Formula list ready?
+Body: Je formula-gula bar bar bhule jas, ek jaygay likhe regular recall practice kor.
+Action: Open Tools
+
+N159
+Title: Ekbar pore done?
+Body: Ekbar pore familiar lagte pare, but book bondho kore recall korte paratai real test.
+Action: Open Focus
+
+N160
+Title: Brain-er moddhe organize kor
+Body: Chapter-er main concept diye chhoto mind map banale topic-gular connection bujha easy hoy.
+Action: Open Syllabus
+
+N161
+Title: Ajker 3 ta task
+Body: Ajker jonno 3 ta specific task likhe ne. Shob na holeo progress clear thakbe.
+Action: Open Calendar
+
+N162
+Title: Phone-ta ektu dure
+Body: Phone chokher shamne thakle attention okhane jete pare. Study time-e reach-er baire rakh.
+Action: Open Focus
+
+N163
+Title: Focus abar fire an
+Body: Mind onno dike geche bujhle nijeke blame koris na. Next line-ta mon diye pore abar start kor.
+Action: Open Focus
+
+N164
+Title: Hard topic kokhon?
+Body: Je shomoy matha shobcheye fresh thake, tokhon difficult topic-ta tackle korar try kor.
+Action: Open Calendar
+
+N165
+Title: Short break, fresh mind
+Body: Break-e ektu hatahati kor. Break-ta jeno abar long phone tour hoye na jay!
+Action: Open Focus
+
+N166
+Title: Study setup ready
+Body: Dorkarer boi ar khata agei guchhiye rakh. Majhkhane jinis khujte time kom jabe.
+Action: Open Focus
+
+N167
+Title: Marks-er calculation
+Body: Kon section-e beshi marks, sheta jene time divide kor. Tobe low-mark important concept-o skip koris na.
+Action: Open Syllabus
+
+N168
+Title: Answer-ta organize kor
+Body: Long answer-e main point, explanation ar example alada korle examiner-er bujhte easy hoy.
+Action: Open Focus
+
+N169
+Title: Unit bhulish na
+Body: Number thik holeo unit miss korle problem hote pare. Calculation-er sheshe unit check kor.
+Action: Open Focus
+
+N170
+Title: Sign-er chhoto danger
+Body: Plus-minus-er chhoto mistake puro calculation change korte pare. Last-e sign-gula verify kor.
+Action: Open Focus
+
+N171
+Title: Easy marks age ne
+Body: Exam-e je question-gula bhalo parish, ogula diye confidence ar time duita-i manage korte parish.
+Action: Open Focus
+
+N172
+Title: Atke gele move on
+Body: Ekta question-e beshi time atke thakish na. Mark kore next-e ja, pore abar fire ashish.
+Action: Open Focus
+
+N173
+Title: Question-er shob part
+Body: Question-e A, B, C ba multiple part thakle sheshe check kor shobgular answer disos kina.
+Action: Open Focus
+
+N174
+Title: Exam bag ready
+Body: Exam-er ager rate admit card, pen ar dorkarer jinis guchhiye rakh. Shokale unnecessary sprint dite hobe na.
+Action: Open Calendar
+
+N175
+Title: Last-night marathon
+Body: Exam-er ager rate shob notun kore shekhar try pressure barate pare. Important topic revise kor.
+Action: Open Focus
+
+N176
+Title: Study-break balance
+Body: Koto khon porbi ar kokhon break nibi age decide kor. Time-er upor control barbe.
+Action: Open Calendar
+
+N177
+Title: Memory trick
+Body: Information-ke familiar example ba story-r sathe connect kor. Meaningful connection mone rakhte help korte pare.
+Action: Open Focus
+
+N178
+Title: Flashcard test
+Body: Card-er ek pashe question, onno pashe answer rakh. Age nijer answer de, tarpor check kor.
+Action: Open Tools
+
+N179
+Title: Aj old topic revise
+Body: Notun porar pasapashi gotokal-er topic-ta koyek minute recall kore dekh.
+Action: Open Syllabus
+
+N180
+Title: 3-day memory test
+Body: Tin din age pora topic-ta book chara mone korar try kor. Kothay gap ache bujhte parbi.
+Action: Open Focus
+
+N181
+Title: Bad day-o count kore
+Body: Aj shob porte na parle-o ekta small task finish kor. Regularly fire ashatay important.
+Action: Open Focus
+
+N182
+Title: Nijeke chhoto koris na
+Body: Onner progress dekhe nijer effort cancel koris na. Tor next step-ta decide kor.
+Action: Open Calendar
+
+N183
+Title: Compare na, improve
+Body: Gotokale ja parish na, aj tar koto tuku parish dekhe nijer progress measure kor.
+Action: Open Focus
+
+N184
+Title: Speed shob na
+Body: Taratari page shesh korai goal na. Main concept bujhechis kina, sheta test kor.
+Action: Open Syllabus
+
+N185
+Title: 15-minute focus race
+Body: 15 minute-er jonno ekta clear target ne. Time shesh hole ki shikhli, check kor.
+Action: Open Focus
+
+N186
+Title: Target-ta likhe rakh
+Body: “Aj porbo” na likhe kon chapter-er kon part shesh korbi, specific kore likh.
+Action: Open Calendar
+
+N187
+Title: Excuse-er chhuti shesh
+Body: Shob perfect howar wait koris na. Ekhon ja ache, sheta diyei start kor.
+Action: Open Focus
+
+N188
+Title: Ekta question enough
+Body: Start korte kosto hole ekta question solve kor. Tarpor next task decide kor.
+Action: Open Syllabus
+
+N189
+Title: Confidence-er proof
+Body: Confidence shudhu feeling theke na, preparation-er evidence thekeo ashe. Aj koyekta question solve kor.
+Action: Open Focus
+
+N190
+Title: Preparation check kor
+Body: Kon topic bhalo janish ar konটা blurry, likhe rakh. Next study session plan korte easy hobe.
+Action: Open Syllabus
+
+N191
+Title: Ghori check kom kor
+Body: Bar bar time dekhar bodole fixed time target ne. Sheshe kaj koto dur holo dekhe ne.
+Action: Open Calendar
+
+N192
+Title: Study sesher summary
+Body: Porar sheshe 3 ta main point likhe rakh. Next revision faster hobe.
+Action: Open Focus
+
+N193
+Title: Definition-er sathe example
+Body: Definition porar por nijer ekta example banas. Concept-ta bujhechis kina clear hobe.
+Action: Open Syllabus
+
+N194
+Title: Answer na dekhe likh
+Body: Age nijer moto answer likh, tarpor book-er sathe compare kore mistake fix kor.
+Action: Open Focus
+
+N195
+Title: Wrong option keno wrong?
+Body: Correct answer janar sathe sathe baki option-gula keno wrong, shetao bujhar try kor.
+Action: Open Focus
+
+N196
+Title: Ajker weak spot
+Body: Je 3 ta topic shobcheye tough lagche, list kor. Ekta ekta kore tackle kor.
+Action: Open Syllabus
+
+N197
+Title: Right time-e revision
+Body: Ekbar pore onek din fele rakhish na. Gap diye abar recall korar try kor.
+Action: Open Calendar
+
+N198
+Title: Calendar-e study time
+Body: Study time calendar-e likhe rakhle onno kajer sathe manage kora easier hote pare.
+Action: Open Calendar
+
+N199
+Title: Little by little
+Body: Boro goal-ke daily task-e vag kor. Chhoto task-gula finish hole progress jomte thakbe.
+Action: Open Calendar
+
+N200
+Title: Question korte shikh
+Body: Concept bujhte problem hole specific question likhe rakh. Teacher ba friend-er kachhe clear kore ne.
+Action: Open Syllabus
+
+N201
+Title: Study partner challenge
+Body: Friend-er sathe ekjon arekjon-ke question kor. Shudhu answer shunish na, nijeyo explain kor.
+Action: Open Focus
+
+N202
+Title: Group study-er rule
+Body: Ekshathe porar age goal fix kor. Goal na thakle study group gossip group hoye jete pare!
+Action: Open Focus
+
+N203
+Title: 1-minute explanation
+Body: Ekta topic ek minute-e explain korar try kor. Bar bar atke gele oi part abar por.
+Action: Open Syllabus
+
+N204
+Title: Nijer question banas
+Body: Chapter pore nijei 5 ta question create kor. Important information khuje ber korar habit hobe.
+Action: Open Focus
+
+N205
+Title: Memory audit
+Body: Book bondho kore chapter-er heading-gula recall kor. Kon section miss hoyeche bujhte parbi.
+Action: Open Focus
+
+N206
+Title: Exam-er age calm thak
+Body: Shob kichu ekshathe bhable pressure barbe. Ekhon je kajta korte parish, oitate focus kor.
+Action: Open Focus
+
+N207
+Title: Ekta mistake, ekta lesson
+Body: Wrong question-er pashe keno bhul hoyeche likh. Correct answer dekhei move on koris na.
+Action: Open Focus
+
+N208
+Title: Calculation abar check
+Body: Math-er answer pele possible hole reverse calculation kore verify kor. Chhoto mistake dhora porte pare.
+Action: Open Tools
+
+N209
+Title: Learning measure kor
+Body: Koto page porli sheta na gune, book bondho kore koto tuku recall korte parish test kor.
+Action: Open Focus
+
+N210
+Title: Ajker revision
+Body: Aj notun porar age gotokal-er topic-ta 5 minute recall kore dekh.
+Action: Open Syllabus
+
+N211
+Title: Admission prep reality
+Body: Admission preparation-e shudhu reading na, time dhore question solve korar habit-o dorkar.
+Action: Open Focus
+
+N212
+Title: Mistake list revise kor
+Body: Mock test-e wrong howa question-gula abar solve kor. Same mistake komano-i progress.
+Action: Open Focus
+
+N213
+Title: Question-er language bujh
+Body: “Explain”, “Compare” ar “Calculate”—prottek command-er demand alada. Keyword dhore answer de.
+Action: Open Syllabus
+
+N214
+Title: Shob question same na
+Body: Kichu question fact chay, kichu application chay. Question-er type bujhe answer organize kor.
+Action: Open Focus
+
+N215
+Title: Time divide kore ne
+Body: Exam-er total time ar question count dekhe time allocation plan banaye ne.
+Action: Open Calendar
+
+N216
+Title: Final revision list
+Body: Exam-er age formula, definition ar bar bar bhul howa topic-gula alada kore revise kor.
+Action: Open Syllabus
+
+N217
+Title: Nijer speed test kor
+Body: Time dhore ekta old question paper solve kor. Kon section-e beshi time jacche, bujhte parbi.
+Action: Open Focus
+
+N218
+Title: Preparation mane practice
+Body: Reading shesh mane preparation shesh na. Question solve kore nijer learning test kor.
+Action: Open Focus
+
+N219
+Title: Aj ekta chapter
+Body: Onk kichu baki thakleo ekta chapter-er specific part finish kor. Progress chokhe porbe.
+Action: Open Syllabus
+
+N220
+Title: Start kor, speed ashbe
+Body: Perfect plan-er wait bad de. Ajker first task-ta ekhoni complete kor.
+Action: Open Focus
+
+N221
+Title: Brain-er cache clear kor
+Body: Same page bar bar porar bodole book bondho kore recall kor. Nijer memory-r actual status bujhte parbi.
+Action: Open Focus
+
+N222
+Title: MCQ-te detective ho
+Body: Option-gula dekhei answer select koris na. Question-er keyword ar condition age identify kor.
+Action: Open Focus
+
+N223
+Title: Backlog-er sathe negotiation
+Body: Backlog-er sathe daily ekta topic-er deal kor. Ekdin-e shob clear korte giye abar freeze koris na.
+Action: Open Syllabus
+
+N224
+Title: Future-you thank you bolbe
+Body: Ajker 20 minute focused study future-you-er stress komate pare. Ekhon ekta task start kor!
+Action: Open Focus

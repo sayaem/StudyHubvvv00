@@ -1,0 +1,1071 @@
+STUDYHUB — SMART REVISION ENGINE 1.0
+
+Complete AI-Free, Adaptive Revision System + Premium UI + Full Android Implementation
+
+ROLE & MISSION
+
+Act as a senior Android engineer, Kotlin/Android architecture specialist, product designer, UX architect, database engineer, algorithm designer, and QA engineer.
+
+Your mission is to implement a complete, production-quality Smart Revision Engine inside my existing StudyHub Android application.
+
+This is an enhancement to an existing application, NOT a new app.
+
+The system must intelligently help students decide:
+
+- What topics they should revise.
+- Which topics deserve attention first.
+- When each topic should be revised again.
+- How revision intervals should adapt to the student's actual revision history and feedback.
+- How to manage overdue revisions without overwhelming the student.
+- How to connect revision tasks with StudyHub's existing Syllabus, Calendar, Focus, Home, Stats, and notification systems wherever those systems already exist.
+
+The implementation must work without generative AI, paid APIs, cloud AI services, or API keys.
+
+Use deterministic algorithms, configurable scheduling rules, locally persisted revision history, and evidence-based calculations. The system must be testable, explainable, reliable, and maintainable.
+
+Do not merely describe the implementation, create a mockup, or provide pseudocode. Inspect the existing project and implement the complete feature in the actual codebase.
+
+---
+
+1. NON-NEGOTIABLE PROJECT PRESERVATION RULES
+
+Before changing code, inspect the existing project thoroughly.
+
+Identify:
+
+- Programming language and Android framework.
+- UI framework and existing design system.
+- Application architecture and dependency injection.
+- Navigation graph and current bottom navigation.
+- Existing database, entities, DAOs, repositories, and migrations.
+- Existing Syllabus, subject, chapter, and topic models.
+- Existing Home dashboard and Quick Actions.
+- Existing Calendar event and task models.
+- Existing Focus timer and completed-session history.
+- Existing Stats and analytics calculations.
+- Existing notification scheduler and delivery pipeline.
+- Existing date/time handling, theme support, and persistence patterns.
+- Existing tests and build configuration.
+
+Use the project's actual architecture and conventions.
+
+Strict preservation requirements
+
+1. Preserve the existing five bottom navigation tabs:
+   
+   - Home
+   - Syllabus
+   - Focus
+   - Calendar
+   - Tools
+
+2. Do NOT add a sixth bottom navigation tab.
+
+3. Do NOT replace or redesign the entire application.
+
+4. Do NOT remove, rename, or break existing features, screens, routes, settings, or user data.
+
+5. Reuse existing Syllabus subjects, chapters, topics, Calendar tasks, Focus sessions, and Stats data. Do not create competing duplicate systems.
+
+6. Integrate with existing components through the appropriate repositories, use cases, ViewModels, and navigation routes.
+
+7. Follow the current application architecture. Do not introduce a new architecture or unnecessary dependencies merely to implement this feature.
+
+8. Respect existing typography, spacing, iconography, colors, component styles, dark/light themes, edge-to-edge behavior, and responsive layouts.
+
+9. Inspect existing theme tokens before creating any new styling. Avoid hardcoded colors when equivalent theme tokens already exist.
+
+10. Keep all unrelated screens and behaviors unchanged.
+
+11. Never delete, reset, or overwrite existing user data to simplify implementation.
+
+12. If a required model or integration does not exist, implement the smallest appropriate extension that fits the current architecture.
+
+13. If an integration is impossible because a required capability genuinely does not exist, preserve the existing functionality and clearly document the limitation rather than fabricating functionality.
+
+---
+
+2. STRICT NO-AI / NO-PAID-API REQUIREMENT
+
+The Smart Revision Engine must operate without:
+
+- OpenAI or other generative AI APIs.
+- Gemini API calls or cloud-based AI features.
+- LLM-generated recommendations.
+- Paid AI subscriptions or inference services.
+- API keys, cloud tokens, or external AI dependencies.
+- Fake AI chat interfaces.
+- Randomly generated recommendations presented as intelligent insights.
+
+Do not add a network dependency for the revision algorithm.
+
+Use local, deterministic logic for:
+
+- Due-date calculation.
+- Revision priority scoring.
+- Scheduling.
+- Historical duration estimation.
+- Adaptation to revision feedback.
+- Overdue recovery.
+- Recommendation explanations.
+- Progress and analytics.
+
+Use the existing local database and application persistence mechanisms wherever possible. Follow existing offline and synchronization architecture if the project already has one.
+
+If optional online synchronization already exists, the revision engine must not require it to function.
+
+Every recommendation must be explainable by identifiable data or a documented rule.
+
+---
+
+3. FEATURE PLACEMENT AND NAVIGATION
+
+Implement the feature using the following exact product structure.
+
+A. Home — Smart Revision card
+
+Add a polished Smart Revision card to the existing Home screen, following the existing Home layout and card style.
+
+Do not rebuild the Home screen.
+
+The card should display data that actually exists, such as:
+
+- Smart Revision title and appropriate icon.
+- Number of topics due today.
+- Number of overdue topics, if any.
+- Estimated total revision time.
+- A short, contextual status message.
+- A primary action: "Open Revision Hub".
+- Optional compact progress indicator, only when meaningful real data exists.
+
+Possible states:
+
+State 1 — Revision tasks are due
+Show the actual due-topic count, overdue count if applicable, and estimated time.
+
+State 2 — No topics are due
+Show a calm, positive empty state and the next scheduled revision date if one exists.
+
+State 3 — No revision topics have been configured
+Show "Set up your revision plan" or "Choose syllabus topics" and navigate to the relevant setup flow.
+
+State 4 — Insufficient history
+Explain that the engine is still learning the student's revision patterns. Do not invent confidence scores or claim to know weak topics.
+
+Do not hardcode example counts, dates, durations, progress percentages, or sample topics.
+
+Tapping the card must navigate to the full Revision Hub.
+
+Ensure the card does not excessively increase Home screen length or push essential existing content out of prominence.
+
+B. Revision Hub — Dedicated destination screen
+
+Create a dedicated Revision Hub screen accessible from Home and relevant topic-level actions.
+
+This is a separate screen, NOT a new bottom navigation destination.
+
+The Revision Hub must provide access to:
+
+1. Today's Revision.
+2. Overdue revisions.
+3. Upcoming revisions.
+4. All tracked revision topics.
+5. Revision history.
+6. Subject/topic filters.
+7. Revision progress and useful analytics.
+8. Revision scheduling preferences.
+9. Appropriate empty, loading, error, and insufficient-data states.
+
+Use a clean, premium visual hierarchy. Keep the most important next action prominent.
+
+Do not place every statistic, setting, chart, and list at the top of one long, overwhelming screen. Use clear sections, expandable details, tabs, filters, or secondary screens consistent with the existing app.
+
+C. Syllabus integration
+
+Use the existing subject/chapter/topic hierarchy.
+
+Where supported by the existing UI, add contextual revision actions to topic or chapter details, such as:
+
+- Add to Revision.
+- View Revision Status.
+- Review Now.
+- View Revision History.
+- Remove from Revision Tracking, with an appropriate confirmation if necessary.
+
+Display useful topic-level metadata when available:
+
+- Last reviewed.
+- Next due date.
+- Number of completed reviews.
+- Latest self-reported recall rating.
+
+Do not create a duplicate Syllabus screen or a second independent subject hierarchy.
+
+If the project tracks chapters but not individual topics, support chapter-level revision tracking without inventing nonexistent topic records.
+
+D. Calendar integration
+
+Reuse the existing Calendar system.
+
+The Revision Engine calculates when revisions are due. The Calendar visualizes scheduled revision tasks.
+
+Provide an explicit user-controlled action to schedule suggested revision sessions in the Calendar.
+
+Requirements:
+
+- Preview suggested Calendar additions before committing them.
+- Show date, topic, and estimated duration.
+- Detect scheduling conflicts using existing Calendar rules.
+- Never silently create duplicate tasks.
+- Never overwrite unrelated Calendar events.
+- Respect the student's existing availability and scheduling preferences where those are supported.
+- Allow the student to approve, edit, or cancel the proposed schedule.
+- Use the existing Calendar event model and creation workflow.
+
+A revision being due does not automatically mean it must become a Calendar event.
+
+If the existing Calendar has no suitable scheduling model, implement the smallest compatible extension without duplicating the Calendar system.
+
+E. Focus integration
+
+Where the existing Focus implementation supports task or subject association:
+
+- Allow the student to start a Focus session for a selected revision topic.
+- Pass the existing topic or task reference into the Focus workflow.
+- Preserve the existing timer, session recovery, and completion behavior.
+- Associate completed Focus sessions with revision tasks only when the relationship can be established reliably.
+- Use valid completed-session durations for revision-duration estimates.
+
+Do not fabricate Focus sessions, automatically mark a revision complete just because the timer was opened, or count unrelated Focus sessions as revision work.
+
+After a revision session, offer the student a way to record revision feedback.
+
+F. Stats integration
+
+Reuse the existing Stats infrastructure where appropriate.
+
+If Stats already supports extension, expose revision-related metrics through the existing system without duplicating its entire analytics engine.
+
+Possible metrics include:
+
+- Completed revision sessions.
+- Revision consistency.
+- On-time versus overdue revision completion.
+- Subject-level revision workload.
+- Historical revision duration.
+- Self-reported recall trends.
+
+Only show metrics supported by actual saved data.
+
+---
+
+4. REVISION ENGINE ARCHITECTURE
+
+Implement the feature as a maintainable, testable module that fits the current architecture.
+
+Conceptually, separate these responsibilities:
+
+1. Revision data and persistence.
+2. Revision scheduling and interval calculation.
+3. Revision priority scoring.
+4. Historical duration estimation.
+5. Daily revision planning.
+6. Calendar scheduling preview and commit.
+7. Revision feedback capture.
+8. Analytics and recommendation explanations.
+9. UI state and presentation.
+
+These are logical responsibilities, not a requirement to create unnecessary classes or modules.
+
+Use the existing architecture's preferred patterns.
+
+Business logic must not be embedded directly in composables, Activities, Fragments, or UI click handlers.
+
+Use deterministic functions for core calculations whenever practical. Inject clocks or date providers when necessary to make date-sensitive tests reliable.
+
+Do not make database writes from composables or views.
+
+---
+
+5. DATA MODEL AND PERSISTENCE
+
+Inspect the existing database and data models first. Reuse existing IDs and relationships.
+
+Add only the entities and fields genuinely needed.
+
+The revision model should support the following concepts.
+
+A. Revision tracking record
+
+For each tracked syllabus item, persist fields equivalent to:
+
+- A stable revision-record ID.
+- Existing subject/chapter/topic ID, or the supported syllabus-item reference.
+- Tracking status.
+- First-tracked timestamp.
+- Last-reviewed timestamp, nullable.
+- Next-due timestamp or local date.
+- Current scheduling interval.
+- Completed review count.
+- Consecutive successful self-reported reviews.
+- Latest self-reported recall rating.
+- Optional estimated duration.
+- Creation and update timestamps.
+
+Use appropriate types and nullability. Do not persist a fabricated mastery percentage.
+
+If the project uses a relational database, enforce appropriate uniqueness constraints so the same syllabus item cannot accidentally acquire multiple active tracking records.
+
+B. Revision history record
+
+Maintain an append-only history of completed revision attempts.
+
+Where appropriate, store:
+
+- Unique revision event ID.
+- Revision tracking record ID.
+- Actual completion timestamp.
+- Student's selected recall rating.
+- Previous interval and resulting interval.
+- Whether the review was on time, late, or early.
+- Actual duration if reliably measured.
+- Optional associated Focus session ID.
+- Optional user note if the application already supports notes.
+
+A skipped or postponed review must not be recorded as a successful review.
+
+If students can correct an accidental rating or completion, implement a clear correction strategy that preserves historical consistency and recalculates derived state safely.
+
+Do not treat opening a topic, opening the timer, or viewing a dashboard as a completed revision.
+
+C. Database and migration requirements
+
+- Use the existing database framework.
+- Add versioned, non-destructive migrations.
+- Preserve all existing data.
+- Ensure existing installations can upgrade without losing user content.
+- Ensure new installations can create the required schema.
+- Add appropriate indexes for due dates, syllabus IDs, and history lookups.
+- Use transactions for operations that must update history and the current tracking state together.
+- Handle duplicate requests and repeated taps safely.
+- Avoid unnecessary persistence of values that can be derived reliably from history.
+
+Before implementing migrations, inspect the existing schema and version.
+
+Do not invent a schema migration framework if the project already has one.
+
+---
+
+6. SPACED REPETITION ALGORITHM
+
+Implement a transparent, rule-based spaced repetition algorithm.
+
+This is a practical scheduling heuristic, not a scientifically perfect prediction of memory retention. Document that distinction.
+
+Use configurable defaults rather than scattering arbitrary numbers throughout the codebase.
+
+A. Initial scheduling
+
+When a student first adds a syllabus item to Revision Tracking:
+
+- Preserve the existing syllabus data.
+- Do not claim the topic has already been studied.
+- Do not claim the student has weak recall.
+- Do not fabricate a last-reviewed timestamp.
+- Make the next action clear: schedule the first review or mark a real review as completed.
+- Use a documented, configurable initial interval policy.
+
+If the student has not reviewed a topic yet, show it as "Not reviewed" or "First review needed" rather than pretending that its retention has already decayed.
+
+The first revision's due date must follow a documented rule, such as being due on the selected start date or on a user-configured first-review date.
+
+B. Recall feedback
+
+After a completed revision, let the student select one of three simple feedback options:
+
+- Hard: I struggled to recall this topic.
+- Okay: I remembered some, but missed important details.
+- Easy: I recalled it confidently.
+
+Use clear labels and accessible touch targets.
+
+Do not force feedback before every navigation action. Request it after an actual completed review.
+
+C. Initial interval policy
+
+Start with a configurable heuristic similar to the following:
+
+- Hard: reset or shorten the interval to approximately 1 day.
+- Okay: increase the previous interval moderately, for example by a factor of 1.5.
+- Easy: increase the previous interval more substantially, for example by a factor of 2.
+
+These are initial engineering parameters, not universal optimal values.
+
+Implement:
+
+- Minimum interval.
+- Maximum interval.
+- Safe handling of missing previous intervals.
+- Safe rounding to whole days.
+- Overflow protection.
+- A configurable initial interval.
+- Optional exam-date-aware caps or review recommendations.
+
+Do not allow zero-day, negative, infinite, or otherwise invalid intervals.
+
+A student reporting "Hard" must not receive a longer interval merely because many calendar days have passed.
+
+Do not increase the interval simply because the student completed a timer.
+
+D. Missed and overdue reviews
+
+Calculate overdue status from the actual due date and current date using consistent date rules.
+
+An overdue topic should not:
+
+- Accumulate fake completed reviews.
+- Automatically receive a successful rating.
+- Trigger unbounded interval growth.
+- Force all missed tasks onto the next day.
+
+When a review is completed late, apply the student's actual feedback and a documented late-review policy.
+
+Use stable date semantics and the app's existing timezone conventions. Avoid accidental date shifts caused by UTC/local-time conversion.
+
+If the existing app stores timestamps, use its established conventions and convert to local dates consistently.
+
+E. Explainability
+
+For every priority or schedule recommendation, provide a concise explanation based on real conditions.
+
+Examples:
+
+- "This topic is overdue."
+- "Your last review was rated Hard."
+- "The exam date is approaching."
+- "This topic has not been reviewed yet."
+
+Do not generate reasons that the data does not support.
+
+---
+
+7. DETERMINISTIC PRIORITY SCORING
+
+Create a predictable priority engine that ranks topics needing attention.
+
+Potential signals:
+
+1. Overdue duration or due status.
+2. Self-reported difficulty from recent reviews.
+3. Verified exam urgency.
+4. Review due date.
+5. Existing revision workload.
+6. Whether a first review is needed.
+
+Use normalized values or a clear rule hierarchy so different signals can be compared sensibly.
+
+Prefer a transparent rule hierarchy over a complex formula that cannot be justified.
+
+If a weighted score is used, centralize its weights in one configuration and document them. Initial values must be treated as tunable heuristics, not proven scientific coefficients.
+
+Recommended precedence
+
+1. Valid, explicitly due or overdue reviews.
+2. Topics with recent Hard feedback.
+3. Topics with verified upcoming exam relevance.
+4. Other due reviews.
+5. Upcoming reviews that can fit within the student's remaining capacity.
+
+Within each group, use deterministic tie-breaking, such as due date and stable record ID.
+
+Exam urgency must not invent exam dates or assume that every syllabus topic is relevant to every exam.
+
+Missing signals must be omitted or handled with neutral defaults, not replaced with fabricated information.
+
+The UI must show enough information for the student to understand why a topic appears near the top.
+
+---
+
+8. SELF-ADAPTATION FROM REAL HISTORY
+
+Implement a lightweight, deterministic adaptation system using the student's actual saved revision history.
+
+This is not machine learning in the generative-AI sense. It is ordinary statistics and configurable rules.
+
+A. Revision duration estimation
+
+Use reliable historical revision durations when available.
+
+Requirements:
+
+- Use actual completed revision sessions associated with the relevant topic.
+- Exclude unrelated Focus sessions.
+- Exclude invalid, negative, zero, or implausible measurements according to a documented validation policy.
+- Prefer a median or another robust estimate when sufficient observations exist.
+- Consider recent valid observations more relevant than very old observations when appropriate.
+- Avoid changing the estimate drastically from one outlier.
+- Use a reasonable fallback when history is unavailable.
+- Clearly distinguish estimated duration from actual duration.
+- Use confidence states such as "Not enough history", "Early estimate", and "Based on your history" only when their definitions are implemented.
+
+Never imply that a fallback duration was learned from the student's behavior.
+
+Do not invent completed sessions or estimate past durations that were never recorded.
+
+B. Confidence and data sufficiency
+
+Track how much valid history supports an estimate.
+
+For example, one completed review is not enough to make strong claims about a student's long-term pattern.
+
+Use explicit minimum-observation rules before labeling a duration estimate or trend as history-based.
+
+Do not expose arbitrary confidence percentages without a validated calculation.
+
+C. Self-reported recall adaptation
+
+Use Hard, Okay, and Easy feedback to adapt the next review interval.
+
+Where helpful, recent feedback may influence priority more than old feedback.
+
+However:
+
+- Do not infer intelligence or general academic ability.
+- Do not label a student as weak or lazy.
+- Do not claim to measure actual memory retention from self-reported ratings alone.
+- Do not treat a missing rating as Easy.
+- Do not count a skipped review as failure or success without an explicit, documented rule.
+
+D. Transparent adaptation
+
+In settings or contextual explanations, explain that estimates improve as the student completes more revision sessions.
+
+Never display "AI learned your habits" or similar claims.
+
+Use wording such as "Based on your revision history."
+
+---
+
+9. DAILY REVISION PLANNING
+
+Implement a practical daily planner that selects and orders eligible revision items without overwhelming the student.
+
+Use existing student settings and Calendar availability if supported.
+
+Consider:
+
+- Due and overdue topics.
+- Priority ranking.
+- Estimated duration.
+- User-configured revision budget.
+- Existing Calendar conflicts.
+- Verified upcoming exams.
+- Previously scheduled revision tasks.
+- The student's explicit scheduling preferences.
+
+Planning rules
+
+1. A daily revision budget must be configurable or use an existing study-duration preference.
+2. Never silently exceed the configured budget.
+3. Do not silently remove or overwrite existing Calendar tasks.
+4. Do not assume an unavailable time slot is free.
+5. Do not generate arbitrary exact start times without availability data.
+6. If all due topics do not fit, prioritize them and show which remain unscheduled.
+7. Make the remaining workload visible.
+8. Allow the student to preview the plan before committing it to Calendar.
+9. Recompute the preview when relevant inputs change.
+10. Use stable ordering so the same inputs produce the same plan.
+
+A due review must remain visible even if it does not fit within today's budget. Budget limitations should affect scheduling suggestions, not hide obligations.
+
+Do not create an endless rescheduling loop where postponed tasks repeatedly duplicate themselves.
+
+---
+
+10. CALENDAR PREVIEW AND SAFE COMMIT
+
+Provide an explicit workflow:
+
+1. Generate a revision schedule proposal.
+2. Display proposed topics, dates, durations, and reasons.
+3. Let the student review and adjust the proposal.
+4. Check for conflicts and duplicate tasks.
+5. Commit only after explicit confirmation.
+6. Show the actual saved result.
+
+Use the existing Calendar task-creation workflow.
+
+Implement safe and idempotent writes. Repeated confirmation taps must not create duplicate tasks.
+
+If a proposal becomes stale because the underlying schedule changes, revalidate before committing.
+
+Do not claim success before the database operation actually succeeds.
+
+Do not auto-delete already scheduled tasks when a topic's interval changes. Offer an explicit update or rescheduling workflow if required.
+
+---
+
+11. REVISION HISTORY AND ANALYTICS
+
+Build useful, compact analytics based on real completed revision records.
+
+Potential sections:
+
+- Total completed reviews.
+- Due and overdue counts.
+- On-time completion trend.
+- Subject-wise revision activity.
+- Historical duration by topic or subject.
+- Self-reported recall distribution.
+- Recent revision history.
+- Upcoming revision workload.
+
+Requirements:
+
+- Define each metric precisely.
+- Use a single source of truth for shared calculations.
+- Avoid double-counting a revision in both a Focus session and a revision event.
+- Exclude incomplete, canceled, or unrelated sessions.
+- Distinguish counts from percentages.
+- Handle empty datasets without division-by-zero errors.
+- Use date ranges consistently.
+- Label self-reported recall as self-reported.
+- Avoid presenting recall ratings as objectively measured mastery.
+
+Do not add large charts simply for decoration. Prioritize analytics that help the student make a decision.
+
+If the app already has a central Stats screen, reuse its conventions and avoid duplicating all existing analytics.
+
+---
+
+12. PREMIUM UI/UX REQUIREMENTS
+
+The interface must feel like a polished, modern Android productivity app, not a basic database screen.
+
+First inspect the existing StudyHub visual language and follow it.
+
+Visual principles
+
+- Clear visual hierarchy.
+- Carefully balanced whitespace.
+- Consistent card shapes and corner radii.
+- Consistent typography.
+- Subtle, purposeful visual emphasis.
+- Accessible contrast.
+- Comfortable touch targets.
+- Responsive behavior on small and large phones.
+- Correct system insets and edge-to-edge handling.
+- Smooth, restrained animations where supported.
+- Existing light and dark themes must both work.
+- Use existing design tokens and reusable components.
+
+Do not invent an unrelated design language.
+
+Avoid excessive gradients, unnecessary glassmorphism, giant decorative illustrations, too many badges, excessive shadows, and redundant metric cards.
+
+Revision Hub information architecture
+
+Create a practical layout with:
+
+Header
+
+- Revision title.
+- Short contextual subtitle.
+- Optional settings or history action.
+
+Summary area
+
+- Due today.
+- Overdue count if applicable.
+- Estimated revision duration.
+
+Primary action
+
+- Start or continue the highest-priority revision.
+- If no topic is eligible, provide an appropriate empty-state action.
+
+Main revision list
+
+- Topic and subject names.
+- Due status.
+- Estimated duration, when available.
+- Concise priority reason.
+- Appropriate actions such as Review Now, Postpone, or View Details.
+
+Secondary sections
+
+- Upcoming revisions.
+- Recent history.
+- Progress and settings, accessible without overwhelming the main view.
+
+Use compact list items and expandable details where appropriate.
+
+Do not show the same statistic repeatedly in multiple cards.
+
+Empty states
+
+Implement distinct states for:
+
+- No tracked topics.
+- No reviews due.
+- No revision history.
+- No exam dates available.
+- No duration history.
+- No Calendar availability data.
+
+Each empty state should explain what the student can do next.
+
+Do not display fake chart data, fake progress, or placeholder topic names.
+
+Accessibility
+
+- Provide descriptive content labels for icon-only actions.
+- Respect font scaling.
+- Ensure controls remain usable on small screens.
+- Use semantic text styles and proper contrast.
+- Avoid communicating priority through color alone.
+- Handle keyboard and accessibility navigation according to the existing UI framework.
+
+---
+
+13. REVISION SESSION WORKFLOW
+
+Implement a complete review lifecycle.
+
+Step 1 — Select a topic
+
+The student selects a due topic or starts the highest-priority eligible review.
+
+Step 2 — Review details
+
+Show:
+
+- Topic and subject.
+- Why it is due.
+- Last reviewed date, if available.
+- Suggested revision duration, if available.
+- A clear Start Review action.
+
+Step 3 — Study
+
+Where possible, launch the existing Focus timer with the correct revision context.
+
+The student must also be able to study without a timer if the existing app supports such workflows.
+
+Step 4 — Complete review
+
+Require an explicit completion action. Do not mark completion merely because the timer ends or the student leaves the screen.
+
+Step 5 — Record feedback
+
+Offer Hard, Okay, or Easy feedback.
+
+Explain the labels briefly and make the choice easy to understand.
+
+If the student completes the session but skips feedback, preserve the completion if appropriate, but do not invent a rating. Apply the documented neutral or feedback-missing scheduling policy.
+
+Step 6 — Update the engine
+
+In one safe transaction where supported:
+
+- Save the completed review event.
+- Update the next due date.
+- Update the interval and counters.
+- Update derived state.
+- Preserve the associated Focus session reference if valid.
+
+Step 7 — Confirm the result
+
+Show the next scheduled review date and a concise explanation of how the interval was determined.
+
+Do not claim that the student has mastered the topic solely because they selected Easy.
+
+---
+
+14. POSTPONEMENT, SKIPPING, AND USER CONTROL
+
+Students must remain in control.
+
+Support appropriate actions:
+
+- Postpone a review.
+- Reschedule it.
+- Skip a suggested session.
+- Remove a topic from active tracking.
+- View the topic's revision history.
+- Edit a mistaken completion or rating where supported.
+
+Clearly distinguish postponing a task from completing a review.
+
+Postponing must not falsely increase the review count or extend the interval as if the student had successfully recalled the topic.
+
+When removing a topic from tracking:
+
+- Preserve the underlying Syllabus content.
+- Do not delete the chapter or subject.
+- Preserve revision history unless the user explicitly requests its deletion and the product's data model supports it.
+- Explain what removal means.
+
+Avoid aggressive notifications, guilt-inducing language, and shame-based productivity messages.
+
+---
+
+15. NOTIFICATION INTEGRATION
+
+Integrate with StudyHub's existing notification infrastructure if it exists.
+
+Do not create a competing notification scheduler.
+
+Revision notifications may include:
+
+- A revision becoming due.
+- A reasonable reminder for an overdue revision.
+- A scheduled revision session reminder if Calendar supports it.
+
+Requirements:
+
+- Respect notification permissions and existing preferences.
+- Respect quiet hours and existing global notification rules.
+- Avoid duplicate reminders for the same revision event.
+- Use the existing delivery pipeline and scheduler.
+- Keep notification content grounded in saved data.
+- Do not promise exact delivery times when Android background scheduling cannot guarantee them.
+- Do not introduce an additional hourly notification stream if a central hourly scheduler already exists.
+- Do not interfere with existing Notification Set or Smart Notification Intelligence behavior.
+
+If no compatible notification infrastructure exists, document the gap and implement only the smallest appropriate extension.
+
+---
+
+16. PERFORMANCE, RELIABILITY, AND SECURITY
+
+- Keep database operations off the main thread.
+- Follow the project's coroutine, Flow, lifecycle, or asynchronous conventions.
+- Avoid repeated full-history queries for every UI recomposition.
+- Use appropriate database indexes and repository query patterns.
+- Observe lifecycle correctly.
+- Avoid memory leaks.
+- Handle rapid repeated taps safely.
+- Prevent duplicate completion events.
+- Handle database failures and stale references gracefully.
+- Validate foreign-key relationships and associated IDs.
+- Avoid logging sensitive user study data unnecessarily.
+- Keep core revision calculations deterministic.
+- Ensure app restart does not erase revision history or scheduling state.
+- Do not depend on continuous background execution for basic due-date calculation.
+- Recalculate due status from persisted dates when the app opens or relevant data changes.
+- Handle timezone changes and date boundaries consistently.
+
+Do not overengineer the implementation with unnecessary services, workers, libraries, or background processes.
+
+---
+
+17. TESTING REQUIREMENTS
+
+Write meaningful automated tests using the existing testing framework.
+
+Do not stop at compiling the app.
+
+A. Unit tests — scheduling
+
+Test:
+
+- First-review initialization.
+- Hard feedback.
+- Okay feedback.
+- Easy feedback.
+- Minimum and maximum intervals.
+- Rounding behavior.
+- Missing prior interval.
+- Invalid input handling.
+- Late completion.
+- Due-today calculation.
+- Overdue calculation.
+- Timezone and local-date boundaries.
+- Exam-aware scheduling when valid dates exist.
+- Missing exam-date behavior.
+- Deterministic results for identical inputs.
+
+B. Unit tests — priority
+
+Test:
+
+- Overdue items rank appropriately.
+- Recent Hard feedback increases priority.
+- Valid exam urgency affects ranking as documented.
+- Missing data does not produce fabricated urgency.
+- Stable tie-breaking.
+- Budget limitations do not hide due topics.
+
+C. Unit tests — historical adaptation
+
+Test:
+
+- No history uses the fallback estimate.
+- One observation is not described as a reliable long-term trend.
+- Valid historical durations update the estimate.
+- Invalid and unrelated Focus sessions are excluded.
+- Outliers do not cause extreme estimates.
+- Recent history is handled according to the implemented policy.
+- Estimates remain within configured bounds.
+
+D. Database and integration tests
+
+Test:
+
+- Creating a tracking record.
+- Duplicate tracking prevention.
+- Recording a completed review.
+- Atomic history and current-state updates.
+- App restart persistence.
+- Non-destructive migration.
+- Existing syllabus references remain valid.
+- Calendar preview and commit.
+- Duplicate Calendar task prevention.
+- Repeated confirmation taps.
+- Focus-session association.
+- Handling deleted or unavailable syllabus references.
+- Correct behavior when the database operation fails.
+
+E. UI tests
+
+Test:
+
+- Home card with due revisions.
+- Home card with no configured topics.
+- Empty Revision Hub.
+- Revision Hub with overdue items.
+- Topic detail integration.
+- Start, complete, and rate a review.
+- Calendar proposal preview and confirmation.
+- Theme compatibility.
+- Small-screen layout and long topic names.
+- Existing bottom navigation remains unchanged.
+
+F. Regression tests
+
+Verify that existing:
+
+- Home content and Quick Actions.
+- Syllabus behavior.
+- Focus timer and session recovery.
+- Calendar tasks and events.
+- Stats calculations.
+- Notifications.
+- Settings and theme behavior.
+- Navigation and persistence.
+
+continue to work as before.
+
+Never delete tests merely to make the build pass.
+
+---
+
+18. IMPLEMENTATION WORKFLOW
+
+Follow this sequence.
+
+Phase 1 — Audit
+
+Inspect the repository and identify the actual architecture, UI components, data models, database schema, navigation, and integration points.
+
+Determine exactly where the Smart Revision Engine should fit.
+
+Phase 2 — Implementation plan
+
+Create a concise internal implementation plan based on the real codebase.
+
+Identify:
+
+- Files to create.
+- Files to modify.
+- Database changes and migration requirements.
+- Existing components to reuse.
+- Tests required.
+- Potential regressions and dependencies.
+
+Do not invent file paths, class names, or APIs before inspecting the repository.
+
+Phase 3 — Data and domain logic
+
+Implement revision persistence, interval calculation, priority scoring, duration estimation, and planning logic.
+
+Write unit tests for the core algorithm.
+
+Phase 4 — Integrations
+
+Integrate with existing Syllabus, Home, Calendar, Focus, Stats, and notifications where supported.
+
+Preserve existing workflows.
+
+Phase 5 — UI
+
+Implement the Revision Hub, Home card, topic-level actions, feedback workflow, history, and empty states.
+
+Use the actual StudyHub design system.
+
+Phase 6 — Validation
+
+Run available build tasks and automated tests.
+
+Fix errors caused by the implementation. Do not report a successful build or passing test unless it was actually run and passed.
+
+Review navigation, migrations, persistence, theme compatibility, small-screen layouts, duplicate operations, and regressions.
+
+Phase 7 — Final report
+
+Provide a concise but useful report covering:
+
+- Features implemented.
+- Actual files created and modified.
+- Database migrations.
+- Algorithms and interval policies.
+- Integrations completed.
+- Tests run and their actual results.
+- Build status.
+- Any genuine limitations or unfinished work.
+
+Clearly distinguish verified completion from work that remains.
+
+---
+
+19. ACCEPTANCE CRITERIA
+
+The feature is complete only when all applicable criteria below are satisfied.
+
+1. StudyHub retains exactly its existing five bottom navigation destinations.
+2. Home contains a real-data Smart Revision card.
+3. The card opens a complete Revision Hub screen.
+4. Existing Syllabus topics can be tracked for revision without duplicating syllabus content.
+5. The engine calculates next review dates deterministically.
+6. Hard, Okay, and Easy feedback change intervals according to documented rules.
+7. Revision history survives app restarts.
+8. Due and overdue states are calculated from real persisted dates.
+9. Recommendations explain their reasons using real data.
+10. Historical duration estimates use valid observations and disclose insufficient history.
+11. The daily planner respects the configured budget and existing Calendar constraints.
+12. Calendar changes require explicit confirmation and do not create duplicate tasks.
+13. Focus integration uses valid session references and does not fabricate completion.
+14. Revision analytics do not double-count sessions or fabricate mastery.
+15. Notifications reuse existing infrastructure and respect its rules.
+16. The interface follows the existing StudyHub design system and supports its themes.
+17. Database migrations preserve existing user data.
+18. Core business logic has meaningful automated tests.
+19. Relevant builds and tests have been executed, and their actual results are reported.
+20. No generative AI, paid API, API key, or cloud AI dependency is required.
+
+---
+
+FINAL DIRECTIVE
+
+Begin by inspecting the actual existing StudyHub project.
+
+Then implement the Smart Revision Engine end to end in the existing codebase, following the requirements above.
+
+Prioritize correctness, integration, persistence, transparent algorithms, premium usability, and regression safety over superficial visual complexity.
+
+Do not stop after writing a plan or presenting code snippets. Implement the feature, run the available validation tasks, fix implementation-related failures, and report exactly what was completed.
+
+If a requirement conflicts with the actual project architecture, choose the smallest safe, maintainable adaptation and explain the decision in the final report.
+
+The result must be a genuinely useful, adaptive, fully AI-free Smart Revision Engine integrated into StudyHub — not a mockup, not a fake AI feature, and not a disconnected second productivity system.

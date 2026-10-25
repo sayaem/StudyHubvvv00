@@ -1,0 +1,1072 @@
+StudyHub Adaptive Notification Engine — Full Production Implementation Prompt
+
+Project Context
+
+I am building StudyHub, an Android-first study management application for Bangladeshi SSC, HSC, and admission students.
+
+Implement a complete, adaptive notification engine in my existing project. It should behave like a funny, intelligent study buddy that helps students reduce distraction, return to their studies, maintain healthy study habits, and stay aware of important academic tasks.
+
+The notification personality should be funny, witty, friendly, occasionally mischievous, and genuinely useful. The presentation can be humorous, but the underlying information and scheduling must be accurate.
+
+Do not merely describe the solution or generate a mockup. Inspect the existing project and implement the feature in the actual codebase.
+
+Preserve the existing StudyHub design, light theme, navigation, profile system, data, and unrelated features.
+
+---
+
+PART 1 — Core Feature Requirements
+
+1.1 Adaptive Notification Engine
+
+Create a modular notification engine with the following capabilities:
+
+- A bundled library of at least 120 distinct predefined notifications, provided below.
+- Profile-based notification selection.
+- Context-aware scheduling and controlled randomness.
+- A test notification scheduled three minutes after app launch.
+- In-app banners while the app is open.
+- Android system notifications while the app is open or in the background, where permitted.
+- Persistent in-app notification history.
+- Relevant notification actions and deep links.
+- User-controlled notification settings.
+- Duplicate prevention, quiet hours, frequency limits, and repeat avoidance.
+- Offline-first operation for predefined content and local scheduling.
+- Optional FCM integration only if actual server-triggered push delivery is required.
+
+Do not implement this as a timer that randomly sends messages without considering user context.
+
+1.2 Notification Delivery Terminology
+
+Implement these delivery paths distinctly:
+
+1. In-app banner: A notification-style banner displayed inside StudyHub while it is in the foreground.
+2. Android local notification: A native system notification scheduled by the app and delivered locally, subject to Android restrictions.
+3. Remote push notification: A server-triggered notification delivered through Firebase Cloud Messaging (FCM), if backend infrastructure is required and available.
+4. In-app inbox: A persistent history of notifications that users can open later.
+
+The app should support both in-app and system notification presentation for the three-minute test, subject to user permissions and platform limitations.
+
+Do not claim remote FCM is configured unless the required Firebase project, credentials, backend, and delivery flow are actually configured.
+
+---
+
+PART 2 — The 120 Predefined Notifications
+
+Implement all messages below as real entries in a bundled, structured notification library. Do not replace the list with generic templates or leave the messages as documentation only.
+
+Each entry should have:
+
+- A unique stable ID.
+- Category.
+- Title.
+- Body.
+- Tone.
+- Eligibility conditions.
+- Suggested destination, if applicable.
+- Priority.
+- Repeat-avoidance metadata.
+
+Use the supplied titles and bodies as the initial Banglish content. Minor punctuation adjustments are acceptable, but preserve the humor and meaning.
+
+Category A — Funny Study Roasts
+
+N001
+
+- Title: Bhai, syllabus ki tor ex? 💀
+- Body: Eto din dhore avoid kortesis! Ajke ekta chapter-er sathe settle kore fel.
+- Action: Open Syllabus
+
+N002
+
+- Title: Book khule allergy hoy naki? 📚
+- Body: Matro 10 minute por. Tarpor chaile nijeke genius vabish.
+- Action: Start Focus
+
+N003
+
+- Title: Tor future loading... 2% 🔄
+- Body: Ektu porashona korle progress bar-tao move korbe, boss.
+- Action: Start Focus
+
+N004
+
+- Title: Bhai, bed ki exam dibe? 🛏️
+- Body: Aram kore shuye thakle marks ashbe na. Uth, ekta task finish kor.
+- Action: Open Tasks
+
+N005
+
+- Title: Motivation-er jonno wait kortesis? 😂
+- Body: Motivation vacation-e. Tui 10 minute start kor, mood pore ashbe.
+- Action: Start Focus
+
+N006
+
+- Title: Tor pen-er retirement hoye gelo ✍️
+- Body: Bechara koto din kichu lekhe na. Ajke take ekta kaj de.
+- Action: Open Notes
+
+N007
+
+- Title: Chapter-ra tor naam-e missing diary korse 🕵️
+- Body: Ekta pending chapter open kor. Oder bari fire aste de.
+- Action: Open Syllabus
+
+N008
+
+- Title: Scroll korte PhD hoye geche 📱
+- Body: Ebar 15 minute porashonay doctorate-er first step ne.
+- Action: Start Focus
+
+N009
+
+- Title: Bhai, brain airplane mode-e? ✈️
+- Body: Choto ekta study session diye connection abar on kor.
+- Action: Start Focus
+
+N010
+
+- Title: Exam-er sathe situationship cholche? 😭
+- Body: Serious commitment-er time hoyeche. Ajker study goal-ta finish kor.
+- Action: Open Goals
+
+N011
+
+- Title: Tor chair tor upor disappointed 🪑
+- Body: Koto khon dhore khali pore ache! 15 minute boshe por.
+- Action: Start Focus
+
+N012
+
+- Title: Calculator-o bored hoye geche 🧮
+- Body: Math-er ekta problem solve kor. Calculator-ke kaj-e ferot de.
+- Action: Open Subject
+
+N013
+
+- Title: Future you court case korbe ⚖️
+- Body: “Ajke porte parto!” — ei evidence-ta ajkei delete kore de.
+- Action: Open Tasks
+
+N014
+
+- Title: Bhai, excuse-er stock sesh? 😂
+- Body: Excuse na, ajke ekta choto task complete korar screenshot-worthy moment chai.
+- Action: Open Tasks
+
+N015
+
+- Title: Bookshelf-er sathe long-distance relationship 📚
+- Body: Dure theke bhalobasha enough na. Ekta boi khule bos.
+- Action: Open Syllabus
+
+Category B — Social Media Distraction Nudges
+
+N016
+
+- Title: Scroll-er rabbit hole-e dhukchis? 🐇
+- Body: Ekhon back button chap. 10 minute Focus challenge accept kor.
+- Action: Start Focus
+
+N017
+
+- Title: Reel sesh? Naki next 47 ta baki? 💀
+- Body: Ektu break theke abar porashonay fire ay. Ekta choto task choose kor.
+- Action: Start Focus
+
+N018
+
+- Title: Algorithm tor topper hote dibe na 😂
+- Body: Feed tor attention chai. Tui nijer goal-ke 15 minute de.
+- Action: Open Goals
+
+N019
+
+- Title: Notification-er pichone douracchis? 🏃
+- Body: Ebar ekta notification-er bodole ekta chapter finish korar chase de.
+- Action: Open Syllabus
+
+N020
+
+- Title: Phone-er sathe break-up korbi? 📱💔
+- Body: Permanent na. Matro 15 minute dure rakh, tarpor abar dekha hobe.
+- Action: Start Focus
+
+N021
+
+- Title: Internet ache, concentration kothay? 😂
+- Body: Ekta distraction-free session start kor. Choto win-o win.
+- Action: Start Focus
+
+N022
+
+- Title: Feed-er episode sesh hoy na keno? 🎬
+- Body: Ebar nijer syllabus-er next episode play kor.
+- Action: Open Syllabus
+
+N023
+
+- Title: Dopamine-er delivery eshe geche 📦
+- Body: Quick scroll-er bodole ekta task complete kore satisfying tick ne.
+- Action: Open Tasks
+
+N024
+
+- Title: Phone-ke ektu chuti de 😴
+- Body: Screen down, book up. 10 minute holeo focus kor.
+- Action: Start Focus
+
+N025
+
+- Title: Online status green, syllabus status? 💀
+- Body: Syllabus-er progress-o green korar jonno ekta pending chapter dhor.
+- Action: Open Syllabus
+
+N026
+
+- Title: “Just 5 minutes” cinematic universe 😂
+- Body: Sei 5 minute-er sequel bondho kore ekta real study session start kor.
+- Action: Start Focus
+
+N027
+
+- Title: Scroll-er streak bhangbi na? 🔥
+- Body: Scroll streak na, study streak build korar challenge ne.
+- Action: Open Goals
+
+N028
+
+- Title: Feed tor attendance ney na 📱
+- Body: Tor goal ney. Ajke nijer goal-er kache attendance de.
+- Action: Open Goals
+
+N029
+
+- Title: Brain-er tab onek khola? 🧠
+- Body: Ekta tab rakh—ekhon sudhu ekta task. Baki pore.
+- Action: Open Tasks
+
+N030
+
+- Title: Offline hero howar time 🦸
+- Body: Phone silent kore 15 minute por. Nijer attention-er boss tui.
+- Action: Start Focus
+
+Category C — Motivation and Comeback
+
+N031
+
+- Title: Choto start, boro comeback 💪
+- Body: Ajke 10 minute diye shuru kor. Perfect day-er jonno wait korish na.
+- Action: Start Focus
+
+N032
+
+- Title: Tor progress zero na 🌱
+- Body: Ekhane fire asha-o progress. Ebar ekta choto task choose kor.
+- Action: Open Tasks
+
+N033
+
+- Title: Slow progress-o progress 🐢
+- Body: Speed niye tension na. Consistency-r ekta choto step ne.
+- Action: Start Focus
+
+N034
+
+- Title: Future you high-five pathaise ✋
+- Body: Ajker ekta completed task future-er pressure ektu komabe.
+- Action: Open Tasks
+
+N035
+
+- Title: Comeback arc start korbi? 🎬
+- Body: Hero-ra ek dine shob pare na. Ajke ekta chapter finish kor.
+- Action: Open Syllabus
+
+N036
+
+- Title: Tor effort count kore ❤️
+- Body: Result ekhono na ashleo effort meaningful. Ajke abar ektu try kor.
+- Action: Start Focus
+
+N037
+
+- Title: Ekta tick mark-er power ☑️
+- Body: Ekta task complete kor. Momentum nijer moto build hote de.
+- Action: Open Tasks
+
+N038
+
+- Title: Perfect routine lagbe na ✨
+- Body: Ekhon je time ache, oi time-e ekta choto session kor.
+- Action: Start Focus
+
+N039
+
+- Title: Restart button tor kachei 🔁
+- Body: Agertar din jemon-i jak, ekhon theke abar start kora jay.
+- Action: Start Focus
+
+N040
+
+- Title: Future topper loading... 🔋
+- Body: Battery bachanor moto focus-o bachate hoy. 15 minute nijeke de.
+- Action: Start Focus
+
+N041
+
+- Title: Ajker effort, kalke confidence 🌟
+- Body: Ekta topic revise kor. Nijer upor trust build kor.
+- Action: Open Syllabus
+
+N042
+
+- Title: Tui parbi, but ekta condition 😎
+- Body: Shuru korte hobe. Ajker easiest task-ta finish kor.
+- Action: Open Tasks
+
+N043
+
+- Title: Choto win celebrate kor 🎉
+- Body: Ekta goal complete korle nijeke credit dite bhulish na.
+- Action: Open Goals
+
+N044
+
+- Title: Pressure-ke plan-e convert kor 🗺️
+- Body: Chinta komate ajker kaj-gulo choto step-e vag kore ne.
+- Action: Open Calendar
+
+N045
+
+- Title: Ekdom late hoye jayni ❤️
+- Body: Nijeke blame na kore ekta realistic next step ne.
+- Action: Start Focus
+
+Category D — Syllabus and Chapter Reminders
+
+N046
+
+- Title: Pending chapter-er roll call 📋
+- Body: Syllabus khule dekhe ne kon chapter-ta next-e complete kora jay.
+- Action: Open Syllabus
+
+N047
+
+- Title: Ekta chapter, ekta victory 🏆
+- Body: Ajke ekta chapter-er meaningful portion shesh korar target ne.
+- Action: Open Syllabus
+
+N048
+
+- Title: Revision-er appointment ache 📚
+- Body: Age pora topic-ta ektu revise kor. Memory-ke refresh de.
+- Action: Open Syllabus
+
+N049
+
+- Title: Syllabus map check kor 🗺️
+- Body: Kon topic complete, kon topic baki—ajke progress update kor.
+- Action: Open Syllabus
+
+N050
+
+- Title: Ekta topic ekhono waiting room-e ⏳
+- Body: Pending topic-ta open kore 10 minute porar challenge ne.
+- Action: Open Syllabus
+
+N051
+
+- Title: Notes-er sathe reunion 💌
+- Body: Purono notes khule dekhe ne ki revise kora dorkar.
+- Action: Open Notes
+
+N052
+
+- Title: Chapter boss fight incoming 🎮
+- Body: Tough topic-ta choto section-e vag kore start kor.
+- Action: Open Syllabus
+
+N053
+
+- Title: Ajke ki shikhlis? 🧠
+- Body: Pora topic theke 3 ta key point recall korar try de.
+- Action: Open Notes
+
+N054
+
+- Title: Subject rotation time 🔄
+- Body: Routine-e thakle next subject-e shift korar somoy hoyeche.
+- Action: Open Subjects
+
+N055
+
+- Title: Progress update, boss! 📈
+- Body: Ajker pora chapter-er progress save kora hoyeche kina check kor.
+- Action: Open Syllabus
+
+N056
+
+- Title: Difficult topic-ke ghost koris na 👻
+- Body: Topic-ta niye stuck hole notes dekhe ekta choto step solve kor.
+- Action: Open Notes
+
+N057
+
+- Title: Revision-er mini mission 🎯
+- Body: Ajke ekta purono topic theke nijeke 5 ta question kor.
+- Action: Open Syllabus
+
+N058
+
+- Title: Chapter finish line kothay? 🏁
+- Body: Baki section-gulo check kore next realistic milestone set kor.
+- Action: Open Syllabus
+
+N059
+
+- Title: Subject-er sathe check-in 📝
+- Body: Ajker subject goal-ta ekhono baki thakle ekta manageable part finish kor.
+- Action: Open Subjects
+
+N060
+
+- Title: Memory refresh, not factory reset 😂
+- Body: Pora topic-ta abar recall kor. Bar bar revise korle retention-e help hote pare.
+- Action: Open Notes
+
+Category E — Tasks and Planning
+
+N061
+
+- Title: To-do list tor dike takiye ache 👀
+- Body: Ajker task-gulo dekhe easiest meaningful task-ta diye shuru kor.
+- Action: Open Tasks
+
+N062
+
+- Title: Plan chara pora = GPS chara trip 🗺️
+- Body: Ajker jonno ekta clear study target set kor.
+- Action: Open Calendar
+
+N063
+
+- Title: Task choto kor, excuse na 😂
+- Body: Boro kaj-ke 15-minute step-e vag kore start kor.
+- Action: Open Tasks
+
+N064
+
+- Title: Calendar-er sathe peace treaty 🤝
+- Body: Upcoming deadline check kore realistic study slot plan kor.
+- Action: Open Calendar
+
+N065
+
+- Title: Ajker mission select kor 🎯
+- Body: Ekta priority task choose kor. Multitasking-er circus lagbe na.
+- Action: Open Tasks
+
+N066
+
+- Title: Deadline-er sathe eye contact 👀
+- Body: Kachakachi deadline thakle plan-ta ekbar review kor.
+- Action: Open Calendar
+
+N067
+
+- Title: Task complete = tiny dopamine 🎉
+- Body: Kono task shesh kore thakle status update kore nijer progress track kor.
+- Action: Open Tasks
+
+N068
+
+- Title: Routine update kora hoyeche? 🗓️
+- Body: Plan change hole calendar-o update kor, future tui confused hobe na.
+- Action: Open Calendar
+
+N069
+
+- Title: Ajker top priority konta? 🥇
+- Body: Shob kichu ekshathe na. Ekhon shobcheye important ekta kaj choose kor.
+- Action: Open Tasks
+
+N070
+
+- Title: Choto deadline reminder ⏰
+- Body: Tor saved plan-e kono task due thakle ekhon progress check kor.
+- Action: Open Calendar
+
+N071
+
+- Title: Task-er naam ta clear kor ✍️
+- Body: “Porbo” na likhe specific topic ba chapter set kor.
+- Action: Open Tasks
+
+N072
+
+- Title: Plan B-o ekta plan 😎
+- Body: Time kom hole target choto kor, puro din-ta cancel koris na.
+- Action: Open Calendar
+
+Category F — Exam and Deadline Alerts
+
+These messages must only be eligible when real, saved exam or deadline information exists.
+
+N073
+
+- Title: Exam countdown check! ⏳
+- Body: Tor saved exam date check kor. Baki preparation-er plan-ta realistic rakh.
+- Action: Open Calendar
+
+N074
+
+- Title: Deadline kachakachi, captain! 🚦
+- Body: Tor saved deadline-er remaining kaj-gulo review kor.
+- Action: Open Calendar
+
+N075
+
+- Title: Exam plan-er health check 🩺
+- Body: Exam-er age kon subject ba topic-e beshi time lagbe, plan kore ne.
+- Action: Open Syllabus
+
+N076
+
+- Title: Admit-card mission check 🎫
+- Body: Relevant exam-er official notice o required document status check kor, jodi applicable hoy.
+- Action: Open Calendar
+
+N077
+
+- Title: Revision window miss koris na 📖
+- Body: Exam date-er sathe match kore revision slot rakhte bhulish na.
+- Action: Open Calendar
+
+N078
+
+- Title: Mock deadline, real discipline 🎯
+- Body: Tor saved study plan-e deadline thakle seta review kore next step ne.
+- Action: Open Tasks
+
+N079
+
+- Title: Exam prep-er mini audit 🧾
+- Body: Syllabus progress dekhe remaining topics-er priority set kor.
+- Action: Open Syllabus
+
+N080
+
+- Title: Important date check kore ne 📅
+- Body: Saved exam ba admission deadline thakle date-ta verify kore plan update kor.
+- Action: Open Calendar
+
+N081
+
+- Title: Preparation-er gap khuje ber kor 🔎
+- Body: Kon topic-e confidence kom, seta identify kore ekta revision task set kor.
+- Action: Open Syllabus
+
+N082
+
+- Title: Deadline alert, drama na 🚦
+- Body: Date verified thakle remaining preparation-er ekta practical step ne.
+- Action: Open Calendar
+
+Category G — Focus Sessions and Breaks
+
+N083
+
+- Title: 15-minute boss mode 😎
+- Body: Ekta choto distraction-free session start kor. Shudhu ekta task.
+- Action: Start Focus
+
+N084
+
+- Title: Focus mode: activated? 🎮
+- Body: Session start korar por unnecessary app switching komanor try kor.
+- Action: Start Focus
+
+N085
+
+- Title: Ekta task, full attention 🎯
+- Body: Ekhon multitasking na kore ekta kaj-e focus kor.
+- Action: Start Focus
+
+N086
+
+- Title: Brain-o break chai 🧠
+- Body: Long study session-er por short break ne, pani kha, chokh relax kor.
+- Action: Open Focus
+
+N087
+
+- Title: Break sesh hole comeback 🔔
+- Body: Break timer sesh hole next study block-e fire ay, jodi ready thakis.
+- Action: Start Focus
+
+N088
+
+- Title: Focus session-er tiny victory 🏆
+- Body: Session complete hole nijer effort acknowledge kor.
+- Action: Open Focus
+
+N089
+
+- Title: Desk setup ready? 🪑
+- Body: Pani, notes, pen ready kore distraction komiye start kor.
+- Action: Start Focus
+
+N090
+
+- Title: Focus-er age mini checklist ☑️
+- Body: Ekta task, proyojonio materials, ar ekta realistic timer—done!
+- Action: Start Focus
+
+N091
+
+- Title: Chokh-keo ektu bhalobash ❤️
+- Body: Screen use korle majhe majhe dure takao, blink koro, ar comfort check koro.
+- Action: Open Focus
+
+N092
+
+- Title: Session sesh? Review-o important 📝
+- Body: Ki shikhlis, next ki korbi—duita line note kore rakh.
+- Action: Open Notes
+
+Category H — Streaks and Progress
+
+N093
+
+- Title: Nijer progress dekhe ne 📈
+- Body: Study history check kor. Choto improvement-o valuable.
+- Action: Open Progress
+
+N094
+
+- Title: Streak-er jonno pressure na ❤️
+- Body: Gap hoye geleo problem nei. Ajke abar nijer moto shuru kor.
+- Action: Start Focus
+
+N095
+
+- Title: Ajker effort save kor ☑️
+- Body: Session ba task complete kore thakle progress update kore ne.
+- Action: Open Progress
+
+N096
+
+- Title: Level up-er time 🎮
+- Body: Ajker goal-er ekta step finish korle nijer progress aro clear hobe.
+- Action: Open Goals
+
+N097
+
+- Title: Tui koto dur eshechis dekhe ne 🌱
+- Body: Purono progress-er sathe compare kore next realistic target set kor.
+- Action: Open Progress
+
+N098
+
+- Title: Consistency-er small flex 😎
+- Body: Ajke ekta planned study action complete kor. Nijer effort count kor.
+- Action: Start Focus
+
+N099
+
+- Title: Goal check, boss! 🎯
+- Body: Goal realistic ache kina review kor, proyojone adjust kor.
+- Action: Open Goals
+
+N100
+
+- Title: Achievement unlock-er age effort 🔓
+- Body: Badge-er cheye learning important. Ajke ekta meaningful task kor.
+- Action: Open Progress
+
+Category I — Healthy Study Habits
+
+N101
+
+- Title: Pani kheye ne, scholar 💧
+- Body: Onekkhon porle ektu pani kha ar nijer comfort check kor.
+- Action: Dismiss
+
+N102
+
+- Title: Stretch break, boss 🧘
+- Body: Onekkhon boshe thakle ektu dariye stretch kor, jodi possible hoy.
+- Action: Dismiss
+
+N103
+
+- Title: Sleep is not a side quest 😴
+- Body: Ghum-er time sacrifice na kore realistic study plan rakh.
+- Action: Open Calendar
+
+N104
+
+- Title: Brain-er maintenance time 🧠
+- Body: Break, sleep, food, ar manageable study block—balance-o important.
+- Action: Dismiss
+
+N105
+
+- Title: Marathon na, smart session 🏃
+- Body: Kaj-ke choto block-e vag kor. Nijer energy onujayi pace rakh.
+- Action: Start Focus
+
+N106
+
+- Title: Desk theke mini reset 🌿
+- Body: Onekkhon porle short break niye abar comfortable hoye bos.
+- Action: Dismiss
+
+Category J — Gentle Comeback and Inactivity
+
+N107
+
+- Title: Hey, abar dekha holo ❤️
+- Body: Kichudin gap holeo shob sesh na. Ajke ekta choto step ne.
+- Action: Start Focus
+
+N108
+
+- Title: No guilt, just next step 🌱
+- Body: Agertar din niye nijeke blame na kore ekhon theke shuru kor.
+- Action: Open Tasks
+
+N109
+
+- Title: Study buddy ekhanei ache 🤝
+- Body: Ready hole ekta topic choose kor. Choto kore start korlei hobe.
+- Action: Open Syllabus
+
+N110
+
+- Title: Comeback-er jonno permission lage na 🔁
+- Body: Ajkei abar shuru kora jay. Ekta easy task choose kor.
+- Action: Open Tasks
+
+N111
+
+- Title: Routine ektu off track? 🗺️
+- Body: Nijer current schedule dekhe ekta manageable study slot set kor.
+- Action: Open Calendar
+
+N112
+
+- Title: One step is enough for now ❤️
+- Body: Ajke shob finish korte hobe na. Ekta meaningful step ne.
+- Action: Start Focus
+
+Category K — Notes and Learning
+
+N113
+
+- Title: Notes-er makeover time ✍️
+- Body: Ajker important concept-ta nijer vashay note kore rakh.
+- Action: Open Notes
+
+N114
+
+- Title: Nijeke teacher baniye de 🎓
+- Body: Pora concept-ta nijeke ba imaginary student-ke explain korar try kor.
+- Action: Open Notes
+
+N115
+
+- Title: Active recall challenge 🧠
+- Body: Notes na dekhe 3 ta point mone korar try kor, tarpor verify kor.
+- Action: Open Syllabus
+
+N116
+
+- Title: Question mark-er power ❓
+- Body: Je jaygay confused, seta question hisebe note kore rak.
+- Action: Open Notes
+
+N117
+
+- Title: Ajker learning-er receipt 🧾
+- Body: Ki shikhlis, ki baki—duita point record kor.
+- Action: Open Notes
+
+N118
+
+- Title: Ekta concept, nijer language 📚
+- Body: Difficult concept-ta simple language-e explain kore dekhe ne.
+- Action: Open Notes
+
+N119
+
+- Title: Confusion-ke bookmark kor 🔖
+- Body: Stuck hole topic-ta mark kor, pore targeted help ba revision ne.
+- Action: Open Syllabus
+
+N120
+
+- Title: Review-er mini mission 🔎
+- Body: Purono notes theke ekta important idea recall kore verify kor.
+- Action: Open Notes
+
+---
+
+PART 3 — User Profile and Adaptation
+
+3.1 Inspect Existing Profile
+
+Inspect the real profile model and use only fields available in the existing project.
+
+Possible signals, if already available:
+
+- Education level and exam category.
+- Subjects and syllabus progress.
+- Study goals and study schedule.
+- Upcoming saved deadlines.
+- Recent focus sessions.
+- Task completion history.
+- Notification preferences.
+- Notification open, dismiss, and ignore history.
+- Last notification time and recent message IDs.
+
+Do not invent profile values or assume a student has an exam date or pending chapter when the data does not exist.
+
+3.2 Message Eligibility
+
+Before selecting a notification, verify:
+
+- It matches the user's context.
+- Its category is enabled.
+- Its required data exists.
+- It is not during quiet hours.
+- It is not a duplicate or recently used message.
+- The daily notification cap has not been reached.
+- The user is not currently in an active focus session, unless the message is a relevant focus completion or break event.
+- Any associated task or deadline remains relevant.
+
+If the message requires a saved exam date, only use it when a valid saved date exists. Never invent countdowns.
+
+3.3 Adaptive Scoring
+
+Implement a maintainable, deterministic scoring function.
+
+Example conceptual formula:
+
+"score = relevance + priority + freshness + user_preference + timing_fit - repetition_penalty - interruption_penalty"
+
+Use configurable weights and tests.
+
+Among eligible messages, apply controlled randomness weighted by score. Do not select entirely randomly from the full library.
+
+Track the user's reactions where possible:
+
+- Opened.
+- Dismissed.
+- Action clicked.
+- Ignored.
+- Relevant action completed.
+- Recently shown.
+
+Use these signals to adjust future selection and frequency conservatively. An ignored notification does not prove social media usage or lack of motivation.
+
+---
+
+PART 4 — Three-Minute Test Notification
+
+Implement a dedicated test notification workflow.
+
+Required behavior
+
+1. When the app is opened, define one app-launch event and schedule a test notification for exactly 3 minutes after that event.
+2. Schedule it once per intended test session, not once per screen render.
+3. Keep test scheduling separate from production adaptive scheduling.
+4. If the app remains open, show an in-app banner and attempt a matching Android system notification.
+5. If the app enters the background, let the native scheduler deliver the Android notification when permitted.
+6. Persist the unique event ID and delivery state.
+7. Prevent duplicate scheduling or display when the user navigates between tabs.
+8. On app restart, inspect the persisted event and handle pending or expired events safely.
+9. Add a development-only control to send a test notification immediately.
+10. Make the delay configurable for development, defaulting to 3 minutes.
+
+For automated testing, use a controllable clock or injectable scheduler so the three-minute behavior can be tested without slowing down the test suite.
+
+Do not accidentally repeat the test notification every three minutes.
+
+If the app is reopened, follow an explicit, documented test-session policy to prevent uncontrolled duplicate test notifications.
+
+---
+
+PART 5 — Foreground, Background, and Push
+
+5.1 Foreground
+
+While StudyHub is open:
+
+- Render a polished in-app banner consistent with the existing light theme.
+- Show the notification title, message, icon, and appropriate action.
+- Allow dismissing the banner.
+- Handle action taps without duplicate navigation.
+- Attempt to show a matching Android system notification when permission and platform behavior allow.
+- Do not show multiple copies of the same event in the in-app UI.
+
+5.2 Background
+
+Use the project's actual Android framework and supported scheduling APIs.
+
+- Schedule local notifications persistently.
+- Configure Android notification channels and appropriate importance.
+- Request notification permission on supported Android versions at a suitable moment, with a clear explanation.
+- Support deep links into the relevant existing StudyHub screen.
+- Reschedule pending events after reboot where supported and correctly configured.
+- Handle time zone changes, clock changes, permission revocation, and app updates where applicable.
+- Test behavior when the process is killed.
+
+Document platform-specific limitations, including force-stop behavior and battery optimization. Do not promise delivery when Android or the device prevents it.
+
+5.3 Optional FCM
+
+Do not add Firebase merely to display locally bundled predefined notifications.
+
+If remote server-triggered push is required:
+
+- Inspect whether Firebase is already configured.
+- Identify missing project configuration and backend responsibilities.
+- Keep notification content and scheduling logic consistent between local and remote delivery.
+- Prevent duplicate delivery if both local and remote scheduling could target the same event.
+- Never include private server keys in the client.
+- Do not claim remote push works without a real, tested configuration.
+
+---
+
+PART 6 — Adaptive Scheduling and Anti-Spam
+
+Use configurable defaults:
+
+- Maximum 3 proactive notifications per day.
+- Minimum cooldown between ordinary notifications.
+- Quiet hours configurable by the user.
+- No routine notification during an active focus session.
+- No immediate burst of missed notifications after returning to the app.
+- No repeated message until a reasonable portion of the eligible library has been used.
+- No repeated reminders for a completed task.
+- Deadline messages only when the underlying dates are verified and relevant.
+- Reduce low-priority nudges after repeated dismissals or lack of engagement.
+- Reset or adapt cooldowns carefully without creating notification storms.
+
+Keep important, time-sensitive reminders distinct from generic motivational nudges.
+
+Randomize within eligible windows, not outside user preferences. Respect local time and quiet hours.
+
+---
+
+PART 7 — Notification Inbox and Settings
+
+Use existing notification and settings screens if present. Otherwise, add the smallest consistent implementation without changing bottom navigation.
+
+Notification Inbox
+
+- Persistent history.
+- Read/unread state.
+- Category and timestamp.
+- Relevant deep links.
+- Mark as read.
+- Dismiss or clear.
+- Empty state.
+- Safe handling of stale destinations.
+
+Notification Settings
+
+Where appropriate, support:
+
+- Master notification enable/disable.
+- Funny, motivational, and important reminder categories.
+- Daily frequency.
+- Quiet hours.
+- In-app banners.
+- Android system notifications.
+- Optional test mode in development builds.
+
+Respect Android notification permission state and explain when system notifications are disabled.
+
+---
+
+PART 8 — Architecture and Data Integrity
+
+Keep the engine modular. Adapt names to the existing project rather than blindly introducing duplicate layers.
+
+Suggested responsibilities:
+
+- NotificationContentRepository: bundled predefined messages.
+- NotificationEligibilityService: user context and constraints.
+- AdaptiveNotificationEngine: scoring and selection.
+- NotificationScheduler: schedule, cancel, and reschedule.
+- NotificationDeliveryService: foreground and system delivery.
+- NotificationHistoryRepository: persistent event history.
+- NotificationSettingsRepository: user preferences.
+- NotificationActionRouter: safe deep-link routing.
+
+Use the existing state-management, storage, and navigation patterns wherever possible.
+
+Every scheduled notification should have a stable ID, category, scheduled time, delivery mode, and deduplication key.
+
+Do not clear or overwrite existing user data. Avoid unnecessary dependencies and database migrations.
+
+---
+
+PART 9 — Testing and Acceptance Criteria
+
+The implementation is complete only when the following have been checked:
+
+1. The library contains at least 120 distinct predefined messages.
+2. Every message has a unique ID and valid category.
+3. The three-minute test event is scheduled from the defined app-launch event.
+4. Navigation does not cause repeated test scheduling.
+5. Foreground banner rendering works.
+6. Android notification permission handling works.
+7. Background local notification delivery is tested on an appropriate device or emulator.
+8. Force-stop and battery-restriction limitations are documented.
+9. Profile-based message selection works with complete and incomplete profile data.
+10. Quiet hours, daily caps, cooldowns, and active-focus suppression work.
+11. Recent-message repetition is prevented as expected.
+12. Deadline messages never invent dates or countdowns.
+13. Notification actions open the correct existing screens.
+14. Notification history and settings persist.
+15. App restart does not cause notification storms.
+16. Build and relevant tests pass.
+
+If a test cannot be executed in the current environment, explicitly say so. Do not fabricate successful results.
+
+---
+
+PART 10 — Scope Restrictions
+
+- Do not redesign the whole app.
+- Do not change the existing bottom navigation.
+- Do not change the overall light theme.
+- Do not remove existing features.
+- Do not create fake user activity, exam dates, statistics, or tasks.
+- Do not add invasive social media monitoring.
+- Do not use AI or network requests to generate every notification at runtime.
+- Do not add unnecessary backend dependencies.
+- Do not present a mockup as a completed implementation.
+- Do not stop after writing a plan.
+- Implement the feature in the existing project and report all required external configuration.
+
+Final Implementation Report
+
+After implementation, summarize:
+
+- Files and components changed.
+- How the 120-message library is stored and selected.
+- How profile-based adaptation works.
+- How the three-minute test behaves.
+- Foreground and background delivery implementation.
+- Whether FCM is configured or remains optional.
+- Permissions and Android-specific limitations.
+- Tests actually executed and their results.
+- Any remaining setup required.
+
+Begin by inspecting the existing project and then implement the feature using its actual architecture.

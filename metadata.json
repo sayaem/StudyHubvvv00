@@ -1,0 +1,6 @@
+{
+  "name": "StudyHub",
+  "description": "Android-first study planner and admission manager for SSC, HSC, and university admission candidates in Bangladesh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

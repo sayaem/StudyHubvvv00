@@ -1,0 +1,837 @@
+STUDYHUB FOCUS 3.0 — ULTIMATE PREMIUM FOCUS & STUDY PRODUCTIVITY SYSTEM
+
+ROLE & MISSION
+
+Act as a principal Android engineer, senior product designer, mobile UX architect, software architect, and productivity-app specialist.
+
+Your mission is to transform the existing Focus tab of my StudyHub Android application into an exceptionally polished, advanced, intelligent, reliable, and fully functional study productivity system.
+
+This is a real-world implementation task. You must inspect my existing project, understand its architecture, modify its actual source code, integrate the new functionality with existing StudyHub systems, and verify the implementation.
+
+Do not merely provide advice, generate a mockup, create a separate prototype, or return example code without integrating it into the project.
+
+The final experience should feel like a premium, professionally engineered productivity product with the visual refinement of a top-tier mobile application.
+
+However, premium does not mean excessive decoration or unnecessary complexity. Every visual element and feature must serve a clear purpose.
+
+Primary objectives
+
+1. Create an exceptionally polished Focus interface.
+2. Build a reliable timer and session-management engine.
+3. Provide advanced focus modes, customization, and reusable presets.
+4. Integrate subjects, chapters, study goals, and session notes.
+5. Deliver meaningful analytics, progress tracking, XP, streaks, and achievements.
+6. Provide optional distraction-management and ambient-audio features.
+7. Maintain excellent performance, accessibility, persistence, and Android compatibility.
+8. Preserve the existing StudyHub application and its established design identity.
+
+Priority rule: Reliability first, visual quality second, advanced functionality third, optional enhancements last. All three core areas must ultimately be delivered to a high standard.
+
+---
+
+1. NON-NEGOTIABLE PROJECT INTEGRATION RULES
+
+Before writing code, inspect the actual project.
+
+Determine:
+
+- The Android framework, Kotlin/Java usage, and Compose/XML implementation.
+- Existing Activities, Fragments, navigation routes, and architecture.
+- The current Focus tab and existing timer implementation.
+- The current theme, color palette, typography, spacing, iconography, and reusable UI components.
+- Existing subject, syllabus, chapter, goal, and study-session models.
+- Current database, local storage, and persistence architecture.
+- Existing notifications, background execution, and lifecycle handling.
+- Android minimum SDK, target SDK, Gradle configuration, and dependency versions.
+- Existing analytics, achievements, rewards, or progress-tracking systems, if any.
+
+Use these findings to make implementation decisions. Never assume particular filenames, frameworks, libraries, or architectural patterns.
+
+Preserve StudyHub
+
+- Upgrade the existing Focus tab in place.
+- Preserve the existing app-wide navigation and bottom navigation.
+- Keep Home, Syllabus, Calendar, Tools, Profile, and unrelated screens unchanged.
+- Reuse existing models, repositories, services, design tokens, and components wherever appropriate.
+- Do not introduce duplicate subject databases or competing session-management systems.
+- Do not replace working infrastructure without a demonstrated reason.
+- Do not add dependencies unless they provide meaningful value.
+- Keep all new functionality integrated with the actual app.
+
+If I provide a UI mockup image, treat it strictly as visual reference material. Use it for inspiration, component hierarchy, layout concepts, and interaction ideas. Adapt it to StudyHub's actual design system. Do not recreate it as a separate app or blindly copy its colors and layout.
+
+---
+
+2. SIGNATURE PREMIUM UI DESIGN SYSTEM
+
+The interface must feel deliberately designed, cohesive, sophisticated, and premium.
+
+Aim for a calm, immersive study environment rather than a generic dashboard template.
+
+Visual direction
+
+Use:
+
+- Strong typographic hierarchy and carefully selected font weights.
+- Generous but efficient spacing.
+- Refined rounded surfaces with consistent corner radii.
+- Sophisticated tonal contrast and subtle surface elevation.
+- Restrained gradients where appropriate.
+- High-quality icons consistent with the existing icon system.
+- Elegant progress indicators and precise visual feedback.
+- Smooth, purposeful transitions and micro-interactions.
+- Excellent alignment, visual balance, and component consistency.
+- Responsive layouts that adapt to screen size and font scale.
+- A coherent light and dark theme, following the existing theme architecture.
+
+Avoid:
+
+- Excessive neon, glowing effects, or rainbow gradients.
+- Too many cards stacked vertically.
+- Repetitive borders around every component.
+- Excessive emojis or oversized decorative illustrations.
+- Unnecessary animations or distracting motion.
+- Tiny buttons, cramped spacing, or weak text contrast.
+- Generic AI-generated dashboard aesthetics.
+- Fake statistics, decorative charts, and nonfunctional controls.
+
+Do not add visual complexity merely to make the screen appear advanced.
+
+Premium interaction quality
+
+Every important interaction should feel intentional:
+
+- Buttons provide immediate, appropriate feedback.
+- Sheets and dialogs open and dismiss predictably.
+- Changes to duration or settings have clear confirmation and save behavior.
+- Session state changes update the interface immediately.
+- Loading, empty, paused, completed, and error states receive proper designs.
+- Animations remain subtle and never interfere with timer accuracy.
+- Accessibility semantics and touch targets are implemented properly.
+
+Use existing design tokens. If the current design system lacks something necessary, extend it consistently.
+
+---
+
+3. PREMIUM FOCUS DASHBOARD
+
+Create a timer-first dashboard with a clear information hierarchy.
+
+A. Header and contextual information
+
+Include:
+
+- A refined Focus title.
+- A short contextual subtitle or today's study intention.
+- A compact entry point for focus settings.
+- A clear indication of the selected mode.
+
+Avoid unnecessary toolbar elements.
+
+B. Session setup
+
+Before a session begins, users should be able to select:
+
+- Focus mode.
+- Duration or saved preset.
+- Subject.
+- Chapter or topic, if supported by existing syllabus data.
+- Optional session goal.
+- Optional Strict Focus setting.
+
+Keep the default setup fast. Put advanced configuration in polished bottom sheets or dedicated Focus screens rather than overcrowding the main dashboard.
+
+Users must be able to start a basic session without selecting a subject, chapter, or goal.
+
+C. Signature timer component
+
+Make the timer the visual centerpiece.
+
+Implement:
+
+- A large, highly legible remaining-time or elapsed-time display.
+- A refined circular progress ring or another suitable progress visualization.
+- Accurate progress based on the actual session state.
+- Clear focus, short-break, long-break, paused, and completed states.
+- Appropriate status labels and remaining-cycle information.
+- Subtle visual feedback when time changes or a session completes.
+- Accessible descriptions for the timer and progress indicator.
+
+The timer must never depend on an animation or UI recomposition to calculate elapsed time.
+
+D. Primary controls
+
+Provide clear Start, Pause, Resume, End Session, Skip Break, and Next Session actions where applicable.
+
+Requirements:
+
+- Make the primary action visually dominant.
+- Avoid giving every action equal visual emphasis.
+- Prevent accidental session termination through an appropriate confirmation flow.
+- Disable or hide invalid actions based on the current state.
+- Prevent repeated taps from creating duplicate sessions or transitions.
+
+E. Compact productivity overview
+
+Show a restrained set of useful metrics:
+
+- Today's focused time.
+- Daily goal progress.
+- Completed sessions today.
+- Current streak or a compact progress indicator.
+- Current subject or session context.
+
+Do not display every statistic simultaneously.
+
+F. Additional Focus views
+
+Where useful, implement cohesive secondary views for:
+
+- Focus settings.
+- Saved presets.
+- Detailed analytics.
+- Session history.
+- Session completion and reflection.
+- Achievements.
+
+These views must remain connected to the existing navigation and follow StudyHub's design language.
+
+---
+
+4. FOUR FULLY FUNCTIONAL FOCUS MODES
+
+All modes must share the same reliable session-management infrastructure wherever practical.
+
+Mode A: Pomodoro
+
+Implement:
+
+- Configurable focus duration.
+- Configurable short-break duration.
+- Configurable long-break duration.
+- A configurable number of focus sessions before a long break.
+- Cycle and session progress.
+- Automatic break transitions, if enabled.
+- Automatic next-focus transitions, if enabled.
+- Manual pause, resume, skip, and end controls.
+- Correct session counts and break tracking.
+
+Automatic transitions and automatic starting of a new focus session must be separately configurable.
+
+Never start an unexpected session when automatic start is disabled.
+
+Mode B: Deep Focus
+
+Implement:
+
+- Custom uninterrupted countdown.
+- Optional Strict Focus behavior.
+- Minimal visual distractions.
+- Optional confirmation before ending early.
+- Optional completion reflection or break suggestion.
+- No mandatory Pomodoro cycles.
+
+Users must always retain a way to end a session safely.
+
+Mode C: Simple Timer
+
+Implement:
+
+- A single customizable countdown.
+- Start, pause, resume, and early termination.
+- No mandatory breaks or cycles.
+- Optional post-session break.
+
+Mode D: Count-up Stopwatch
+
+Implement:
+
+- Open-ended elapsed-time tracking.
+- Start, pause, resume, and end controls.
+- No required target duration.
+- Accurate accumulation of active focus time.
+- Optional study goal and subject association.
+- Proper persistence and recovery.
+
+Clearly distinguish count-up sessions from countdown sessions in the interface, history, and analytics.
+
+---
+
+5. ADVANCED CUSTOMIZATION
+
+Duration selection
+
+Provide quick presets:
+
+- 15 minutes.
+- 25 minutes.
+- 45 minutes.
+- 50 minutes.
+- 60 minutes.
+- 90 minutes.
+- Custom duration.
+
+Allow hours and minutes to be configured with validation.
+
+Use a default range of 1–180 minutes per focus block, configurable if appropriate.
+
+Remember the preferred duration and restore it after restarting the app.
+
+Changing the next session's duration must not silently modify an active session.
+
+If a user changes the current session's configuration in a way that would discard progress, require explicit confirmation.
+
+Break settings
+
+Allow users to configure:
+
+- Short-break duration.
+- Long-break duration.
+- Focus sessions before a long break.
+- Automatic break transitions.
+- Automatic next-focus transitions.
+- Completion notification preferences.
+- Optional sound and vibration.
+
+Validate all settings and provide sensible defaults.
+
+Custom focus presets
+
+Users must be able to create, name, edit, duplicate, select, and delete presets.
+
+Example presets:
+
+- Quick Study.
+- Standard Pomodoro.
+- Deep Study.
+- Physics Practice.
+- Chemistry Revision.
+- Admission MCQ.
+- Exam Preparation.
+- Night Study.
+
+Each preset may contain:
+
+- Name and optional description.
+- Focus mode.
+- Focus duration.
+- Short- and long-break durations.
+- Cycle configuration.
+- Automatic-transition preferences.
+- Optional default subject and goal.
+- Optional Strict Focus preference.
+
+Persist presets locally and restore them after app restarts.
+
+Provide a fast preset-selection experience without making the dashboard cluttered.
+
+---
+
+6. SUBJECT, SYLLABUS, AND GOAL INTEGRATION
+
+Integrate the Focus system with existing StudyHub data.
+
+Where supported by existing models, allow users to associate a session with:
+
+- A subject.
+- A syllabus chapter or topic.
+- A study goal, such as finishing a chapter or solving 20 MCQs.
+- An optional session note.
+- An optional post-session reflection.
+
+Reuse existing subject and syllabus selection flows whenever practical.
+
+Subject, chapter, and goal selection must remain optional.
+
+Do not create duplicate databases, hardcoded subject lists, or disconnected copies of existing syllabus data.
+
+Store references to existing entities when appropriate and handle deleted or unavailable entities gracefully.
+
+---
+
+7. RELIABLE TIMER ENGINE — CRITICAL
+
+This is a core correctness requirement, not an optional enhancement.
+
+The timer must remain accurate when:
+
+- The user leaves the Focus tab.
+- The app enters the background.
+- The screen turns off.
+- The process is killed and recreated.
+- The app is reopened.
+- The device is rebooted, where supported.
+- The user pauses and resumes repeatedly.
+
+Do not rely on an in-memory integer decremented every second.
+
+Timer architecture
+
+Implement an explicit, testable session state machine.
+
+Possible states include:
+
+- Idle.
+- Focus Running.
+- Focus Paused.
+- Short Break Running.
+- Short Break Paused.
+- Long Break Running.
+- Long Break Paused.
+- Completed.
+- Ended Early.
+- Interrupted, where appropriate.
+
+Define legal transitions and prevent invalid or duplicate transitions.
+
+Persist enough information to restore the complete session, including:
+
+- Unique session identifier.
+- Session mode and type.
+- Session state.
+- Start and end timestamps.
+- Intended duration.
+- Accumulated active duration.
+- Pause timestamps or accumulated paused time.
+- Current Pomodoro phase and cycle.
+- Associated subject, chapter, and goal.
+- Completion, interruption, and reward status.
+
+Use appropriate time sources.
+
+For active countdowns, use persisted timestamps and a suitable monotonic clock strategy for in-session calculations. Reconcile state carefully across process recreation and device reboot. Do not blindly trust a wall-clock timestamp if the system clock changes.
+
+Separate the timer's source of truth from the UI refresh mechanism.
+
+The UI may refresh periodically while visible, but session correctness must not depend on continuous background ticking.
+
+Required behavior
+
+- Derive the displayed remaining time from the persisted session state.
+- Restore the correct timer immediately when the Focus screen returns.
+- Freeze active-time accumulation when paused.
+- Resume without resetting the session start time incorrectly.
+- Record actual focused duration when a session ends early.
+- Exclude break time and paused time from focused-time analytics.
+- Record completion exactly once.
+- Prevent duplicate history entries, XP rewards, achievements, and automatic transitions.
+- Handle midnight crossings correctly.
+- Handle invalid or partially persisted state gracefully.
+
+Android background behavior
+
+Choose background mechanisms based on actual platform requirements.
+
+- Use notifications where useful and permitted.
+- Request notification permission when required.
+- Use a foreground service only when genuinely necessary and compliant with Android restrictions.
+- Avoid unnecessary battery consumption.
+- Handle notification actions consistently with the same session state machine.
+- Handle device reboot where the implementation and platform rules permit it.
+
+Do not promise exact alarm delivery or unrestricted background execution.
+
+If a completion notification cannot be guaranteed under certain Android restrictions, the stored session must still be reconciled correctly when the app resumes.
+
+Write automated tests for timer calculations and recovery wherever the existing test infrastructure supports them.
+
+---
+
+8. FOCUS ANALYTICS AND HISTORY
+
+Implement genuine analytics using persisted session records.
+
+Daily analytics
+
+Include:
+
+- Total actual focused time today.
+- Completed focus-session count.
+- Daily target and progress.
+- Actual versus planned focus duration.
+- Optional subject-wise distribution.
+
+Weekly analytics
+
+Include:
+
+- A seven-day focus-time chart.
+- Daily focused-time totals.
+- Weekly total.
+- Average daily focus time.
+- Comparison with the previous week where meaningful.
+
+Detailed history
+
+Each record should include available information such as:
+
+- Date and time.
+- Mode.
+- Subject and chapter.
+- Planned duration.
+- Actual focused duration.
+- Session outcome.
+- Goal and optional note.
+
+Provide useful filtering by date, mode, or subject when practical.
+
+Analytics correctness
+
+Define clear rules for:
+
+- Completed sessions.
+- Sessions ended early.
+- Interrupted sessions.
+- Paused sessions.
+- Breaks.
+- Sessions spanning midnight.
+- Duplicate or recovered sessions.
+
+Use actual persisted records for all charts and metrics.
+
+Never hardcode progress values, generate fake history, or fabricate achievements.
+
+Handle empty history gracefully with an intentional, polished empty state.
+
+---
+
+9. DAILY GOALS, XP, STREAKS, AND ACHIEVEMENTS
+
+Implement a coherent gamification system that encourages consistency without distracting from studying.
+
+Daily goals
+
+- Allow users to set a daily focused-time target.
+- Display accurate progress.
+- Handle target changes and midnight boundaries.
+- Make goal completion state clear.
+
+XP and progression
+
+- Award XP according to a documented rule based on valid focused time.
+- Optionally award bonuses for meaningful milestones.
+- Prevent duplicate rewards.
+- Prevent XP farming from paused, duplicated, or invalid sessions.
+- Persist XP totals and reward events.
+- Make reward calculations deterministic and testable.
+
+Streaks
+
+- Define the qualifying rule clearly.
+- Calculate current and longest streaks from actual records.
+- Handle local calendar-day boundaries.
+- Restore streaks correctly after app restarts.
+- Avoid incorrect streak resets from missing or delayed background execution.
+
+Achievements
+
+Provide meaningful milestones, such as:
+
+- First Focus Session.
+- Focus-Time Milestones.
+- Daily Goal Achieved.
+- Weekly Consistency.
+- Subject Study Milestones.
+
+Unlock achievements only when their real conditions are met.
+
+Persist achievement unlocks and reward events to prevent duplication.
+
+Gamification must remain secondary to the timer. Use tasteful progress indicators and subtle celebrations rather than filling the dashboard with badges.
+
+---
+
+10. STRICT FOCUS AND DISTRACTION MANAGEMENT
+
+Provide an optional Strict Focus feature.
+
+Possible capabilities:
+
+- A distraction-free focus interface.
+- A confirmation before ending a session early.
+- Optional reminders when leaving the Focus screen.
+- Optional self-reported distraction logging.
+- An optional post-session distraction summary.
+
+Respect user choice and provide a clear way to disable these features.
+
+Do not claim to block other applications unless the actual implementation, required permissions, and Android capabilities support that behavior.
+
+Do not introduce invasive monitoring or unnecessary sensitive permissions.
+
+Strict Focus must never prevent users from ending a session safely.
+
+---
+
+11. OPTIONAL AMBIENT SOUNDS
+
+If the core system is stable, provide optional ambient audio such as:
+
+- Rain.
+- Nature.
+- White noise.
+- Brown noise.
+
+Requirements:
+
+- Play, pause, mute, and volume controls.
+- No automatic playback without user consent.
+- Proper handling of audio interruptions.
+- Respect for background playback preferences.
+- Appropriate behavior when a session ends.
+- Licensed or locally bundled audio assets where practical.
+
+Do not download copyrighted audio without appropriate permission.
+
+Ambient audio must remain optional and must not compromise timer reliability or app performance.
+
+---
+
+12. SESSION COMPLETION AND REFLECTION
+
+Design a premium completion experience.
+
+Show:
+
+- Actual focused duration.
+- Planned duration, where available.
+- Subject and goal.
+- Session outcome.
+- Daily goal progress.
+- XP earned, if applicable.
+- An option to begin a break or another focus session.
+
+Offer an optional, quick reflection:
+
+- Did you achieve your goal?
+- What did you learn?
+- How focused were you?
+- Were there any distractions?
+- Optional notes.
+
+Reflection must never block completion or reward processing.
+
+Persist reflection only when the user submits it.
+
+Ensure the completion flow is idempotent: revisiting the screen must not create duplicate sessions or rewards.
+
+---
+
+13. FOCUS SETTINGS AND PERSONALIZATION
+
+Provide a polished settings experience with appropriate grouping.
+
+Potential settings include:
+
+- Preferred focus mode.
+- Default duration.
+- Break durations.
+- Pomodoro cycle configuration.
+- Automatic transition behavior.
+- Saved preset management.
+- Daily goal.
+- Notification preferences.
+- Sound and vibration.
+- Ambient-audio preferences.
+- Strict Focus behavior.
+- Optional keep-screen-awake behavior, where appropriate.
+- Reduced-motion-aware animation preferences where supported.
+
+Persist settings using the existing storage architecture or the most suitable solution for the project.
+
+Validate restored settings and recover gracefully from invalid values.
+
+Do not overwhelm users with every advanced setting on first use.
+
+---
+
+14. PERFORMANCE, ACCESSIBILITY, AND CODE QUALITY
+
+- Follow the existing architecture and coding conventions.
+- Keep business logic separate from UI rendering.
+- Use lifecycle-aware UI state collection and updates.
+- Avoid unnecessary recompositions and polling.
+- Avoid repeated database writes on every displayed second.
+- Keep animations independent of timer correctness.
+- Provide accessible labels and semantics.
+- Maintain readable contrast in light and dark themes.
+- Support larger font sizes and different screen dimensions.
+- Ensure controls have appropriate touch targets.
+- Handle missing data, permission denial, and storage errors gracefully.
+- Avoid unnecessary dependencies and architectural duplication.
+- Do not leave placeholder controls or TODOs for core features.
+
+All features shown in the UI must be connected to real functionality.
+
+---
+
+15. TESTING AND VERIFICATION
+
+Use the project's existing testing infrastructure and add appropriate tests.
+
+Unit tests
+
+Test:
+
+- Countdown calculations.
+- Count-up calculations.
+- Pause and resume.
+- Multiple pause/resume cycles.
+- Early session termination.
+- Focus and break separation.
+- Pomodoro phase transitions.
+- Automatic transition preferences.
+- Midnight crossings.
+- Invalid persisted settings.
+- Session completion idempotency.
+- XP and achievement deduplication.
+- Daily and weekly analytics.
+- Streak calculations.
+
+Integration tests
+
+Where supported, test:
+
+- Preset creation, editing, deletion, and persistence.
+- Session persistence and restoration.
+- Subject and chapter association.
+- Session history.
+- Daily goal updates.
+- Notification action handling.
+- Permission-denied behavior.
+- Navigation into and out of Focus.
+- Process recreation and recovery.
+
+Build verification
+
+Run the actual available build and test commands for the project.
+
+Fix errors introduced by your changes.
+
+Do not claim tests passed unless they were actually executed successfully.
+
+If a test requires an emulator, device, permission, or environment unavailable to you, report that limitation clearly.
+
+---
+
+16. IMPLEMENTATION STRATEGY
+
+Do not attempt to implement this entire system as one uncontrolled code-generation operation.
+
+Work in explicit stages.
+
+Stage 1 — Audit and implementation plan
+
+Inspect the codebase and identify:
+
+- Current Focus implementation.
+- Existing architecture and reusable components.
+- Timer failure causes.
+- Required persistence changes.
+- Necessary files and dependencies.
+- Integration risks.
+
+Produce a concise plan and then proceed with implementation when the environment permits. Do not stop at the planning stage.
+
+Stage 2 — Reliable timer foundation
+
+Implement the state machine, persistence, time calculations, pause/resume, recovery, and session completion.
+
+Add and run relevant tests before proceeding.
+
+Stage 3 — Premium dashboard and four modes
+
+Implement the polished Focus dashboard, Pomodoro, Deep Focus, Simple Timer, and Count-up Stopwatch.
+
+Connect every control to real session state.
+
+Stage 4 — Customization and study integration
+
+Implement custom durations, breaks, saved presets, subjects, chapters, and goals.
+
+Verify persistence and active-session safeguards.
+
+Stage 5 — History and analytics
+
+Implement real session history, daily and weekly analytics, and accurate metric calculations.
+
+Stage 6 — Goals and gamification
+
+Implement daily targets, XP, streaks, and achievements with duplicate prevention.
+
+Stage 7 — Optional enhancements
+
+Implement Strict Focus, ambient audio, reflection, and other enhancements only if the core functionality is stable.
+
+Stage 8 — Final UI polish and verification
+
+Review the entire Focus experience for visual consistency, responsiveness, accessibility, and interaction quality.
+
+Run available builds and tests. Fix regressions and verify that unrelated StudyHub screens remain unchanged.
+
+At each stage:
+
+1. Inspect the relevant code.
+2. Implement the actual functionality.
+3. Run appropriate tests.
+4. Fix discovered issues.
+5. Verify integration before continuing.
+
+Keep the project in a buildable state wherever practical.
+
+If the task exceeds the available execution time or context, prioritize a complete, reliable core over partially implemented optional features. Clearly document remaining work.
+
+---
+
+17. STRICT COMPLETION REQUIREMENTS
+
+Do not claim completion based on screenshots or a successful-looking interface alone.
+
+Before reporting success, verify the implementation against the actual source code and available tests.
+
+At the end, provide:
+
+1. A summary of the implemented features.
+2. The actual files and components modified.
+3. An explanation of the timer architecture and session recovery.
+4. The persistence strategy and data-model changes.
+5. The build commands executed and their actual results.
+6. The tests executed and their actual results.
+7. Any known limitations, incomplete features, or unverified behavior.
+8. Confirmation of whether unrelated screens and navigation were preserved.
+9. Any required manual setup, permissions, or migration steps.
+
+Clearly distinguish:
+
+- Implemented and tested.
+- Implemented but not fully verified.
+- Partially implemented.
+- Not implemented.
+
+Never invent test results, claim nonexistent functionality, or conceal failures.
+
+If a requirement conflicts with the actual project architecture or Android platform restrictions, explain the conflict and implement the safest appropriate alternative.
+
+---
+
+FINAL PRODUCT STANDARD
+
+The finished StudyHub Focus experience must feel like a cohesive, premium productivity system built into the existing application.
+
+It must combine:
+
+- Exceptional visual polish.
+- A timer-first, distraction-conscious interface.
+- Four useful focus modes.
+- Deep but approachable customization.
+- Reusable presets.
+- Existing StudyHub subject and syllabus integration.
+- Accurate background timing and session recovery.
+- Genuine analytics and history.
+- Meaningful goals, XP, streaks, and achievements.
+- Optional ambient audio and Strict Focus features.
+- Strong persistence, accessibility, and tested behavior.
+
+Do not sacrifice correctness for aesthetics. Do not sacrifice usability for feature count. Do not sacrifice the existing application to build a disconnected redesign.
+
+Your mission is to deliver the most polished, advanced, reliable Focus experience that fits naturally inside the real StudyHub application. Inspect the project, implement the actual changes, verify them, and report honestly.

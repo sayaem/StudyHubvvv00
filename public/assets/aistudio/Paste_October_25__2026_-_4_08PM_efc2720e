@@ -1,0 +1,688 @@
+STUDYHUB — SMART STUDY PLANNER 1.0
+
+Complete Implementation Prompt: Hybrid Rule-Based Intelligence + Self-Learning + One-Click Calendar Integration
+
+You are a senior Android engineer, software architect, algorithm designer, data engineer, and premium mobile UX/UI specialist.
+
+Your task is to implement a genuinely useful, reliable, intelligent Smart Study Planner inside my existing StudyHub Android application.
+
+This is an enhancement to the existing application, NOT a new application.
+
+The planner must combine:
+
+1. A deterministic rule-based planning engine.
+2. A historical-data-driven self-learning engine.
+3. An adaptive scheduling and workload-balancing algorithm.
+4. A strict plan-validation and safety layer.
+5. Seamless integration with the existing Calendar, Syllabus, Focus, study statistics, and notification systems where compatible with the current architecture.
+
+ABSOLUTE REQUIREMENT: NO AI, NO LLM, NO PAID API, NO AI SERVICE, AND NO CLOUD AI DEPENDENCY.
+
+All planning and learning must be performed using ordinary application code, deterministic rules, mathematical calculations, local historical data, and validated statistics. Do not simulate AI or describe ordinary rules as a trained AI model.
+
+---
+
+1. FIRST: AUDIT THE EXISTING PROJECT
+
+Before writing or modifying code, inspect the existing StudyHub project thoroughly.
+
+Identify:
+
+- Programming language, Android architecture, UI framework, and navigation structure.
+- Existing Calendar screen, weekly/date selector, timeline, event cards, and Add Plan workflow.
+- Existing Syllabus and subject/chapter data models.
+- Existing task, exam, deadline, and study-goal models.
+- Existing Focus timer, session history, completed study duration, and session status.
+- Existing local database, repositories, persistence layer, and state-management approach.
+- Existing statistics and analytics calculations.
+- Existing notification and scheduling infrastructure, if relevant.
+- Existing design system, colors, typography, spacing, shapes, icons, and animations.
+- Existing tests and build configuration.
+
+Trace how these systems currently exchange data. Reuse the existing sources of truth.
+
+Do not create a parallel Calendar, Syllabus, subject database, task manager, or Focus history system.
+
+If a required field or capability does not exist, implement the smallest compatible extension or a clear user-input fallback. Do not invent existing classes, methods, or data structures without inspecting the code.
+
+If the project has a documented limitation, account for it explicitly rather than silently pretending the feature is supported.
+
+Once the audit is complete, implement the feature. Do not stop at an architecture proposal or a list of suggestions.
+
+2. CORE PRODUCT VISION
+
+Place Smart Study Planner directly inside the existing Calendar tab.
+
+Calendar remains the central place where users view, create, edit, and manage their schedules. Smart Study Planner becomes an intelligent planning feature within Calendar rather than a separate tab or a duplicate task-management system.
+
+The planner must:
+
+- Generate a realistic proposed daily study plan from valid existing data.
+- Prioritize unfinished syllabus tasks and relevant upcoming exams.
+- Respect actual available study time and existing calendar commitments.
+- Learn realistic duration estimates and planning preferences from reliable historical data.
+- Adapt to completed, missed, postponed, and rescheduled tasks.
+- Explain why each task is recommended.
+- Allow users to review and modify the proposed plan.
+- Add all selected valid tasks to the existing Calendar through one explicit user action.
+- Prevent duplicate events, invalid schedules, and accidental overwriting of user edits.
+- Work without internet access for its core planning and learning functionality, subject to the capabilities of the existing app.
+- Never generate fabricated syllabus content, exams, deadlines, or historical observations.
+
+The system should prioritize reliability and usefulness over the number of features.
+
+3. PREMIUM CALENDAR UI INTEGRATION
+
+Add a premium Smart Study Planner card near the top of the existing Calendar screen, without disrupting the current date selector, event timeline, or existing calendar interactions.
+
+Planner card
+
+The card should display:
+
+- A clear “Smart Study Planner” title.
+- A concise explanation of what the planner does.
+- The selected planning date.
+- Available study time, when reliably known.
+- Number of recommended tasks.
+- Estimated total study duration.
+- Optional planning status, such as Draft Ready, Needs Availability, or Plan Added.
+- A prominent “Generate Today's Plan” action.
+
+Use the selected calendar date when generating a plan. Do not silently use today's date if the user selected another date.
+
+If the user has insufficient data to generate a useful plan, explain what information is missing and offer an appropriate action. Never display fabricated statistics just to fill the UI.
+
+Design requirements
+
+- Follow the existing StudyHub design language and theme.
+- Make the card visually premium, polished, and consistent with the existing app.
+- Use clean typography, thoughtful spacing, restrained colors, rounded surfaces, and subtle transitions.
+- Keep the design compact enough that the calendar remains the primary screen.
+- Support the existing light/dark theme where applicable.
+- Handle small screens, long subject names, accessibility font sizes, and text overflow.
+- Provide accessible touch targets and content descriptions.
+- Avoid excessive gradients, decorative charts, clutter, unnecessary nested cards, and oversized headers.
+- Use existing components and icons wherever practical.
+- Do not redesign unrelated Calendar components.
+
+The final result should feel native to StudyHub, not like an unrelated third-party screen.
+
+4. PLAN GENERATION WORKFLOW
+
+Implement the following end-to-end workflow.
+
+Step A: Generate
+
+The user taps “Generate Today's Plan.”
+
+The system:
+
+1. Reads valid existing data from the current repositories.
+2. Determines the selected date and actual available planning window.
+3. Identifies eligible unfinished tasks and relevant revision opportunities.
+4. Calculates task priorities.
+5. Estimates realistic task durations.
+6. Selects tasks that fit the available study budget.
+7. Schedules selected tasks into feasible time slots.
+8. Validates the proposed plan.
+9. Produces a preview with explanations.
+
+The generated plan must initially be a draft. It must not automatically create or overwrite confirmed calendar entries.
+
+Step B: Review the draft
+
+Show a clear plan preview containing:
+
+- Subject and task title.
+- Source syllabus item or existing task reference, where applicable.
+- Recommended duration.
+- Proposed start and end times.
+- Priority or urgency indicator.
+- Short explanation of why the task was selected.
+- Whether the duration is based on personal history, an existing estimate, or a fallback.
+- Any uncertainty or scheduling limitation that materially affects the recommendation.
+
+Allow users to edit, remove, reorder, or adjust the duration of proposed tasks before committing the plan.
+
+Do not require users to accept the entire plan unchanged. Support selecting or deselecting individual tasks if this can be integrated cleanly with the existing UI.
+
+Step C: One-click calendar integration
+
+Provide a prominent action:
+
+“Add All to Calendar”
+
+When tapped, add all selected, valid tasks to the existing Calendar in one logical operation.
+
+Requirements:
+
+- Use the existing Calendar repository and persistence mechanism.
+- Create genuine calendar entries that appear in the existing timeline and date views.
+- Preserve subject associations and references to source syllabus items.
+- Save the planning source and plan identifier where compatible with the current schema.
+- Mark generated tasks appropriately so their origin can be identified.
+- Never create duplicate calendar entries if the same plan is submitted twice.
+- Check for conflicting events immediately before committing.
+- Respect user changes made since the draft was generated.
+- If the schedule has changed, revalidate the draft and explain the conflict.
+- Prefer an atomic transaction or an equivalent all-or-nothing operation.
+- If atomic persistence is unavailable, implement reliable rollback or recovery so a partial commit cannot silently leave a broken plan.
+- Disable repeated submission while a commit is in progress.
+- Show clear success or failure feedback only after persistence confirms the result.
+- Navigate or refresh the existing Calendar state so the new entries appear immediately.
+
+If some selected tasks cannot be scheduled, do not silently discard them. Explain which tasks need adjustment and let the user resolve the issue.
+
+After successful insertion, show the number of tasks added and the scheduled total duration.
+
+The commit operation must be idempotent: repeating the same successful operation must not add duplicate tasks.
+
+5. RULE-BASED PLANNING ENGINE
+
+Implement a dedicated, testable planning engine that does not depend on UI code.
+
+Keep business logic separate from composables, activities, fragments, or other presentation components, according to the existing architecture.
+
+The engine must accept validated inputs and return a structured proposed plan, including relevant warnings and explanations.
+
+5.1 Eligible task selection
+
+Use existing valid records wherever possible.
+
+Potential candidates include:
+
+- Unfinished syllabus items.
+- Existing incomplete study tasks.
+- Tasks with genuine deadlines.
+- Relevant upcoming-exam preparation.
+- Revision tasks supported by recorded study history or explicit syllabus settings.
+- Previously postponed tasks that remain relevant.
+- Existing user-created tasks that the user has not completed.
+
+Eligibility rules:
+
+- Exclude completed tasks unless an explicit, legitimate revision task is separately created.
+- Exclude invalid, deleted, or unavailable source records.
+- Avoid scheduling the same underlying task twice.
+- Respect task dependencies if the existing app represents them.
+- Do not assume that every syllabus item is unfinished.
+- Do not assume that task completion proves mastery.
+- Do not invent chapters, exams, deadlines, task titles, or completion states.
+- Do not create revision tasks merely because a topic exists; require a supported revision rule or user preference.
+- Treat missing information as unknown, not as evidence of success or failure.
+
+Each recommendation should retain its source reference so it can be traced back to real application data.
+
+5.2 Priority scoring
+
+Create an explainable priority-scoring model.
+
+Potential factors:
+
+- Time remaining until a verified exam.
+- Deadline urgency.
+- Remaining syllabus workload relevant to that exam.
+- Task overdue status.
+- User-declared task importance.
+- Revision due status, if supported.
+- Recorded difficulty or repeated failure, only if such evidence exists.
+- Existing priority settings.
+
+Use normalized component scores, for example 0–100, and configurable weights.
+
+An initial experimental formula could be:
+
+PriorityScore =
+0.35 × ExamUrgency
+
++ 0.25 × RelevantRemainingWorkload
++ 0.20 × DeadlineUrgency
++ 0.20 × EvidenceBasedRevisionNeed
+
+These weights are starting parameters, not scientifically established constants. Adapt the components to the actual data model and test the resulting behavior before treating the weights as final.
+
+Important rules:
+
+- Avoid double-counting the same underlying urgency signal.
+- Do not assign a high difficulty score when difficulty data is missing.
+- An overdue task is not automatically the most important task.
+- Completed tasks must not become eligible merely because they have a high historical score.
+- Explain the principal reason for each recommendation.
+- Keep hard constraints separate from soft priority scores.
+
+Priority scores help rank candidates; they must never override time availability, valid task status, calendar conflicts, or other hard constraints.
+
+5.3 Workload balancing
+
+The engine must choose a feasible combination of tasks rather than blindly selecting the highest-scoring tasks until time runs out.
+
+Consider:
+
+- Available study minutes.
+- Task duration estimates.
+- Upcoming exams.
+- Deadline urgency.
+- Relevant syllabus coverage.
+- Subject distribution where appropriate.
+- User-declared preferences.
+- Breaks and transitions, if supported.
+- Existing scheduled commitments.
+- The cost of splitting a task, when splitting is supported.
+
+If the remaining workload exceeds available time:
+
+- Prioritize the most important feasible tasks.
+- Report that not all work fits.
+- Identify important tasks left unscheduled.
+- Offer a realistic alternative date or next available slot when the required data exists.
+- Never squeeze unrealistic durations into the plan to make everything appear complete.
+
+Do not force an arbitrary subject balance that undermines a genuinely urgent exam. Use balancing as a secondary optimization goal after important constraints and urgency.
+
+5.4 Scheduling
+
+Convert the selected tasks into actual time slots only when sufficient schedule information exists.
+
+Use the existing Calendar to identify occupied intervals and available windows.
+
+Requirements:
+
+- Respect existing events and their actual time ranges.
+- Do not overlap confirmed calendar entries.
+- Respect user-provided unavailable periods.
+- Do not schedule tasks in the past.
+- Do not create tasks beyond the available study budget.
+- Use a configurable, reasonable session-length strategy.
+- Preserve task duration when possible.
+- If a task cannot fit into any available slot, leave it unscheduled and explain why.
+- Do not silently move or delete existing events.
+- Handle time zones and daylight-saving behavior correctly where relevant to the existing implementation.
+- Recheck the schedule immediately before committing the draft.
+
+Keep selection and scheduling as logically distinct stages so both can be tested independently.
+
+6. SELF-LEARNING ENGINE — NO AI
+
+Implement a local, data-driven learning component that gradually improves planning estimates using valid historical observations.
+
+Do not introduce a cloud model, AI API, paid inference endpoint, or unnecessary external machine-learning framework.
+
+The learning engine should begin with simple, interpretable statistics. Prefer reliable calculations over complex but poorly validated algorithms.
+
+6.1 Learn realistic task duration
+
+Use valid historical observations such as:
+
+- Planned duration.
+- Actual active study duration, if reliably measured.
+- Whether the task was completed.
+- Whether the recorded session corresponds to the same task.
+- Subject or task category, where the existing data supports that association.
+
+Never treat wall-clock elapsed time as active study time without accounting for pauses or interruptions according to the existing Focus implementation.
+
+Never assume a Focus session belongs to a particular syllabus task unless a real association exists.
+
+Use a robust estimator, such as a median, trimmed estimate, or carefully bounded running average, according to sample size and data quality.
+
+A possible recency-weighted update is:
+
+UpdatedEstimate =
+α × RecentEstimate
+
++ (1 − α) × PreviousEstimate
+
+Use this only when sufficient comparable observations exist, and document the update behavior.
+
+Requirements:
+
+- Establish minimum sample thresholds.
+- Bound estimates to reasonable limits.
+- Reduce the impact of outliers.
+- Prevent one unusually long or short session from dramatically changing future estimates.
+- Separate reliable active study observations from incomplete or ambiguous records.
+- Do not infer a subject-specific duration from unrelated data without a justified fallback strategy.
+- Store the source and confidence of the estimate.
+- Allow recalculation when source history changes or is deleted.
+
+6.2 Learn completion and schedule patterns
+
+Where sufficient valid data exists, estimate:
+
+- Task completion rate.
+- Frequency of postponement.
+- Typical session length.
+- Realistic daily workload.
+- Preferred study periods, if actual time-stamped records support this.
+- Which planned durations tend to result in successful completion.
+- Whether recent scheduling adjustments have improved feasibility.
+
+Do not label a student lazy, unmotivated, or academically weak.
+
+A missed task does not explain why it was missed. Treat causes as unknown unless the user explicitly records them.
+
+Do not infer mastery, comprehension, or exam performance from task completion alone.
+
+6.3 Confidence and cold-start behavior
+
+Every learned estimate should have a meaningful confidence level based on sample count, consistency, recency, and data quality.
+
+When there is little or no reliable history:
+
+- Use valid user-provided estimates where available.
+- Otherwise use conservative, configurable defaults.
+- Clearly distinguish defaults from personalized estimates.
+- Do not pretend that the system has learned a pattern before enough evidence exists.
+
+Learning must be gradual. The planner should not overreact to a single observation.
+
+6.4 Adapt to changing behavior
+
+Use a recency-aware strategy so current behavior can gradually replace outdated patterns.
+
+For example, if a student’s available schedule or task-completion behavior changes, recent reliable observations should eventually carry more influence than very old observations.
+
+Avoid abrupt, unexplained changes to the plan.
+
+When a learned estimate changes materially, the engine should be able to explain that the adjustment is based on recent observed behavior.
+
+6.5 Feedback loop
+
+After a planned task is completed, skipped, postponed, or rescheduled:
+
+1. Record the actual outcome using the existing data model where possible.
+2. Validate the observation.
+3. Update the relevant statistics only when the outcome is meaningful and reliable.
+4. Preserve uncertainty when the observation is incomplete.
+5. Use the updated estimates in future planning cycles.
+
+Do not repeatedly learn from the same event as though it were a new observation.
+
+Keep learning updates idempotent and traceable to their source records.
+
+If the user corrects or deletes source history, recalculate or invalidate affected learned estimates according to the architecture.
+
+6.6 Safe learning boundaries
+
+Self-learning may adjust estimates, preferences, and soft priorities.
+
+It must NEVER override:
+
+- Verified exam dates.
+- User-defined hard deadlines.
+- Existing calendar conflicts.
+- Available-time limits.
+- Completion status.
+- Source-data validity.
+- Explicit user edits.
+- Duplicate-prevention rules.
+- Other hard scheduling constraints.
+
+The rule engine and validator always have final authority.
+
+7. ADAPTIVE RESCHEDULING
+
+When a planned task is missed, postponed, or partially completed:
+
+- Do not mark it complete automatically.
+- Preserve the recorded outcome accurately.
+- Recalculate the remaining workload.
+- Re-evaluate priority using current deadlines and exams.
+- Use updated duration estimates only when supported by reliable history.
+- Respect the student’s new availability.
+- Recheck all existing calendar events.
+- Propose an adjusted schedule.
+- Explain what changed and why.
+- Preserve completed work and user-edited events.
+- Require explicit user approval before changing confirmed future calendar entries.
+
+Never move a missed task automatically into a full schedule without checking whether the new slot is feasible.
+
+If no realistic slot exists, tell the user rather than silently creating a conflict.
+
+8. DATA MODEL AND PERSISTENCE
+
+Follow the existing architecture and persistence technology.
+
+Prefer extending existing entities and repositories instead of creating duplicates.
+
+Where compatible, persist:
+
+- Planner draft ID.
+- Target planning date.
+- Plan status.
+- Source task and syllabus references.
+- Proposed duration.
+- Proposed start and end times.
+- Priority score and the factors supporting it.
+- Duration estimate source and confidence.
+- Recommendation explanation.
+- Calendar entry IDs after successful commit.
+- User edits and approval state.
+- Learning observations or references to source records.
+- Learning update version or processed-observation IDs.
+- Creation and update timestamps.
+
+These are logical requirements, not mandatory new tables or classes. Reuse existing structures when they already provide equivalent functionality.
+
+Use stable IDs and repository-level validation to prevent duplicate tasks.
+
+Do not persist sensitive derived profiles unnecessarily. Keep learning data local and minimize the amount of personal information stored.
+
+If a schema migration is needed, implement it safely and preserve existing user data.
+
+Handle application restart, process recreation, and database failures without losing a confirmed plan or duplicating entries.
+
+9. EXISTING CALENDAR INTEGRATION
+
+The Calendar remains the source of truth for scheduled events.
+
+After the user adds a plan:
+
+- Entries must appear in existing Calendar date views and timeline.
+- Existing Calendar editing and deletion must continue to work.
+- Focus sessions should be associated with planner tasks only through a valid explicit link or user selection.
+- Completed tasks must remain completed.
+- Deleted or edited entries must not be recreated automatically on the next planning cycle.
+- Reopening a saved plan must show its actual persisted status.
+- Regeneration must not erase existing user-created entries.
+- Plan provenance should be preserved where possible without cluttering the Calendar UI.
+
+If the user regenerates a plan that was previously committed, compare it with existing entries and generate a safe change proposal. Never blindly insert a second copy.
+
+Do not change the semantics of the existing Add Plan workflow unless integration requires a compatible improvement.
+
+10. PREMIUM USER EXPERIENCE
+
+Build a coherent flow inside Calendar:
+
+1. Calendar opens with the existing date selector and schedule.
+2. Smart Study Planner card appears near the top.
+3. User selects a date and generates a plan.
+4. The app shows a polished draft preview.
+5. Each recommendation has a concise explanation.
+6. User can edit or deselect tasks.
+7. User taps “Add All to Calendar.”
+8. The app validates and persists the selected plan.
+9. Existing Calendar entries refresh to show the new tasks.
+10. A concise success state confirms the result.
+
+Include meaningful UI states:
+
+- Initial / not yet generated.
+- Generating.
+- Draft ready.
+- Insufficient data.
+- Conflict detected.
+- Validation failure.
+- Commit in progress.
+- Successfully added.
+- Partially infeasible selection.
+- Error with a recoverable next step.
+- Previously committed plan.
+
+Do not use fake loading delays or fake progress.
+
+Keep animations subtle and respect accessibility and reduced-motion settings where applicable.
+
+Use existing localization and formatting conventions. Format dates, times, and durations consistently with the rest of StudyHub.
+
+Do not add unrelated dashboard cards or duplicate statistics.
+
+11. PERFORMANCE AND RELIABILITY
+
+- Keep planning and learning calculations deterministic and testable.
+- Avoid expensive database reads inside repeated UI recompositions.
+- Load required data efficiently through existing repositories.
+- Use appropriate background execution for heavier calculations.
+- Prevent stale asynchronous results from overwriting newer drafts.
+- Handle missing, deleted, and concurrently modified source records.
+- Avoid unnecessary recalculation when inputs have not changed.
+- Do not introduce a network requirement for local planning.
+- Ensure calculations are safe for empty datasets and unusually large histories.
+- Preserve the current app’s startup performance and memory behavior.
+
+12. TESTING REQUIREMENTS
+
+Write unit tests for the planning engine, priority calculations, learning estimators, scheduler, validation rules, and rescheduling logic.
+
+Write repository or integration tests for persistence, duplicate prevention, and calendar insertion wherever the project’s testing setup supports them.
+
+Cover at least these scenarios:
+
+Data integrity
+
+- Empty syllabus.
+- No upcoming exams.
+- Missing task duration.
+- Invalid or deleted source record.
+- Duplicate source tasks.
+- Completed tasks.
+- Missing or inconsistent historical records.
+- Corrupted or unavailable learning metadata.
+
+Priority
+
+- Exam tomorrow versus exam next week.
+- Overdue low-priority task versus urgent exam preparation.
+- Multiple exams with overlapping workloads.
+- Missing difficulty data.
+- No double-counting of urgency.
+
+Scheduling
+
+- No available study time.
+- Very limited availability.
+- Existing events occupying all slots.
+- Overlapping calendar events in the input.
+- A task longer than every available slot.
+- Total requested duration exceeding the budget.
+- Multiple tasks with equal priority.
+- A selected date different from today.
+
+Self-learning
+
+- Zero observations.
+- One observation.
+- Insufficient sample size.
+- Repeated consistent observations.
+- Extreme outlier.
+- Old versus recent observations.
+- Task incomplete or partially completed.
+- Duplicate learning-update attempt.
+- Source observation edited or deleted.
+- Cold-start default estimates.
+- Confidence changes as evidence accumulates.
+
+Calendar commit
+
+- Add plan successfully.
+- Tap Add All repeatedly.
+- Retry after a persistence failure.
+- Conflict appears after draft generation.
+- One selected task becomes invalid before commit.
+- Existing user-created event remains unchanged.
+- Existing plan is regenerated.
+- Application restart after successful insertion.
+
+Adaptive rescheduling
+
+- Missed task.
+- Partially completed task.
+- Completed task must not be re-added.
+- Exam date changes.
+- Student availability changes.
+- No feasible replacement slot.
+- User rejects a rescheduling proposal.
+
+Use deterministic fixtures and a controllable clock. Do not rely on real-time waiting or arbitrary sleeps.
+
+Where the current test infrastructure supports it, verify that generated plans always obey the hard constraints, including time budgets, task validity, and no-overlap requirements.
+
+13. ACCEPTANCE CRITERIA
+
+The implementation is complete only when all applicable criteria below are met:
+
+1. Smart Study Planner is integrated into the existing Calendar tab.
+2. It reads actual existing StudyHub data.
+3. No AI, paid API, LLM, or cloud AI service is used.
+4. A deterministic rule-based engine calculates priorities and selects feasible tasks.
+5. A separate self-learning component updates estimates from validated historical observations.
+6. Cold-start behavior is safe and transparent.
+7. Hard constraints cannot be overridden by learning.
+8. The planner never invents syllabus items, exams, or historical outcomes.
+9. The plan is previewed before Calendar insertion.
+10. Add All to Calendar persists the selected tasks through the existing Calendar system.
+11. Repeated commits do not create duplicates.
+12. Conflicts are detected and explained.
+13. Existing Calendar entries and unrelated features remain intact.
+14. Completed, missed, and edited tasks retain correct statuses.
+15. Learning updates do not count the same observation multiple times.
+16. Adaptive rescheduling requires user approval before modifying confirmed entries.
+17. The UI handles loading, empty, conflict, success, and error states.
+18. Tests cover the critical scheduling and learning edge cases.
+19. The app builds successfully using the existing project’s supported build process.
+20. No unrelated redesign, unnecessary dependency, or duplicate task system has been introduced.
+
+14. IMPLEMENTATION RULES
+
+- Inspect before modifying.
+- Follow the current architecture and coding conventions.
+- Reuse existing models, repositories, components, and design tokens.
+- Make focused, incremental changes.
+- Do not remove existing features to simplify implementation.
+- Do not replace real data with mock data.
+- Do not leave placeholder methods, fake statistics, or TODO-only functionality.
+- Do not silently ignore failures.
+- Do not claim tests passed unless they were actually executed.
+- Do not claim the app builds unless the build was actually run successfully.
+- If a test or build cannot run, state the exact limitation honestly.
+- Preserve all unrelated StudyHub functionality.
+
+15. FINAL DELIVERY REPORT
+
+After implementation, provide a concise but specific report containing:
+
+1. What was implemented.
+2. Which existing files and components were reused.
+3. Which files were added or changed.
+4. How the rule-based priority and scheduling algorithm works.
+5. How the self-learning engine uses validated historical data.
+6. How estimates and confidence are calculated.
+7. How draft validation and one-click Calendar insertion work.
+8. How duplicate prevention and safe rescheduling are implemented.
+9. Which tests were executed and their actual results.
+10. Whether the build succeeded.
+11. Any remaining limitations or data requirements.
+
+Clearly distinguish completed implementation from anything not yet implemented.
+
+FINAL PRODUCT PRINCIPLE
+
+StudyHub Smart Study Planner must be a reliable, explainable, self-improving rule-based planning system, not an AI chatbot disguised as a planner.
+
+Rules guarantee safety. Historical data improves estimates. The adaptive scheduler creates realistic plans. Validation prevents bad output. The user retains control.
+
+The ultimate goal is not to generate the largest number of tasks. It is to help each student decide what to study next, allocate realistic time, and steadily improve the quality of future plans using trustworthy evidence.
+
+Implement this within the existing StudyHub application while preserving all unrelated features and existing user data.
