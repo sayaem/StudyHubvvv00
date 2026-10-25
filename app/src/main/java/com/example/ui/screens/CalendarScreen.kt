@@ -87,6 +87,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material.icons.filled.AutoAwesome
 import com.example.data.local.AdmissionTargetEntity
 import com.example.data.local.ChapterEntity
 import com.example.data.local.FocusGamificationEntity
@@ -97,7 +98,9 @@ import com.example.data.local.UserProfile
 import com.example.planner.CommitResult
 import com.example.planner.PlannerDraft
 import com.example.planner.PlannerStatus
-import com.example.ui.components.SmartStudyPlannerCard
+import com.example.ui.components.SmartStudyPlannerCommitResultBanner
+import com.example.ui.components.SmartStudyPlannerConfirmationDialog
+import com.example.ui.components.SmartStudyPlannerReviewSheet
 import com.example.ui.components.getSubjectIcon
 import com.example.ui.components.parseColorHex
 import com.example.ui.theme.BrandBlue
@@ -165,6 +168,7 @@ fun CalendarScreen(
     var showPlanSheet by remember { mutableStateOf(false) }
     var editingPlan by remember { mutableStateOf<StudyTaskEntity?>(null) }
     var planToDelete by remember { mutableStateOf<StudyTaskEntity?>(null) }
+    var showPlannerConfirmationDialog by remember { mutableStateOf(false) }
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -253,6 +257,23 @@ fun CalendarScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
+                    // Smart Study Planner Intelligence Action Button
+                    IconButton(
+                        onClick = { showPlannerConfirmationDialog = true },
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clip(CircleShape)
+                            .background(BrandBlue.copy(alpha = 0.12f))
+                            .testTag("smart_planner_intelligence_button")
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.AutoAwesome,
+                            contentDescription = "Smart Study Planner",
+                            modifier = Modifier.size(20.dp),
+                            tint = BrandBlue
+                        )
+                    }
+
                     // Previous Week
                     IconButton(
                         onClick = {
@@ -572,28 +593,17 @@ fun CalendarScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // =========================================================================
-            // SMART STUDY PLANNER 1.0 (Rule-Based & Self-Learning Plan Generation)
-            // =========================================================================
-            val availableBudget = (dailyGoalMinutes - completedStudyMinutes.toInt()).coerceAtLeast(30)
-            SmartStudyPlannerCard(
-                targetDate = selectedDateStr,
-                isTargetToday = selectedDateStr == todayDateStr,
-                availableBudgetMinutes = availableBudget,
-                plannerDraft = plannerDraft,
-                plannerStatus = plannerStatus,
-                commitResult = plannerCommitResult,
-                onGeneratePlan = { onGenerateSmartPlan?.invoke(selectedDateStr) },
-                onToggleTaskSelection = { taskId -> onTogglePlannerTaskSelection?.invoke(taskId) },
-                onUpdateTaskDuration = { taskId, newDur -> onUpdatePlannerTaskDuration?.invoke(taskId, newDur) },
-                onRemoveTask = { taskId -> onRemovePlannerTask?.invoke(taskId) },
-                onDismissDraft = { onDismissPlannerDraft?.invoke() },
-                onCommitToCalendar = { onCommitSmartPlanToCalendar?.invoke() },
-                onDismissCommitResult = { onClearPlannerCommitResult?.invoke() },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(14.dp))
+            // Smart Study Planner Commit Result Feedback Banner
+            if (plannerCommitResult != null && plannerCommitResult.success) {
+                SmartStudyPlannerCommitResultBanner(
+                    commitResult = plannerCommitResult,
+                    onDismiss = { onClearPlannerCommitResult?.invoke() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                )
+                Spacer(modifier = Modifier.height(14.dp))
+            }
 
             // =========================================================================
             // 4. VERTICAL TIME-BASED TIMELINE
@@ -1420,6 +1430,38 @@ fun CalendarScreen(
                     Text("Cancel")
                 }
             }
+        )
+    }
+
+    // =========================================================================
+    // 7. SMART STUDY PLANNER CONFIRMATION DIALOG & PROPOSAL REVIEW SHEET
+    // =========================================================================
+    if (showPlannerConfirmationDialog) {
+        val availableBudget = (dailyGoalMinutes - completedStudyMinutes.toInt()).coerceAtLeast(30)
+        SmartStudyPlannerConfirmationDialog(
+            targetDate = selectedDateStr,
+            isTargetToday = selectedDateStr == todayDateStr,
+            availableBudgetMinutes = availableBudget,
+            onConfirmGenerate = {
+                showPlannerConfirmationDialog = false
+                onGenerateSmartPlan?.invoke(selectedDateStr)
+            },
+            onDismiss = { showPlannerConfirmationDialog = false }
+        )
+    }
+
+    if (plannerDraft != null || plannerStatus == PlannerStatus.GENERATING) {
+        val availableBudget = (dailyGoalMinutes - completedStudyMinutes.toInt()).coerceAtLeast(30)
+        SmartStudyPlannerReviewSheet(
+            targetDate = selectedDateStr,
+            availableBudgetMinutes = availableBudget,
+            plannerDraft = plannerDraft,
+            plannerStatus = plannerStatus,
+            onToggleTaskSelection = { taskId -> onTogglePlannerTaskSelection?.invoke(taskId) },
+            onUpdateTaskDuration = { taskId, newDur -> onUpdatePlannerTaskDuration?.invoke(taskId, newDur) },
+            onRemoveTask = { taskId -> onRemovePlannerTask?.invoke(taskId) },
+            onDismissDraft = { onDismissPlannerDraft?.invoke() },
+            onCommitToCalendar = { onCommitSmartPlanToCalendar?.invoke() }
         )
     }
 }

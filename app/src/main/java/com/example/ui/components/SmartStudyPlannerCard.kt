@@ -7,17 +7,20 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -25,13 +28,12 @@ import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Remove
-import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -39,24 +41,24 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,376 +75,406 @@ import com.example.ui.theme.StatusWarning
 import com.example.ui.theme.TextMuted
 import com.example.ui.theme.TextSecondary
 
+/**
+ * Step 2: Confirmation-First Dialog shown when the Intelligence Icon is tapped.
+ */
 @Composable
-fun SmartStudyPlannerCard(
+fun SmartStudyPlannerConfirmationDialog(
     targetDate: String,
     isTargetToday: Boolean,
     availableBudgetMinutes: Int,
+    onConfirmGenerate: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .background(BrandBlue.copy(alpha = 0.12f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.AutoAwesome,
+                        contentDescription = null,
+                        tint = BrandBlue,
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = "Smart Study Planner",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Text(
+                    text = "Smart Study Planner will analyze your available study time (${availableBudgetMinutes}m budget), existing calendar tasks, syllabus priorities, and learning pace to prepare a proposed study schedule for ${if (isTargetToday) "today" else targetDate}.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Surface(
+                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f),
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Generating a proposal will NOT save tasks to your Calendar until you review and confirm.",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = onConfirmGenerate,
+                colors = ButtonDefaults.buttonColors(containerColor = BrandBlue),
+                shape = RoundedCornerShape(12.dp),
+                modifier = Modifier.testTag("planner_confirm_continue_button")
+            ) {
+                Text("Generate Proposed Plan", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss,
+                modifier = Modifier.testTag("planner_confirm_cancel_button")
+            ) {
+                Text("Cancel", fontWeight = FontWeight.SemiBold)
+            }
+        }
+    )
+}
+
+/**
+ * Steps 3 & 4: Dedicated Scrollable Proposed Schedule Review Interface.
+ * Resolves scrolling bug by placing tasks inside an independently scrollable LazyColumn with bottom content padding.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SmartStudyPlannerReviewSheet(
+    targetDate: String,
+    availableBudgetMinutes: Int,
     plannerDraft: PlannerDraft?,
     plannerStatus: PlannerStatus,
-    commitResult: CommitResult?,
-    onGeneratePlan: () -> Unit,
     onToggleTaskSelection: (String) -> Unit,
     onUpdateTaskDuration: (String, Int) -> Unit,
     onRemoveTask: (String) -> Unit,
     onDismissDraft: () -> Unit,
-    onCommitToCalendar: () -> Unit,
-    onDismissCommitResult: () -> Unit,
-    modifier: Modifier = Modifier
+    onCommitToCalendar: () -> Unit
 ) {
-    var isExpanded by remember { mutableStateOf(true) }
-
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp)
+    ModalBottomSheet(
+        onDismissRequest = onDismissDraft,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ) {
-        // Success feedback banner
-        AnimatedVisibility(
-            visible = commitResult != null && commitResult.success,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically()
-        ) {
-            commitResult?.let { result ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp)
-                        .border(1.dp, StatusSuccess.copy(alpha = 0.5f), RoundedCornerShape(16.dp)),
-                    colors = CardDefaults.cardColors(containerColor = StatusSuccess.copy(alpha = 0.12f)),
-                    shape = RoundedCornerShape(16.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 14.dp, vertical = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.CheckCircle,
-                                contentDescription = null,
-                                tint = StatusSuccess,
-                                modifier = Modifier.size(20.dp)
-                            )
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column {
-                                Text(
-                                    text = "Plan Added to Calendar!",
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
-                                Text(
-                                    text = "Added ${result.addedCount} task(s) (${result.totalDurationMinutes} mins). View them in your timeline below.",
-                                    fontSize = 11.sp,
-                                    color = TextSecondary
-                                )
-                            }
-                        }
-                        IconButton(
-                            onClick = onDismissCommitResult,
-                            modifier = Modifier.size(28.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Dismiss",
-                                modifier = Modifier.size(16.dp),
-                                tint = TextSecondary
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        // Main Planner Header Card
-        Card(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.5f), RoundedCornerShape(18.dp)),
-            shape = RoundedCornerShape(18.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
+                .padding(horizontal = 20.dp)
+                .navigationBarsPadding()
         ) {
-            Column(modifier = Modifier.padding(14.dp)) {
-                // Header row
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.weight(1f)
+            // Header
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(34.dp)
+                            .clip(CircleShape)
+                            .background(BrandBlue.copy(alpha = 0.12f)),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(36.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(BrandBlue.copy(alpha = 0.12f)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.AutoAwesome,
-                                contentDescription = null,
-                                tint = BrandBlue,
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Column {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    text = "Smart Study Planner",
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.ExtraBold,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Surface(
-                                    color = BrandBlue.copy(alpha = 0.12f),
-                                    shape = RoundedCornerShape(6.dp)
-                                ) {
-                                    Text(
-                                        text = "1.0",
-                                        fontSize = 10.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = BrandBlue,
-                                        modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp)
-                                    )
-                                }
-                            }
-                            Text(
-                                text = if (isTargetToday) "Adaptive schedule for today" else "Adaptive schedule for $targetDate",
-                                fontSize = 11.sp,
-                                color = TextSecondary
-                            )
-                        }
+                        Icon(
+                            imageVector = Icons.Default.AutoAwesome,
+                            contentDescription = null,
+                            tint = BrandBlue,
+                            modifier = Modifier.size(20.dp)
+                        )
                     }
-
-                    // Budget Pill
-                    Surface(
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
-                        shape = RoundedCornerShape(10.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.AccessTime,
-                                contentDescription = null,
-                                tint = BrandTeal,
-                                modifier = Modifier.size(13.dp)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = "${availableBudgetMinutes}m budget",
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column {
+                        Text(
+                            text = "Proposed Schedule",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                        Text(
+                            text = "$targetDate • ${availableBudgetMinutes}m budget",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
                     }
                 }
 
-                // If draft is ready, show quick metrics summary
-                if (plannerDraft != null && plannerDraft.status == PlannerStatus.DRAFT_READY) {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    val selectedTasks = plannerDraft.tasks.filter { it.isSelected }
-                    val totalDuration = selectedTasks.sumOf { it.durationMinutes }
+                IconButton(
+                    onClick = onDismissDraft,
+                    modifier = Modifier
+                        .size(32.dp)
+                        .testTag("planner_review_close_button")
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close proposed schedule",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
 
+            Spacer(modifier = Modifier.height(12.dp))
+
+            if (plannerStatus == PlannerStatus.GENERATING) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator(
+                            color = BrandBlue,
+                            strokeWidth = 3.dp,
+                            modifier = Modifier.size(36.dp)
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Analyzing syllabus & calculating optimal slots...",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = TextSecondary
+                        )
+                    }
+                }
+            } else if (plannerDraft != null && plannerDraft.tasks.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No study tasks needed for $targetDate! All high priority topics are up to date.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            } else if (plannerDraft != null) {
+                val selectedTasks = plannerDraft.tasks.filter { it.isSelected }
+                val totalDuration = selectedTasks.sumOf { it.durationMinutes }
+
+                // Metrics summary
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
-                            .padding(horizontal = 10.dp, vertical = 6.dp),
+                            .padding(horizontal = 14.dp, vertical = 8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = "${selectedTasks.size} task(s) recommended",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.SemiBold,
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = "Est. Total: ${totalDuration}m",
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.ExtraBold,
                             color = BrandTeal
                         )
                     }
                 }
 
                 // Warnings if any
-                if (plannerDraft != null && plannerDraft.warnings.isNotEmpty()) {
+                if (plannerDraft.warnings.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(8.dp))
-                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        plannerDraft.warnings.forEach { warning ->
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Info,
-                                    contentDescription = null,
-                                    tint = StatusWarning,
-                                    modifier = Modifier.size(14.dp)
-                                )
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text(
-                                    text = warning,
-                                    fontSize = 11.sp,
-                                    color = TextSecondary,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            }
+                    plannerDraft.warnings.forEach { warning ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Info,
+                                contentDescription = null,
+                                tint = StatusWarning,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = warning,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = TextSecondary,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                     }
                 }
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-                // Action buttons row
-                if (plannerDraft == null || plannerDraft.status == PlannerStatus.IDLE || plannerDraft.status == PlannerStatus.COMMITTED) {
-                    Button(
-                        onClick = onGeneratePlan,
+                // Scrollable Task List Region (INDEPENDENT SCROLL + Generous Bottom Padding)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f, fill = false)
+                ) {
+                    LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(42.dp)
-                            .testTag("generate_smart_plan_button"),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = BrandBlue)
+                            .testTag("planner_proposed_tasks_list"),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        contentPadding = PaddingValues(top = 4.dp, bottom = 28.dp) // Generous bottom padding!
+                    ) {
+                        items(plannerDraft.tasks, key = { it.id }) { task ->
+                            ProposedTaskItem(
+                                task = task,
+                                onToggleSelection = { onToggleTaskSelection(task.id) },
+                                onDurationChanged = { newDur -> onUpdateTaskDuration(task.id, newDur) },
+                                onRemove = { onRemoveTask(task.id) }
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Persistent Bottom Action Bar
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = onDismissDraft,
+                        modifier = Modifier
+                            .weight(0.35f)
+                            .height(46.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text("Dismiss", fontWeight = FontWeight.SemiBold)
+                    }
+
+                    Button(
+                        onClick = onCommitToCalendar,
+                        enabled = selectedTasks.isNotEmpty(),
+                        modifier = Modifier
+                            .weight(0.65f)
+                            .height(46.dp)
+                            .testTag("add_all_to_calendar_button"),
+                        colors = ButtonDefaults.buttonColors(containerColor = BrandTeal),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.AutoAwesome,
+                            imageVector = Icons.Default.CalendarToday,
                             contentDescription = null,
                             modifier = Modifier.size(16.dp)
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                            text = if (isTargetToday) "Generate Today's Plan" else "Generate Plan for $targetDate",
-                            fontSize = 13.sp,
+                            text = if (selectedTasks.size == plannerDraft.tasks.size) "Add All to Calendar" else "Add (${selectedTasks.size}) to Calendar",
                             fontWeight = FontWeight.Bold
                         )
-                    }
-                } else if (plannerStatus == PlannerStatus.GENERATING) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(42.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(20.dp),
-                            color = BrandBlue,
-                            strokeWidth = 2.dp
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = "Analyzing syllabus & calculating optimal slots...",
-                            fontSize = 12.sp,
-                            color = TextSecondary
-                        )
-                    }
-                } else if (plannerDraft.status == PlannerStatus.DRAFT_READY) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        OutlinedButton(
-                            onClick = onDismissDraft,
-                            modifier = Modifier
-                                .weight(0.35f)
-                                .height(42.dp),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Text(
-                                text = "Dismiss",
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-
-                        val selectedCount = plannerDraft.tasks.count { it.isSelected }
-                        Button(
-                            onClick = onCommitToCalendar,
-                            enabled = selectedCount > 0,
-                            modifier = Modifier
-                                .weight(0.65f)
-                                .height(42.dp)
-                                .testTag("add_all_to_calendar_button"),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = BrandTeal)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.CalendarToday,
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = if (selectedCount == plannerDraft.tasks.size) "Add All to Calendar" else "Add ($selectedCount) to Calendar",
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
                     }
                 }
             }
         }
+    }
+}
 
-        // Proposed Draft Task Cards (Rendered inline below header)
-        AnimatedVisibility(
-            visible = plannerDraft != null && plannerDraft.status == PlannerStatus.DRAFT_READY && plannerDraft.tasks.isNotEmpty(),
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically()
+/**
+ * Success feedback banner shown after tasks are successfully committed.
+ */
+@Composable
+fun SmartStudyPlannerCommitResultBanner(
+    commitResult: CommitResult,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AnimatedVisibility(
+        visible = commitResult.success,
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkVertically(),
+        modifier = modifier
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 6.dp)
+                .border(1.dp, StatusSuccess.copy(alpha = 0.5f), RoundedCornerShape(16.dp)),
+            colors = CardDefaults.cardColors(containerColor = StatusSuccess.copy(alpha = 0.12f)),
+            shape = RoundedCornerShape(16.dp)
         ) {
-            plannerDraft?.let { draft ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 14.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 4.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = null,
+                        tint = StatusSuccess,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column {
                         Text(
-                            text = "Proposed Schedule (${draft.tasks.size} tasks)",
-                            fontSize = 12.sp,
+                            text = "Plan Added to Calendar!",
+                            fontSize = 13.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
-                            text = "Tap to toggle or adjust",
-                            fontSize = 10.sp,
-                            color = TextMuted
+                            text = "Added ${commitResult.addedCount} task(s) (${commitResult.totalDurationMinutes} mins). View them in your timeline below.",
+                            fontSize = 11.sp,
+                            color = TextSecondary
                         )
                     }
-
-                    draft.tasks.forEach { task ->
-                        ProposedTaskItem(
-                            task = task,
-                            onToggleSelection = { onToggleTaskSelection(task.id) },
-                            onDurationChanged = { newDur -> onUpdateTaskDuration(task.id, newDur) },
-                            onRemove = { onRemoveTask(task.id) }
-                        )
-                    }
+                }
+                IconButton(
+                    onClick = onDismiss,
+                    modifier = Modifier.size(28.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Dismiss",
+                        tint = TextSecondary,
+                        modifier = Modifier.size(16.dp)
+                    )
                 }
             }
         }
@@ -478,7 +510,7 @@ fun ProposedTaskItem(
         )
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
-            // Row 1: Checkbox, Title, Time, Priority
+            // Row 1: Checkbox, Title, Time
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -555,13 +587,12 @@ fun ProposedTaskItem(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Row 3: Duration source, Confidence, Adjustment Controls
+            // Row 3: Priority badge, Confidence label & Duration Controls
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Confidence badge
                 val confLabel = when (task.durationConfidence) {
                     DurationConfidence.HIGH -> "High Conf."
                     DurationConfidence.MEDIUM -> "Med Conf."
@@ -589,7 +620,6 @@ fun ProposedTaskItem(
                     )
                 }
 
-                // Controls: - / + duration & delete
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(
                         onClick = { onDurationChanged((task.durationMinutes - 5).coerceAtLeast(15)) },

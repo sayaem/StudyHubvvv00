@@ -407,7 +407,7 @@ fun StudyBuddyScreen(
             if (messages.isEmpty()) {
                 // Empty Welcome State
                 EmptyBuddyWelcomeState(
-                    studentName = userProfile?.name,
+                    studentName = userProfile?.displayName,
                     revisionMetrics = revisionMetrics,
                     onSelectPrompt = { prompt ->
                         onSendMessage(prompt)
@@ -639,7 +639,7 @@ private fun EmptyBuddyWelcomeState(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        val dueCount = revisionMetrics?.totalDueCount ?: 0
+        val dueCount = (revisionMetrics?.dueTodayCount ?: 0) + (revisionMetrics?.overdueCount ?: 0)
         val questions = listOf(
             if (dueCount > 0) "Help me revise my $dueCount due topics" else "What should I study next?",
             "Help me plan my study schedule for today",

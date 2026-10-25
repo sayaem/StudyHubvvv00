@@ -16,20 +16,20 @@ object StudyBuddyContextEngine {
     fun classifyIntent(prompt: String): BuddyQueryIntent {
         val lower = prompt.lowercase(Locale.ROOT)
         return when {
-            lower.contains("plan") || lower.contains("schedule") || lower.contains("today") || lower.contains("routine") || lower.contains("missed") -> {
-                BuddyQueryIntent.PLANNING
-            }
             lower.contains("revis") || lower.contains("recall") || lower.contains("spaced repetition") || lower.contains("review") -> {
                 BuddyQueryIntent.REVISION
+            }
+            lower.contains("plan") || lower.contains("schedule") || lower.contains("today") || lower.contains("routine") || lower.contains("missed") -> {
+                BuddyQueryIntent.PLANNING
             }
             lower.contains("exam") || lower.contains("admission") || lower.contains("test") || lower.contains("deadline") || lower.contains("buet") || lower.contains("medical") || lower.contains("varsity") -> {
                 BuddyQueryIntent.EXAM_PREPARATION
             }
+            lower.contains("focus") || lower.contains("pomodoro") || lower.contains("distract") || lower.contains("concentrat") || lower.contains("timer") -> {
+                BuddyQueryIntent.FOCUS_HABITS
+            }
             lower.contains("stat") || lower.contains("progress") || lower.contains("hour") || lower.contains("time") || lower.contains("score") || lower.contains("analytics") -> {
                 BuddyQueryIntent.STATS_PROGRESS
-            }
-            lower.contains("focus") || lower.contains("pomodoro") || lower.contains("distract") || lower.contains("concentrat") -> {
-                BuddyQueryIntent.FOCUS_HABITS
             }
             lower.contains("chapter") || lower.contains("topic") || lower.contains("syllabus") || lower.contains("subject") || lower.contains("physics") || lower.contains("chemistry") || lower.contains("math") || lower.contains("biology") -> {
                 BuddyQueryIntent.TOPIC_SYLLABUS

@@ -404,10 +404,10 @@ fun HomeScreen(
         // Study Buddy Companion Card
         val todayDate = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
         StudyBuddyHomeCard(
-            studentName = userProfile?.displayName?.ifBlank { userProfile.name },
+            studentName = userProfile?.displayName?.ifBlank { "Student" },
             revisionMetrics = revisionMetrics,
             todayTasksCount = tasks.count { it.date == todayDate },
-            nextExamTarget = nextTarget?.let { "${it.universityName} (${it.unitTrack})" },
+            nextExamTarget = nextTarget?.let { "${it.institutionName}${if (it.programUnit != null) " (${it.programUnit})" else ""}" },
             onOpenStudyBuddy = onOpenStudyBuddy
         )
 
